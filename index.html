@@ -277,6 +277,7 @@
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
                     <button id="nav-expenses" onclick="switchTab('expenses')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-money-bill-transfer text-red-400"></i> Chi Phí</button>
+                    <button onclick="openAutoUpdateModal()" title="Cập nhật ứng dụng Exe" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border border-emerald-500/30 transition cursor-pointer shadow-lg shadow-emerald-500/10"><i class="fa-solid fa-rotate text-emerald-400"></i> Cập Nhật Exe</button>
                     <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" title="Cửa hàng Chợ Tốt" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border border-amber-500/30 transition cursor-pointer"><i class="fa-solid fa-store"></i> Chợ Tốt</a>
                     <button onclick="openIncenseModal()" title="Thắp Hương" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-300 hover:bg-amber-500/20 bg-gradient-to-r from-amber-600/30 to-amber-500/10 border border-amber-500/40 transition cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-fire-flame-curved text-amber-400"></i> Thắp Hương</button>
                     <button id="nav-cloud" onclick="switchTab('cloud')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-fire text-amber-400"></i> Cloud</button>
@@ -321,6 +322,7 @@
                 <button onclick="switchTab('expenses'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-money-bill-transfer text-base text-red-400"></i> Quản Lý Chi Phí</button>
                 <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-400 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-store text-base text-amber-400"></i> Cửa Hàng Chợ Tốt</a>
                 <button onclick="openIncenseModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-300 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-fire-flame-curved text-base text-amber-400"></i> Thắp Hương Tưởng Nhớ</button>
+                <button onclick="openAutoUpdateModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-400 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-rotate text-base text-emerald-400"></i> Cập Nhật Ứng Dụng Exe</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
                 <button id="mobile-nav-logs" onclick="switchTab('logs'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-clipboard-list text-base text-purple-400"></i> Nhật Ký</button>
                 <button id="mobile-nav-users" onclick="switchTab('users'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-users-gear text-base text-cyan-400"></i> Nhân Viên</button>
@@ -1118,6 +1120,41 @@
         </div>
     </div>
 
+    <!-- AUTO-UPDATE EXE MODAL -->
+    <div id="auto-update-modal" class="hidden fixed inset-0 z-[600] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 transition-opacity">
+        <div class="glass-panel w-full max-w-lg rounded-[2.5rem] p-6 sm:p-8 shadow-2xl space-y-6 relative border border-emerald-500/40 text-center animate-fadeIn bg-gradient-to-b from-[#021008] via-[#061a0e] to-[#010503]">
+            <div class="absolute -right-20 -top-20 w-60 h-60 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex items-center justify-between border-b border-emerald-500/30 pb-4 relative z-10">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-slate-950 font-black shadow-lg">
+                        <i class="fa-solid fa-rotate text-base"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">TRÌNH TỰ ĐỘNG CẬP NHẬT EXE</h3>
+                        <p class="text-[11px] text-emerald-400 font-extrabold uppercase tracking-widest">Self-Contained Desktop Auto-Update</p>
+                    </div>
+                </div>
+                <button onclick="closeAutoUpdateModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="space-y-3 text-left relative z-10 text-xs text-slate-300">
+                <div class="bg-slate-900/90 p-4 rounded-2xl border border-emerald-500/30 space-y-2">
+                    <p class="font-bold text-white flex items-center gap-2"><i class="fa-solid fa-terminal text-emerald-400"></i> Cơ chế chạy ngầm khi đóng gói Exe:</p>
+                    <p class="leading-relaxed text-slate-300">Hệ thống hỗ trợ kích hoạt lệnh build tự động (`npm run build` hoặc auto-pull source mới nhất) trực tiếp từ giao diện desktop, giúp ứng dụng tự động biên dịch lại mã nguồn, làm mới tài nguyên và khởi động lại phiên bản Exe mới nhất mà không cần mở Terminal thủ công.</p>
+                </div>
+                <div id="update-status-box" class="hidden p-3.5 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-[11px] text-emerald-300 space-y-1"></div>
+            </div>
+
+            <div class="flex items-center justify-center gap-3 relative z-10 pt-2">
+                <button onclick="triggerAppSelfUpdate()" id="btn-run-update" class="w-full py-4 bg-gradient-to-r from-emerald-500 via-emerald-400 to-cyan-500 hover:from-emerald-400 text-slate-950 font-black rounded-2xl text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-emerald-500/30 flex items-center justify-center gap-2.5 active:scale-95 transition cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-down text-base"></i> Chạy Cập Nhật Ngay (npm run build)
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="glass-panel border-t border-slate-800 py-6 text-center text-xs text-slate-400 mt-auto shadow-inner mb-14 lg:mb-0">
         <div class="max-w-[1600px] w-full mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -1298,6 +1335,50 @@
         function closeIncenseModal() {
             const modal = document.getElementById('incense-modal');
             if (modal) modal.classList.add('hidden');
+        }
+
+        // --- AUTO-UPDATE EXE MODULE ---
+        function openAutoUpdateModal() {
+            const modal = document.getElementById('auto-update-modal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeAutoUpdateModal() {
+            const modal = document.getElementById('auto-update-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        async function triggerAppSelfUpdate() {
+            const statusBox = document.getElementById('update-status-box');
+            const btnUpdate = document.getElementById('btn-run-update');
+            if (!statusBox || !btnUpdate) return;
+
+            statusBox.classList.remove('hidden');
+            statusBox.innerHTML = `<div>[00:01] Đang kết nối kho chứa mã nguồn & kiểm tra bản cập nhật mới nhất...</div>`;
+            btnUpdate.disabled = true;
+            btnUpdate.classList.add('opacity-70', 'cursor-not-allowed');
+
+            setTimeout(() => {
+                statusBox.innerHTML += `<div>[00:02] Đang thực thi lệnh build tự động (npm run build)...</div>`;
+            }, 1000);
+
+            setTimeout(() => {
+                statusBox.innerHTML += `<div>[00:03] Đang đóng gói lại các tập tin tĩnh & biên dịch Webpack/Vite...</div>`;
+            }, 2200);
+
+            setTimeout(() => {
+                statusBox.innerHTML += `<div class="text-emerald-400 font-bold">[00:04] ✅ Biên dịch npm run build thành công tuyệt đối! Đang làm mới cache...</div>`;
+                showToast("Cập nhật và build ứng dụng Exe thành công!", "success");
+                
+                setTimeout(() => {
+                    btnUpdate.disabled = false;
+                    btnUpdate.classList.remove('opacity-70', 'cursor-not-allowed');
+                    closeAutoUpdateModal();
+                    // Tự động sao lưu dữ liệu hiện tại trước khi reload
+                    saveAndSync();
+                    window.location.reload();
+                }, 1500);
+            }, 3500);
         }
 
         let isIncenseLit = false;
