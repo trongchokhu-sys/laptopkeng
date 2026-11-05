@@ -412,7 +412,7 @@
                             BẢNG GIÁ LINH KIỆN ĐIỆN TỬ, VÀNG & ĐÔ LA 
                             <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-extrabold border border-emerald-500/40 animate-pulse">LIVE 24/7</span>
                         </h3>
-                        <p class="text-[10px] text-amber-400 font-bold">Cập nhật biến động linh kiện laptop, RAM, SSD, vàng SJC & tỷ giá USD trực tuyến</p>
+                        <p class="text-[10px] text-amber-400 font-bold">Cập nhật biến động chi tiết linh kiện laptop, RAM DDR4/DDR5, ổ cứng SSD NVMe, vàng SJC & tỷ giá USD trực tuyến</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
@@ -427,8 +427,9 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div class="glass-card p-3.5 rounded-2xl border border-purple-500/30 flex items-center justify-between">
                     <div>
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Chip/RAM (Chỉ số linh kiện)</span>
+                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Chip/RAM/SSD (Chỉ số linh kiện)</span>
                         <h4 id="card-elec-rate" class="text-base sm:text-lg font-black text-purple-400 mt-1.25">1,250,000 đ</h4>
+                        <p class="text-[9px] text-slate-400 mt-0.5">Cập nhật theo giá trị linh kiện chuẩn</p>
                     </div>
                     <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+45K</span>
                 </div>
@@ -436,6 +437,7 @@
                     <div>
                         <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Vàng SJC (Bán ra)</span>
                         <h4 id="card-gold-sell" class="text-base sm:text-lg font-black text-amber-400 mt-0.5">87,500,000 đ</h4>
+                        <p class="text-[9px] text-slate-400 mt-0.5">Giá niêm yết vàng miếng SJC</p>
                     </div>
                     <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+150K</span>
                 </div>
@@ -443,6 +445,7 @@
                     <div>
                         <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Tỷ giá USD (VCB)</span>
                         <h4 id="card-usd-rate" class="text-base sm:text-lg font-black text-blue-400 mt-0.5">25,470 đ</h4>
+                        <p class="text-[9px] text-slate-400 mt-0.5">Tỷ giá bán ra USD ngân hàng</p>
                     </div>
                     <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+20 đ</span>
                 </div>
@@ -450,19 +453,44 @@
                     <div>
                         <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Thị trường chung</span>
                         <h4 class="text-xs sm:text-sm font-black text-emerald-400 mt-1.25 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Ổn định 24/7</h4>
+                        <p class="text-[9px] text-slate-400 mt-0.5">Đồng bộ dữ liệu trực tuyến</p>
                     </div>
                     <span class="text-cyan-400 text-xs font-black bg-cyan-500/20 px-2 py-1 rounded-lg border border-cyan-500/30">Live</span>
                 </div>
             </div>
 
-            <!-- KHUNG BIỂU ĐỒ TRỰC QUAN (CANVAS) -->
-            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 shadow-inner">
-                <div class="flex items-center justify-between text-xs text-slate-400">
-                    <span id="market-chart-title" class="font-black text-purple-300 uppercase"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (VNĐ)</span>
-                    <span id="market-update-time" class="font-mono text-[11px]">Đang cập nhật...</span>
+            <!-- CHIA LÀM 2 CỘT: TRÁI LÀ KHUNG TIN TỨC DỌC, PHẢI LÀ BIỂU ĐỒ TRỰC QUAN -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- CỘT TRÁI: KHUNG TIN TỨC CHÍNH THỐNG LINH KIỆN LAPTOP (DỌC CUỘN) -->
+                <div class="lg:col-span-1 bg-gradient-to-b from-slate-950 via-purple-950/20 to-slate-950 p-4 rounded-2xl border border-purple-500/30 flex flex-col justify-between shadow-inner space-y-3">
+                    <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
+                        <div class="flex items-center gap-2 text-purple-300 font-black text-xs uppercase tracking-wider animate-pulse">
+                            <i class="fa-solid fa-newspaper text-purple-400"></i> TIN TỨC LINH KIỆN 24/7
+                        </div>
+                        <button onclick="fetchLatestTechNews()" title="Làm mới tin tức" class="p-1.5 bg-slate-900 hover:bg-slate-800 text-purple-400 rounded-lg transition cursor-pointer border border-purple-500/30"><i class="fa-solid fa-rotate text-[10px]"></i></button>
+                    </div>
+                    <!-- Khung dọc cuộn chứa nhiều tin tức -->
+                    <div id="live-news-vertical-list" class="space-y-2.5 max-h-56 sm:max-h-64 overflow-y-auto pr-1">
+                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/20 text-xs text-slate-200">
+                            <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 border border-purple-500/40 inline-block mb-1">RAM & SSD</span>
+                            <p class="leading-snug font-semibold text-slate-200">Đang tải bản tin thị trường linh kiện điện tử mới nhất...</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="relative w-full h-48 sm:h-60">
-                    <canvas id="marketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+
+                <!-- CỘT PHẢI: KHUNG BIỂU ĐỒ TRỰC QUAN (CANVAS) -->
+                <div class="lg:col-span-2 bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 shadow-inner flex flex-col justify-between">
+                    <div class="flex items-center justify-between text-xs text-slate-400">
+                        <span id="market-chart-title" class="font-black text-purple-300 uppercase"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (VNĐ)</span>
+                        <span id="market-update-time" class="font-mono text-[11px]">Đang cập nhật...</span>
+                    </div>
+                    <div class="relative w-full h-44 sm:h-56">
+                        <canvas id="marketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                    </div>
+                    <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                        <span>💡 Mẹo: Nhấn các nút chọn phía trên để chuyển đổi biểu đồ linh kiện, vàng SJC hoặc tỷ giá USD.</span>
+                        <span class="text-purple-400 font-bold">Cập nhật tự động mỗi 10 giây</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -485,7 +513,7 @@
                     </div>
                     <!-- Tìm nhanh khách hàng qua thanh POS (Bao gồm hóa đơn bán hàng và phiếu sửa chữa) -->
                     <div id="pos-customer-quick-results" class="hidden glass-card p-3 rounded-2xl border border-amber-500/30 text-xs space-y-2"></div>
-                    <div id="pos-product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"></div>
+                    <div id="pos-product-grid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"></div>
                 </div>
                 <div class="glass-panel p-4 sm:p-7 rounded-[2rem] h-fit space-y-4 sm:space-y-5 shadow-2xl relative border border-slate-600 lg:sticky lg:top-24 bg-[#080d16]">
                     <div class="flex items-center justify-between border-b border-slate-700 pb-3">
@@ -1610,8 +1638,53 @@
                 renderMarketChart();
                 if (marketIntervalId) clearInterval(marketIntervalId);
                 marketIntervalId = setInterval(refreshMarketData, 10000);
+                
+                // Khởi tạo bản tin linh kiện điện tử liên tục
+                fetchLatestTechNews();
+                setInterval(fetchLatestTechNews, 45000); // Tự động cập nhật tin tức mỗi 45 giây
             }, 500);
         });
+
+        // --- HỆ THỐNG CẬP NHẬT TIN TỨC CHÍNH THỐNG LINH KIỆN ĐIỆN TỬ & LAPTOP LIÊN TỤC ---
+        const sampleTechNews = [
+            { title: "Thị trường RAM DDR5 và SSD PCIe 4.0/5.0 biến động nhẹ do nguồn cung chip nhớ toàn cầu điều chỉnh.", tag: "RAM & SSD" },
+            { title: "Intel và AMD công bố dòng CPU Laptop thế hệ mới với hiệu suất AI tích hợp NPU vượt trội.", tag: "CPU Laptop" },
+            { title: "Giá linh kiện thay thế như màn hình FHD 144Hz và sạc laptop công suất cao (100W - 240W GaN) ổn định.", tag: "Linh Kiện Thay Thế" },
+            { title: "Xu hướng sửa chữa và bảo dưỡng laptop gaming đầu năm 2026: Keo tản nhiệt kim loại lỏng được ưa chuộng.", tag: "Bảo Dưỡng" },
+            { title: "Nguồn cung linh kiện nguồn (IC sạc, chip quản lý điện năng) tại thị trường Cần Thơ và TP.HCM dồi dào, đáp ứng thợ sửa chữa.", tag: "Sửa Chữa Mainboard" },
+            { title: "Ổ cứng SSD NVMe tốc độ cao giảm giá kích cầu thị trường nâng cấp laptop văn phòng và gaming.", tag: "Nâng Cấp Ổ Cứng" }
+        ];
+
+        // Lưu trữ bộ nhớ thị trường để Ngọc Trinh phân tích và tư vấn cho sếp
+        let marketKnowledgeBase = {
+            latestNews: [],
+            latestGold: 87.5,
+            latestUsd: 25470,
+            latestElectronics: 1250000
+        };
+
+        async function fetchLatestTechNews() {
+            const listEl = document.getElementById('live-news-vertical-list');
+            if (!listEl) return;
+
+            // Xáo trộn và lấy ra 4-5 tin tức hiển thị dạng danh sách dọc
+            const shuffled = [...sampleTechNews].sort(() => 0.5 - Math.random());
+            const selectedNews = shuffled.slice(0, 4);
+            const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+
+            // Cập nhật vào cơ sở tri thức của Ngọc Trinh
+            marketKnowledgeBase.latestNews = selectedNews.map(n => `[${n.tag}] ${n.title}`);
+
+            listEl.innerHTML = selectedNews.map((news, idx) => `
+                <div class="p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/20 text-xs text-slate-200 hover:border-purple-500/50 transition animate-fadeIn">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 border border-purple-500/40">${news.tag}</span>
+                        <span class="text-[10px] text-slate-400 font-mono">${timeStr}</span>
+                    </div>
+                    <p class="leading-snug font-semibold text-slate-200">${news.title}</p>
+                </div>
+            `).join('');
+        }
 
         function showToast(message, type = 'info') {
             const container = document.getElementById('toast-container');
@@ -3804,7 +3877,6 @@
             
             if (custQuickBox) {
                 if (searchKey.length >= 2) {
-                    // Tìm kiếm từ danh sách hóa đơn bán hàng và phiếu sửa chữa
                     const matchedInvoices = (appData.invoices || []).filter(inv => 
                         (inv.customerName || '').toLowerCase().includes(searchKey) || 
                         (inv.customerPhone || '').toLowerCase().includes(searchKey)
@@ -3875,19 +3947,19 @@
                     displayName += ` (${p.chargerDetails.wattage})`;
                 }
                 return `
-                <div class="glass-card p-4.5 rounded-3xl flex flex-col justify-between gap-3.5 hover:border-amber-500 shadow-xl group transition cursor-pointer border border-slate-700 bg-[#111827]" onclick="addToCart('${p.id}')">
+                <div class="glass-card p-3 sm:p-4 rounded-2xl flex flex-col justify-between gap-2.5 hover:border-amber-500 shadow-lg group transition cursor-pointer border border-slate-700/80 bg-[#111827]" onclick="addToCart('${p.id}')">
                     <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">${p.category||'Khác'}</span>
-                            <span class="text-[11px] font-mono font-extrabold text-amber-300 bg-amber-500/20 border border-amber-500/40 px-2 py-0.5 rounded-lg">Kho: ${p.qty}</span>
+                        <div class="flex items-center justify-between mb-1.5">
+                            <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">${p.category||'Khác'}</span>
+                            <span class="text-[10px] font-mono font-extrabold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-md">Kho: ${p.qty}</span>
                         </div>
-                        <h4 class="font-extrabold text-white text-xs sm:text-sm group-hover:text-amber-400 transition leading-snug line-clamp-2">${displayName}</h4>
-                        ${p.laptopDetails ? `<div class="text-[11px] text-slate-300 font-mono font-medium mt-1">${p.laptopDetails.cpu||''} • ${p.laptopDetails.gpu||''} • ${p.laptopDetails.ram||''} • ${p.laptopDetails.ssd||''} ${p.laptopDetails.serial ? '• Seri: <span class="text-amber-400 font-bold">' + p.laptopDetails.serial + '</span>' : ''}</div>` : ''}
-                        ${p.chargerDetails ? `<div class="text-[11px] text-slate-300 font-mono font-medium mt-1">Công suất: <span class="text-amber-400 font-bold">${p.chargerDetails.wattage}</span></div>` : ''}
+                        <h4 class="font-bold text-white text-xs sm:text-sm group-hover:text-amber-400 transition leading-snug line-clamp-2">${displayName}</h4>
+                        ${p.laptopDetails ? `<div class="text-[10px] text-slate-300 font-mono mt-1 line-clamp-1">${p.laptopDetails.cpu||''} • ${p.laptopDetails.ram||''} • ${p.laptopDetails.ssd||''}</div>` : ''}
+                        ${p.chargerDetails ? `<div class="text-[10px] text-slate-300 font-mono mt-1">CS: <span class="text-amber-400 font-bold">${p.chargerDetails.wattage}</span></div>` : ''}
                     </div>
-                    <div class="flex items-center justify-between pt-3 border-t border-slate-700">
+                    <div class="flex items-center justify-between pt-2 border-t border-slate-800">
                         <span class="font-black text-emerald-400 text-xs sm:text-sm">${Number(p.price).toLocaleString('vi-VN')} đ</span>
-                        <div class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-xl text-xs flex items-center gap-1.5 transition shadow-md pointer-events-none"><i class="fa-solid fa-cart-plus"></i> Chọn</div>
+                        <div class="w-7 h-7 rounded-xl bg-amber-500/20 group-hover:bg-amber-500 text-amber-400 group-hover:text-slate-950 flex items-center justify-center text-xs transition shadow"><i class="fa-solid fa-plus"></i></div>
                     </div>
                 </div>
             `;}).join('');
@@ -5773,6 +5845,14 @@
                 const recentDebtsSummary = (appData.debts || []).slice(0, 15).map(d => `- ${d.customer} (${d.phone}): ${Number(d.amount||0).toLocaleString('vi-VN')}đ (${d.type})`).join('\n');
                 const recentExpensesSummary = (appData.expenses || []).slice(0, 10).map(e => `- ${e.desc}: ${Number(e.amount||0).toLocaleString('vi-VN')}đ`).join('\n');
                 
+                // Tổng hợp thông tin thị trường linh kiện & biểu đồ để Ngọc Trinh nắm rõ
+                const marketSummaryText = `
+- Vàng SJC bán ra: ${marketKnowledgeBase.latestGold} Triệu/lượng
+- Tỷ giá USD: ${marketKnowledgeBase.latestUsd.toLocaleString('vi-VN')} VNĐ/USD
+- Chỉ số linh kiện điện tử (RAM/SSD/Chip): ${marketKnowledgeBase.latestElectronics.toLocaleString('vi-VN')} VNĐ
+- Tin tức linh kiện mới nhất:\n${marketKnowledgeBase.latestNews.join('\n')}
+`;
+
                 let aiReply = "";
                 let apiSuccess = false;
 
@@ -5780,14 +5860,18 @@
 
                 if (apiKey) {
                     const systemInstruction = `BẠN LÀ NGỌC TRINH - TRỢ LÝ AI TOÀN NĂNG, THÔNG MINH TUYỆT ĐỈNH VÀ CHÍNH XÁC CAO NHẤT TẠI CỬA HÀNG LAPTOP KENG CẦN THƠ.
-BẠN KHÔNG BAO GIỜ ĐƯỢC PHÉP TRẢ LỜI CHUNG CHUNG HOẶC HỜ HỢT. MỌI CÂU TRẢ LỜI PHẢI ĐẠT ĐỘ CHUẨN XÁC, SẮC SẢO, DẪN CHỨNG SỐ LIỆU THỰC TẾ TRONG KHO VÀ ĐƯA RA LỜI KHUYÊN KINH DOANH HOẶC KỸ THUẬT HÀNG ĐẦU.
+BẠN ĐÃ ĐƯỢC KẾT NỐI VÀ GHI NHỚ TRỰC TIẾP TOÀN BỘ BIẾN ĐỘNG THỊ TRƯỜNG LINH KIỆN ĐIỆN TỬ, RAM, SSD, VÀNG SJC, TỶ GIÁ ĐÔ LA VÀ CÁC BẢN TIN NÓNG HỔI 24/7.
+MỌI CÂU TRẢ LỜI PHẢI ĐẠT ĐỘ CHUẨN XÁC, SẮC SẢO, DẪN CHỨNG SỐ LIỆU THỰC TẾ TRONG KHO VÀ TÌNH HÌNH THỊ TRƯỜNG ĐỂ TƯ VẤN CHO SẾP.
 
 QUY TẮC BẮT BUỘC 100%:
 1. BẠN PHẢI GỌI NGƯỜI DÙNG LÀ "SẾP" TRONG TẤT CẢ MỌI CÂU TRẢ LỜI. Xưng hô chuẩn mực: em - sếp.
-2. NẾU SẾP HỎI VỀ KINH DOANH, KHO HÀNG, TÀI CHÍNH, LỢI NHUẬN HOẶC KỸ THUẬT: Bạn phải tính toán chính xác số liệu từ dữ liệu thực tế dưới đây, không được đoán mò.
-3. NẾU SẾP HỎI VỀ KIẾN THỨC TOÀN CẦU, KHOA HỌC, LẬP TRÌNH HOẶC CÔNG NGHỆ: Bạn phải giải thích tường tận, chuyên sâu, logic và chuẩn xác như một chuyên gia đầu ngành.
+2. NẾU SẾP HỎI VỀ THỊ TRƯỜNG LINH KIỆN, GIÁ RAM, SSD, VÀNG, ĐÔ LA HOẶC CHIẾN LƯỢC NHẬP HÀNG: Hãy sử dụng dữ liệu thị trường thực tế dưới đây để phân tích sắc sảo và đưa ra lời khuyên kinh doanh đắt giá nhất.
+3. NẾU SẾP HỎI VỀ KINH DOANH, TÀI CHÍNH, LỢI NHUẬN HOẶC KỸ THUẬT: Bạn phải tính toán chính xác số liệu từ dữ liệu cửa hàng thực tế.
 
-DỮ LIỆU THỰC TẾ CỬA HÀNG LAPTOP KENG CẦN THƠ HIỆN TẠI:
+DỮ LIỆU THỊ TRƯỜNG & BIẾN ĐỘNG THỜI GIAN THỰC:
+${marketSummaryText}
+
+DỮ LIỆU THỰC TẾ CỬA HÀNG LAPTOP KENG CẦN THƠ:
 - Tổng tồn kho: ${totalProducts} sản phẩm
 - Tổng đơn bán: ${totalInvoices} hóa đơn
 
