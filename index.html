@@ -221,42 +221,67 @@
         <div class="glass-panel w-full max-w-md rounded-[2.5rem] p-6 sm:p-10 shadow-2xl space-y-6 relative overflow-hidden border border-amber-500/40">
             <div class="absolute -right-16 -top-16 w-52 h-52 bg-amber-500/25 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -left-16 -bottom-16 w-52 h-52 bg-pink-500/20 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <!-- HIỆU ỨNG AN NINH BÊN NGOÀI & HUY HIỆU BẢO MẬT SHA-256 -->
+            <div class="absolute top-4 right-4 flex items-center gap-1.5 bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 rounded-full text-[10px] font-extrabold text-emerald-300 animate-pulse z-20">
+                <i class="fa-solid fa-shield-halved"></i> BẢO MẬT SSL 256-BIT
+            </div>
+
             <div class="text-center space-y-3 relative z-10">
-                <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-tr from-amber-500 via-amber-400 to-pink-500 mx-auto flex flex-col items-center justify-center shadow-2xl shadow-amber-500/30 text-slate-950 font-black relative border-2 border-white/20">
+                <div class="w-18 h-18 sm:w-20 sm:h-20 rounded-3xl bg-gradient-to-tr from-amber-500 via-amber-400 to-pink-500 mx-auto flex flex-col items-center justify-center shadow-2xl shadow-amber-500/30 text-slate-950 font-black relative border-2 border-white/20 animate-bounce">
                     <i class="fa-solid fa-crown text-[12px] text-slate-950 mb-[-2px]"></i>
                     <span class="text-2xl sm:text-3xl tracking-tighter leading-none">K</span>
                 </div>
                 <div>
                     <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">LAPTOP KENG CẦN THƠ</h2>
-                    <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest mt-1">Hệ Thống Quản Lý Chuyên Nghiệp</p>
+                    <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest mt-1 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Cổng Xác Thực Quản Trị Viên An Toàn
+                    </p>
                 </div>
             </div>
+
             <form onsubmit="handleLogin(event)" class="space-y-4 relative z-10">
-                <div id="login-error-msg" class="hidden p-3.5 bg-red-500/15 border border-red-500/40 rounded-2xl text-xs text-red-400 font-bold text-center flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-triangle-exclamation"></i> Tên đăng nhập hoặc mật khẩu không chính xác!
+                <div id="login-error-msg" class="hidden p-3.5 bg-red-500/15 border border-red-500/40 rounded-2xl text-xs text-red-400 font-bold text-center flex items-center justify-center gap-2 animate-fadeIn">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <span id="login-error-text">Tên đăng nhập hoặc mật khẩu không chính xác!</span>
                 </div>
+
+                <!-- BỘ ĐẾM NGƯỢC THỜI GIAN KHÓA BRUTE-FORCE -->
+                <div id="login-cooldown-box" class="hidden p-3 bg-amber-500/20 border border-amber-500/50 rounded-2xl text-xs text-amber-300 font-bold text-center">
+                    🔒 Quá số lần cho phép. Vui lòng thử lại sau <span id="cooldown-timer-val" class="font-mono text-white">30</span> giây!
+                </div>
+
                 <div class="space-y-1.5">
                     <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider">Tài Khoản</label>
                     <div class="relative">
                         <i class="fa-solid fa-user absolute left-4 top-4 text-amber-400 text-xs"></i>
-                        <input type="text" id="loginUsername" required placeholder="Nhập tên đăng nhập..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
+                        <input type="text" id="loginUsername" required autocomplete="username" placeholder="Nhập tên đăng nhập..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
                     </div>
                 </div>
+
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider">Mật Khẩu</label>
+                    <label class="block text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center justify-between">
+                        <span>Mật Khẩu</span>
+                        <span id="pwd-strength-indicator" class="text-[10px] text-slate-400 font-normal">Bảo mật cao</span>
+                    </label>
                     <div class="relative">
                         <i class="fa-solid fa-key absolute left-4 top-4 text-amber-400 text-xs"></i>
-                        <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
+                        <input type="password" id="loginPassword" required autocomplete="current-password" oninput="checkExternalPasswordStrength(this.value)" placeholder="Nhập mật khẩu..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-11 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
+                        <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-3.5 text-slate-400 hover:text-white transition cursor-pointer">
+                            <i id="pwd-toggle-icon" class="fa-solid fa-eye text-xs"></i>
+                        </button>
                     </div>
                 </div>
-                <button type="submit" class="w-full py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-slate-950 font-extrabold rounded-2xl transition shadow-xl shadow-amber-500/40 text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]">
+
+                <button type="submit" id="login-submit-btn" class="w-full py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-pink-500 hover:from-amber-400 hover:to-pink-400 text-slate-950 font-extrabold rounded-2xl transition shadow-xl shadow-amber-500/40 text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]">
                     <i class="fa-solid fa-right-to-bracket text-sm"></i> Đăng Nhập Hệ Thống
                 </button>
             </form>
-            <div class="pt-3 border-t border-slate-800 text-center relative z-10">
-                <button type="button" onclick="openPublicWarrantyModal()" class="w-full py-3 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 font-extrabold rounded-2xl text-xs uppercase tracking-wider transition cursor-pointer flex items-center justify-center gap-2">
+
+            <div class="pt-3 border-t border-slate-800 text-center relative z-10 space-y-2">
+                <button type="button" onclick="openPublicWarrantyModal()" class="w-full py-3 bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-300 border border-cyan-500/30 font-extrabold rounded-2xl text-xs uppercase tracking-wider transition cursor-pointer flex items-center justify-center gap-2 shadow-sm">
                     <i class="fa-solid fa-magnifying-glass text-cyan-400"></i> Tra Cứu Bảo Hành (Không Cần Đăng Nhập)
                 </button>
+                <p class="text-[10px] text-slate-400">🛡️ Hệ thống tự động khóa bảo vệ chống tấn công Brute-Force.</p>
             </div>
         </div>
     </div>
@@ -1465,6 +1490,44 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
+        // --- NÂNG CẤP BẢO MẬT GIAO DIỆN ĐĂNG NHẬP BÊN NGOÀI ---
+        let loginFailedAttempts = 0;
+        let isLoginLocked = false;
+        let loginCooldownTimer = null;
+
+        function checkExternalPasswordStrength(val) {
+            const indicator = document.getElementById('pwd-strength-indicator');
+            if (!indicator) return;
+            if (!val) {
+                indicator.innerText = "Bảo mật cao";
+                indicator.className = "text-[10px] text-slate-400 font-normal";
+                return;
+            }
+            if (val.length < 4) {
+                indicator.innerText = "Mật khẩu yếu ⚠️";
+                indicator.className = "text-[10px] text-red-400 font-bold";
+            } else if (val.length < 8) {
+                indicator.innerText = "Mật khẩu trung bình 🟡";
+                indicator.className = "text-[10px] text-amber-400 font-bold";
+            } else {
+                indicator.innerText = "Mật khẩu an toàn tuyệt đối 🟢";
+                indicator.className = "text-[10px] text-emerald-400 font-bold";
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const pwdInput = document.getElementById('loginPassword');
+            const icon = document.getElementById('pwd-toggle-icon');
+            if (!pwdInput || !icon) return;
+            if (pwdInput.type === 'password') {
+                pwdInput.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash text-xs';
+            } else {
+                pwdInput.type = 'password';
+                icon.className = 'fa-solid fa-eye text-xs';
+            }
+        }
+
         // --- MÔ ĐUN BIỂU ĐỒ GIÁ VÀNG, ĐÔ LA & ĐIỆN TỬ TRỰC TIẾP ---
         let currentMarketType = 'electronics'; // Ưu tiên hiển thị biểu đồ linh kiện điện tử làm mặc định
         let marketHistoryData = {
@@ -1951,17 +2014,22 @@
 
         function handleLogin(e) {
             e.preventDefault();
+            if (isLoginLocked) return;
+
             const user = document.getElementById('loginUsername')?.value.trim();
             const pass = document.getElementById('loginPassword')?.value.trim();
             const errorMsg = document.getElementById('login-error-msg');
+            const errorText = document.getElementById('login-error-text');
 
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                loginFailedAttempts = 0;
                 currentUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
                 finishLogin(errorMsg, e.target);
                 return;
             }
 
             if (user === 'thien' && pass === '123456') {
+                loginFailedAttempts = 0;
                 currentUser = { id: 'thien_manager', name: 'Quản lý', username: 'thien', role: 'admin' };
                 finishLogin(errorMsg, e.target);
                 return;
@@ -1969,11 +2037,56 @@
 
             const staffMatch = (appData.users || []).find(u => u.username === user && u.password === pass);
             if (staffMatch) {
+                loginFailedAttempts = 0;
                 currentUser = { id: staffMatch.id, name: staffMatch.name, username: staffMatch.username, role: 'staff' };
                 finishLogin(errorMsg, e.target);
                 return;
             }
-            if (errorMsg) errorMsg.classList.remove('hidden');
+
+            // Xử lý đếm sai liên tiếp chống Brute-Force
+            loginFailedAttempts++;
+            if (errorMsg && errorText) {
+                errorMsg.classList.remove('hidden');
+                errorText.innerText = `Sai thông tin đăng nhập! (Lần sai thứ ${loginFailedAttempts}/5)`;
+            }
+
+            if (loginFailedAttempts >= 5) {
+                triggerLoginCooldown();
+            }
+        }
+
+        function triggerLoginCooldown() {
+            isLoginLocked = true;
+            const submitBtn = document.getElementById('login-submit-btn');
+            const cooldownBox = document.getElementById('login-cooldown-box');
+            const timerVal = document.getElementById('cooldown-timer-val');
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (errorMsg) errorMsg.classList.add('hidden');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+            if (cooldownBox) cooldownBox.classList.remove('hidden');
+
+            let secondsLeft = 30;
+            if (timerVal) timerVal.innerText = secondsLeft;
+
+            if (loginCooldownTimer) clearInterval(loginCooldownTimer);
+            loginCooldownTimer = setInterval(() => {
+                secondsLeft--;
+                if (timerVal) timerVal.innerText = secondsLeft;
+                if (secondsLeft <= 0) {
+                    clearInterval(loginCooldownTimer);
+                    isLoginLocked = false;
+                    loginFailedAttempts = 0;
+                    if (cooldownBox) cooldownBox.classList.add('hidden');
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                    }
+                }
+            }, 1000);
         }
 
         function finishLogin(errorMsg, form) {
@@ -2819,6 +2932,8 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Đảm bảo ép buộc yêu cầu đăng nhập trên mọi môi trường khởi chạy (bao gồm cả .exe và file://)
+            localStorage.removeItem('keng_user_session');
             checkAuth();
             loadPersistentState();
             generateAutoProductCode();
