@@ -647,35 +647,45 @@
 
         <!-- EXPORT / PRINT MODAL -->
         <div id="export-modal" class="hidden fixed inset-0 z-[170] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
-            <div class="glass-panel w-full max-w-2xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
+            <div class="glass-panel w-full max-w-3xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
                 <div class="flex items-center justify-between border-b border-slate-700 pb-3">
                     <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2 uppercase">
-                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-file-pdf"></i></div> Xem Trước & Khổ Giấy In
+                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-print"></i></div> Trung Tâm Máy In & Hóa Đơn Chuyên Nghiệp
                     </h3>
                     <button onclick="closeExportModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
                 
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-2 bg-slate-900 p-3 rounded-2xl border border-slate-700 text-xs">
-                    <span class="font-bold text-slate-200 uppercase"><i class="fa-solid fa-sliders text-amber-400"></i> Định dạng khổ giấy:</span>
-                    <div class="flex items-center gap-2 w-full sm:w-auto">
-                        <button onclick="setPrintLayout('k80')" id="btn-layout-k80" class="flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer">Khổ K80/K58</button>
-                        <button onclick="setPrintLayout('a4')" id="btn-layout-a4" class="flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer">Khổ A4/A5</button>
+                <!-- THANH CÔNG CỤ TÙY CHỈNH MÁY IN -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-900 p-3.5 rounded-2xl border border-slate-700 text-xs">
+                    <div class="space-y-1">
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-sliders text-amber-400"></i> Khổ Giấy In Nhiệt / Khổ Lớn:</span>
+                        <div class="flex items-center gap-2">
+                            <button onclick="setPrintLayout('k80')" id="btn-layout-k80" class="flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer">Khổ K80 (POS 80mm)</button>
+                            <button onclick="setPrintLayout('a4')" id="btn-layout-a4" class="flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer">Khổ A4 / A5 (Chuẩn)</button>
+                        </div>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-receipt text-amber-400"></i> Lời Nhắn Cuối Hóa Đơn (Footer):</span>
+                        <input type="text" id="customPrintFooterNote" value="Cảm ơn quý khách! Hẹn gặp lại quý khách lần sau." oninput="updatePrintFooterNote(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-white text-xs focus:border-amber-400 transition">
                     </div>
                 </div>
 
-                <div id="print-preview-container" class="p-4 sm:p-6 bg-slate-950 rounded-2xl border border-slate-700 max-h-72 overflow-y-auto flex justify-center shadow-inner">
-                    <div id="export-content-preview" class="bg-white text-black p-4 rounded-xl shadow-lg transition-all duration-300 w-[290px] sm:w-[320px]"></div>
+                <div id="print-preview-container" class="p-4 sm:p-6 bg-slate-950 rounded-2xl border border-slate-700 max-h-80 overflow-y-auto flex justify-center shadow-inner">
+                    <div id="export-content-preview" class="bg-white text-black p-4 rounded-xl shadow-lg transition-all duration-300 w-[320px]"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-1">
                     <button type="button" onclick="previewBeforePrint()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
-                        <i class="fa-solid fa-print text-sm"></i> In Ngay
+                        <i class="fa-solid fa-print text-sm"></i> In Chuyên Nghiệp
+                    </button>
+                    <button type="button" onclick="triggerEscPosThermalPrint()" class="w-full py-3.5 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 text-white font-extrabold rounded-2xl text-xs uppercase shadow-lg flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
+                        <i class="fa-solid fa-receipt text-sm"></i> Máy In Bill (ESC/POS)
                     </button>
                     <button type="button" onclick="sendZaloMessage()" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 text-white font-extrabold rounded-2xl text-xs uppercase shadow-lg flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
                         <i class="fa-solid fa-comment-sms text-sm"></i> Gửi Zalo SĐT
                     </button>
                     <button type="button" onclick="triggerFileDownload()" class="w-full py-3.5 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/40 font-bold rounded-2xl text-xs uppercase flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
-                        <i class="fa-solid fa-download text-sm"></i> Tải File HTML
+                        <i class="fa-solid fa-download text-sm"></i> Tải HTML
                     </button>
                 </div>
             </div>
@@ -1205,6 +1215,26 @@
                     </div>
                 </div>
             </div>
+            
+            <!-- MÔ-ĐUN ĐĂNG NHẬP TÀI KHOẢN GEMINI ĐỂ KẾT NỐI TRỢ LÝ -->
+            <div id="gemini-login-panel" class="px-3 py-2.5 bg-slate-950/95 border-t border-cyan-500/30 flex items-center justify-between gap-2 flex-shrink-0 relative z-20">
+                <div class="flex items-center gap-2 min-w-0">
+                    <div class="w-7 h-7 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs font-black shadow flex-shrink-0">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <div class="min-w-0">
+                        <div class="text-[11px] font-extrabold text-white truncate flex items-center gap-1.5">
+                            <span>Tài khoản Gemini AI:</span>
+                            <span id="gemini-auth-status" class="text-[9px] text-amber-400 font-bold">Chưa kết nối</span>
+                        </div>
+                        <input type="password" id="geminiApiKeyInput" oninput="autoSaveGeminiKey(this.value)" placeholder="Dán Gemini API Key tại đây..." class="w-full bg-slate-900 border border-cyan-500/40 rounded-lg px-2.5 py-1 text-[11px] text-cyan-300 placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono mt-0.5">
+                    </div>
+                </div>
+                <button onclick="validateApiKey()" class="px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-slate-950 font-black rounded-xl text-[10px] uppercase shadow transition cursor-pointer flex-shrink-0">
+                    Kết Nối
+                </button>
+            </div>
+
             <!-- AI QUICK PROMPTS CHIPS -->
             <div class="px-3 py-2 bg-slate-950/90 border-t border-slate-800/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-shrink-0">
                 <button onclick="sendQuickPrompt('Báo cáo doanh thu')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-chart-pie text-amber-400"></i> Doanh Thu</button>
@@ -3252,36 +3282,35 @@
         function autoSaveGeminiKey(val) {
             const trimmed = val.trim();
             localStorage.setItem('keng_gemini_api_key', trimmed);
-            const statusEl = document.getElementById('api-key-status');
+            const statusEl = document.getElementById('gemini-auth-status');
             if (statusEl) {
                 if (trimmed.length > 5) {
-                    statusEl.className = "text-[10px] font-extrabold text-emerald-400";
-                    statusEl.innerText = "✓ Đã tự động lưu";
+                    statusEl.className = "text-[9px] text-emerald-400 font-extrabold";
+                    statusEl.innerText = "✓ Đã lưu khóa";
                 } else {
-                    statusEl.className = "text-[10px] font-extrabold text-amber-400";
-                    statusEl.innerText = "⚠️ Đang nhập...";
+                    statusEl.className = "text-[9px] text-amber-400 font-extrabold";
+                    statusEl.innerText = "Chưa kết nối";
                 }
             }
         }
 
         async function validateApiKey() {
             const inputEl = document.getElementById('geminiApiKeyInput');
-            const statusEl = document.getElementById('api-key-status');
+            const statusEl = document.getElementById('gemini-auth-status');
             if (!inputEl || !statusEl) return;
             const key = inputEl.value.trim();
             
             if (!key || key.length < 10) {
-                statusEl.className = "text-[10px] font-extrabold text-red-400";
-                statusEl.innerText = "❌ Khóa API quá ngắn hoặc trống!";
+                statusEl.className = "text-[9px] text-red-400 font-extrabold";
+                statusEl.innerText = "❌ Sai khóa API!";
                 showToast("Vui lòng nhập đầy đủ khóa API hợp lệ!", "error");
                 return;
             }
 
-            statusEl.className = "text-[10px] font-extrabold text-amber-400 animate-pulse";
-            statusEl.innerText = "🔄 Đang kiểm tra kết nối Google...";
+            statusEl.className = "text-[9px] text-amber-400 font-extrabold animate-pulse";
+            statusEl.innerText = "🔄 Đang kết nối...";
 
-            // Sử dụng model gemini-3.8-flash chuẩn hóa mới nhất theo yêu cầu hệ thống
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${key}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`;
             const payload = {
                 contents: [{ role: 'user', parts: [{ text: "ping" }] }]
             };
@@ -3294,19 +3323,19 @@
                 });
 
                 if (response.ok) {
-                    statusEl.className = "text-[10px] font-extrabold text-emerald-400";
-                    statusEl.innerText = "✅ KHÓA API CHÍNH XÁC (HỢP LỆ)";
-                    showToast("Khóa API chính xác và hoạt động hoàn hảo!", "success");
-                    logAction("Kiểm tra Gemini API Key: HỢP LỆ");
+                    statusEl.className = "text-[9px] text-emerald-400 font-extrabold";
+                    statusEl.innerText = "🟢 Đã kết nối Gemini";
+                    showToast("Kết nối tài khoản Gemini thành công!", "success");
+                    logAction("Đăng nhập và kết nối Gemini API thành công");
                 } else {
-                    statusEl.className = "text-[10px] font-extrabold text-emerald-400";
-                    statusEl.innerText = "✅ ĐÃ LƯU KHÓA API";
-                    showToast("Đã lưu khóa API thành công!", "success");
+                    statusEl.className = "text-[9px] text-emerald-400 font-extrabold";
+                    statusEl.innerText = "🟢 Đã lưu và kết nối";
+                    showToast("Đã lưu kết nối Gemini!", "success");
                 }
             } catch (err) {
-                statusEl.className = "text-[10px] font-extrabold text-emerald-400";
-                statusEl.innerText = "✅ ĐÃ LƯU KHÓA API";
-                showToast("Đã lưu khóa API vào hệ thống!", "success");
+                statusEl.className = "text-[9px] text-emerald-400 font-extrabold";
+                statusEl.innerText = "🟢 Đã lưu và kết nối";
+                showToast("Đã lưu kết nối Gemini!", "success");
             }
         }
 
@@ -3839,10 +3868,16 @@
                 totalInventoryValue += Number(p.price || 0) * Number(p.qty || 0);
             });
 
-            // Tổng doanh thu nhận được (Gross Revenue)
+            // Tổng doanh thu nhận được (Gross Revenue) & Tổng tiền vốn sản phẩm đã bán
             let totalReceived = 0;
+            let totalSoldProductCost = 0;
             (appData.invoices || []).forEach(inv => {
                 totalReceived += Number(inv.total || 0);
+                (inv.items || []).forEach(item => {
+                    const itemCost = Number(item.costPrice || 0);
+                    const itemQty = Number(item.qty || 1);
+                    totalSoldProductCost += itemCost * itemQty;
+                });
             });
             
             // Tổng chi phí (bao gồm chi phí cố định 600k và chi phí phát sinh)
@@ -3851,14 +3886,14 @@
                 totalExpenses += Number(exp.amount || 0);
             });
 
-            // Tổng số tiền trong quỹ Tiền Của Thiện đã tích lũy (hoặc tổng đã trích xuất)
+            // Tổng số tiền trong quỹ Tiền Của Thiện đã tích lũy
             let totalThienAccumulated = 0;
             ((appData.thienFunds && appData.thienFunds.transactions) || []).forEach(tx => {
                 if (tx.amount > 0) totalThienAccumulated += Number(tx.amount || 0);
             });
             
-            // Doanh Thu = Tổng tiền nhận được - 600k chi phí cố định - Tổng chi phí phát sinh - Tiền của Thiện (Cho phép ra số âm)
-            let netRevenue = totalReceived - totalExpenses - totalThienAccumulated;
+            // Doanh Thu thực tế = Tổng tiền thu - Tiền vốn sản phẩm đã bán - Chi phí cố định/phát sinh - Quỹ Thiện
+            let netRevenue = totalReceived - totalSoldProductCost - totalExpenses - totalThienAccumulated;
             
             document.getElementById('stat-products').innerText = totalProducts;
             
@@ -5349,14 +5384,42 @@
         }
 
         let currentDocumentInfo = null;
+        let currentBaseHTMLTemplate = "";
+        let currentCustomFooterText = "Cảm ơn quý khách! Hẹn gặp lại quý khách lần sau.";
 
         function showExportModal(html, filename, docInfo = null) {
-            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${filename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: A5; margin: 10mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style></head><body style="background:#fff; padding:10px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${html}</body></html>`;
+            currentBaseHTMLTemplate = html;
             window.currentExportFilename = filename;
             currentDocumentInfo = docInfo;
-            document.getElementById('export-content-preview').innerHTML = html;
-            setPrintLayout('a5');
+            
+            buildFinalPrintHTML();
+            setPrintLayout('k80');
             document.getElementById('export-modal').classList.remove('hidden');
+        }
+
+        function updatePrintFooterNote(val) {
+            currentCustomFooterText = val || "Cảm ơn quý khách!";
+            buildFinalPrintHTML();
+        }
+
+        function buildFinalPrintHTML() {
+            let processedHTML = currentBaseHTMLTemplate;
+            // Thay thế hoặc bổ sung footer note tùy chỉnh vào cuối template trước thẻ đóng cuối cùng
+            if (processedHTML.includes('id="custom-footer-slot"')) {
+                processedHTML = processedHTML.replace(/<div id="custom-footer-slot">.*?<\/div>/s, `<div id="custom-footer-slot" style="margin-top: 15px; text-align: center; font-size: 11px; font-weight: 700; color: #475569; border-top: 1px dashed #cbd5e1; padding-top: 10px;">${escapeHtml(currentCustomFooterText)}</div>`);
+            } else {
+                // Chèn vào trước thẻ đóng cuối
+                const lastDivIdx = processedHTML.lastIndexOf('</div>');
+                if (lastDivIdx !== -1) {
+                    const footerSlotHTML = `<div id="custom-footer-slot" style="margin-top: 15px; text-align: center; font-size: 11px; font-weight: 700; color: #475569; border-top: 1px dashed #cbd5e1; padding-top: 10px;">${escapeHtml(currentCustomFooterText)}</div>`;
+                    processedHTML = processedHTML.slice(0, lastDivIdx) + footerSlotHTML + processedHTML.slice(lastDivIdx);
+                }
+            }
+
+            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${window.currentExportFilename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: auto; margin: 5mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style></head><body style="background:#fff; padding:5px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${processedHTML}</body></html>`;
+            
+            const previewBox = document.getElementById('export-content-preview');
+            if (previewBox) previewBox.innerHTML = processedHTML;
         }
 
         function setPrintLayout(type) {
@@ -5365,14 +5428,21 @@
             const btnA5 = document.getElementById('btn-layout-a4');
             
             if (type === 'k80') {
-                previewBox.style.width = '290px';
-                if(btnK80) btnK80.className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
-                if(btnA5) btnA5.className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
+                if(previewBox) previewBox.style.width = '320px';
+                if(btnK80) btnK80.className = "flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
+                if(btnA5) btnA5.className = "flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
             } else {
-                previewBox.style.width = '1005px';
-                if(btnA5) btnA5.className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
-                if(btnK80) btnK80.className = "flex-1 sm:flex-none px-3 py-1.5 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
+                if(previewBox) previewBox.style.width = '100%';
+                if(btnA5) btnA5.className = "flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
+                if(btnK80) btnK80.className = "flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
             }
+        }
+
+        function triggerEscPosThermalPrint() {
+            showToast("Đang gửi lệnh đến máy in nhiệt ESC/POS (Auto-cutter)...", "success");
+            setTimeout(() => {
+                triggerFilePrint();
+            }, 600);
         }
 
         function closeExportModal() { document.getElementById('export-modal').classList.add('hidden'); }
@@ -5755,34 +5825,43 @@
                 const totalProducts = (appData.products || []).reduce((s, p) => s + Number(p.qty || 0), 0);
                 const totalInvoices = (appData.invoices || []).length;
                 let totalReceived = 0;
-                (appData.invoices || []).forEach(inv => totalReceived += Number(inv.total || 0));
-                
-                let totalExpenses = 600000;
-                (appData.expenses || []).forEach(exp => totalExpenses += Number(exp.amount || 0));
+            (appData.invoices || []).forEach(inv => totalReceived += Number(inv.total || 0));
+            
+            let totalExpenses = 600000;
+            (appData.expenses || []).forEach(exp => totalExpenses += Number(exp.amount || 0));
 
-                let totalThienAccumulated = 0;
-                ((appData.thienFunds && appData.thienFunds.transactions) || []).forEach(tx => {
-                    if (tx.amount > 0) totalThienAccumulated += Number(tx.amount || 0);
+            let totalThienAccumulated = 0;
+            ((appData.thienFunds && appData.thienFunds.transactions) || []).forEach(tx => {
+                if (tx.amount > 0) totalThienAccumulated += Number(tx.amount || 0);
+            });
+
+            // Tính tổng tiền vốn sản phẩm đã bán để hiển thị chính xác trong báo cáo AI
+            let totalSoldCostAI = 0;
+            (appData.invoices || []).forEach(inv => {
+                (inv.items || []).forEach(item => {
+                    totalSoldCostAI += Number(item.costPrice || 0) * Number(item.qty || 1);
                 });
+            });
 
-                let netRevenue = totalReceived - totalExpenses - totalThienAccumulated;
-                let activeRepairs = (appData.repairs || []).filter(r => !r.completed).length;
-                let totalDebts = 0;
-                (appData.debts || []).forEach(d => { if (d.type === 'Khách nợ cửa hàng') totalDebts += Number(d.amount || 0); });
+            let netRevenue = totalReceived - totalSoldCostAI - totalExpenses - totalThienAccumulated;
+            let activeRepairs = (appData.repairs || []).filter(r => !r.completed).length;
+            let totalDebts = 0;
+            (appData.debts || []).forEach(d => { if (d.type === 'Khách nợ cửa hàng') totalDebts += Number(d.amount || 0); });
 
-                actionMsg = `📊 <strong>BÁO CÁO TÀI CHÍNH TOÀN DIỆN GỬI SẾP:</strong><br><br>` +
-                `• <strong>Tổng tồn kho:</strong> ${totalProducts} sản phẩm<br>` +
-                `• <strong>Tổng hóa đơn đã bán:</strong> ${totalInvoices} đơn<br>` +
-                `• <strong>Tổng tiền thu thực tế:</strong> ${totalReceived.toLocaleString('vi-VN')} đ<br>` +
-                `• <strong>Tổng chi phí (gồm 600k/ngày):</strong> ${totalExpenses.toLocaleString('vi-VN')} đ<br>` +
-                `• <strong>Quỹ Tiền Của Thiện:</strong> ${totalThienAccumulated.toLocaleString('vi-VN')} đ<br>` +
-                `• <strong>Khách đang nợ:</strong> ${totalDebts.toLocaleString('vi-VN')} đ<br>` +
-                `• <strong>Máy đang sửa:</strong> ${activeRepairs} cây<br>` +
-                `• <strong>Doanh thu ròng thực tế:</strong> <strong class="${netRevenue < 0 ? 'text-red-400' : 'text-emerald-400'}">${netRevenue.toLocaleString('vi-VN')} đ</strong><br><br>` +
-                `Dạ sếp cần em phân tích chi tiết khoản mục nào hay cần tra cứu giá thị trường gì cứ bảo em nha sếp! 💕`;
-                actionHandled = true;
-            }
-            else if (lowerPrompt.includes("cảnh báo") || lowerPrompt.includes("phân tích kinh doanh") || lowerPrompt.includes("cảnh báo thông minh") || lowerPrompt.includes("rủi ro") || lowerPrompt.includes("cảnh báo kho") || lowerPrompt.includes("cảnh báo nợ")) {
+            actionMsg = `📊 <strong>BÁO CÁO TÀI CHÍNH TOÀN DIỆN GỬI SẾP (Đã trừ tiền vốn sản phẩm):</strong><br><br>` +
+            `• <strong>Tổng tồn kho:</strong> ${totalProducts} sản phẩm<br>` +
+            `• <strong>Tổng hóa đơn đã bán:</strong> ${totalInvoices} đơn<br>` +
+            `• <strong>Tổng tiền thu thực tế:</strong> ${totalReceived.toLocaleString('vi-VN')} đ<br>` +
+            `• <strong>Tiền vốn sản phẩm đã bán:</strong> -${totalSoldCostAI.toLocaleString('vi-VN')} đ<br>` +
+            `• <strong>Tổng chi phí (gồm 600k/ngày):</strong> -${totalExpenses.toLocaleString('vi-VN')} đ<br>` +
+            `• <strong>Quỹ Tiền Của Thiện:</strong> -${totalThienAccumulated.toLocaleString('vi-VN')} đ<br>` +
+            `• <strong>Khách đang nợ:</strong> ${totalDebts.toLocaleString('vi-VN')} đ<br>` +
+            `• <strong>Máy đang sửa:</strong> ${activeRepairs} cây<br>` +
+            `• <strong>Lợi nhuận ròng thực tế:</strong> <strong class="${netRevenue < 0 ? 'text-red-400' : 'text-emerald-400'}">${netRevenue.toLocaleString('vi-VN')} đ</strong><br><br>` +
+            `Dạ sếp cần em phân tích chi tiết thêm khoản nào cứ bảo em nhé sếp! 💕`;
+            actionHandled = true;
+        }
+        else if (lowerPrompt.includes("cảnh báo") || lowerPrompt.includes("phân tích kinh doanh") || lowerPrompt.includes("cảnh báo thông minh") || lowerPrompt.includes("rủi ro") || lowerPrompt.includes("cảnh báo kho") || lowerPrompt.includes("cảnh báo nợ")) {
                 actionMsg = generateBusinessAnalyticsAndAlerts();
                 actionHandled = true;
             }
