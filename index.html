@@ -647,29 +647,38 @@
 
         <!-- EXPORT / PRINT MODAL -->
         <div id="export-modal" class="hidden fixed inset-0 z-[170] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
-            <div class="glass-panel w-full max-w-3xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
+            <div class="glass-panel w-full max-w-4xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
                 <div class="flex items-center justify-between border-b border-slate-700 pb-3">
                     <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2 uppercase">
-                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-print"></i></div> Trung Tâm Máy In & Hóa Đơn Chuyên Nghiệp
+                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-print"></i></div> Trung Tâm Máy In & Hóa Đơn Chuyên Nghiệp (Desktop .EXE Pro)
                     </h3>
                     <button onclick="closeExportModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
                 
-                <!-- THANH CÔNG CỤ TÙY CHỈNH MÁY IN (CHUẨN A5, K80 VÀ CHỌN MODEL MÁY IN CANON 2900 / CANON E410) -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-900 p-3.5 rounded-2xl border border-slate-700 text-xs">
+                <!-- THANH CÔNG CỤ TÙY CHỈNH MÁY IN NÂNG CAO (CHUẨN .EXE DESKTOP) -->
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-slate-900 p-3.5 rounded-2xl border border-slate-700 text-xs">
                     <div class="space-y-1">
-                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-sliders text-amber-400"></i> Khổ Giấy (Mặc Định A5):</span>
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-sliders text-amber-400"></i> Khổ Giấy:</span>
                         <div class="flex items-center gap-2">
                             <button onclick="setPrintLayout('k80')" id="btn-layout-k80" class="flex-1 px-3 py-2 rounded-xl font-bold bg-slate-800 text-slate-200 transition cursor-pointer">Khổ K80</button>
                             <button onclick="setPrintLayout('a5')" id="btn-layout-a5" class="flex-1 px-3 py-2 rounded-xl font-semibold bg-amber-500 text-slate-950 transition cursor-pointer">Khổ A5 (Chuẩn)</button>
                         </div>
                     </div>
                     <div class="space-y-1">
-                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-print text-amber-400"></i> Chọn Dòng Máy In:</span>
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-print text-amber-400"></i> Dòng Máy In (.EXE):</span>
                         <select id="selectedPrinterModel" onchange="updatePrinterModel(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white text-xs focus:border-amber-400 transition">
-                            <option value="canon_2900">🖨️ Máy in Canon LBP 2900 (Laser)</option>
-                            <option value="canon_e410">🖨️ Máy in Canon Pixma E410 (Phun)</option>
-                            <option value="esc_pos">🖨️ Máy in Bill ESC/POS</option>
+                            <option value="canon_2900">🖨️ Canon LBP 2900 (Laser A5)</option>
+                            <option value="canon_e410">🖨️ Canon Pixma E410 (Phun A5)</option>
+                            <option value="esc_pos">🖨️ Máy in Bill ESC/POS (K80)</option>
+                        </select>
+                    </div>
+                    <div class="space-y-1">
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-expand text-amber-400"></i> Tỷ Lệ Phóng To/Thu Nhỏ:</span>
+                        <select id="printZoomScale" onchange="updatePrintZoom(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-white text-xs focus:border-amber-400 transition">
+                            <option value="1.0">100% (Mặc định)</option>
+                            <option value="0.9">90% (Thu gọn)</option>
+                            <option value="1.1">110% (Phóng to)</option>
+                            <option value="1.25">125% (Rõ nét)</option>
                         </select>
                     </div>
                     <div class="space-y-1">
@@ -678,11 +687,11 @@
                     </div>
                 </div>
 
-                <div id="print-preview-container" class="p-4 sm:p-6 bg-slate-950 rounded-2xl border border-slate-700 max-h-80 overflow-y-auto flex justify-center shadow-inner">
+                <div id="print-preview-container" class="p-4 sm:p-6 bg-slate-950 rounded-2xl border border-slate-700 max-h-72 overflow-y-auto flex justify-center shadow-inner">
                     <div id="export-content-preview" class="bg-white text-black p-4 rounded-xl shadow-lg transition-all duration-300 w-[520px]"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 pt-1">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
                     <button type="button" onclick="previewBeforePrint()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex items-center justify-center gap-2 active:scale-95 transition cursor-pointer">
                         <i class="fa-solid fa-print text-sm"></i> In Chuyên Nghiệp
                     </button>
@@ -5395,6 +5404,7 @@
         let currentBaseHTMLTemplate = "";
         let currentCustomFooterText = "Cảm ơn quý khách! Hẹn gặp lại quý khách lần sau.";
         let currentPrinterModel = "canon_2900";
+        let currentPrintZoom = "1.0";
 
         function showExportModal(html, filename, docInfo = null) {
             currentBaseHTMLTemplate = html;
@@ -5423,6 +5433,16 @@
             }
         }
 
+        function updatePrintZoom(zoomVal) {
+            currentPrintZoom = zoomVal;
+            const previewBox = document.getElementById('export-content-preview');
+            if (previewBox) {
+                previewBox.style.transform = `scale(${zoomVal})`;
+                previewBox.style.transformOrigin = 'top center';
+            }
+            showToast(`Đã điều chỉnh tỷ lệ in ${Math.round(zoomVal * 100)}%`, "info");
+        }
+
         function buildFinalPrintHTML() {
             let processedHTML = currentBaseHTMLTemplate;
             if (processedHTML.includes('id="custom-footer-slot"')) {
@@ -5437,10 +5457,14 @@
 
             const pageSizeSetting = currentPrinterModel === 'canon_2900' || currentPrinterModel === 'canon_e410' ? 'A5 portrait' : '80mm auto';
 
-            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${window.currentExportFilename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: ${pageSizeSetting}; margin: 10mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style></head><body style="background:#fff; padding:10px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${processedHTML}</body></html>`;
+            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${window.currentExportFilename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: ${pageSizeSetting}; margin: 8mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; transform: scale(${currentPrintZoom}); transform-origin: top center; } }</style></head><body style="background:#fff; padding:10px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${processedHTML}</body></html>`;
             
             const previewBox = document.getElementById('export-content-preview');
-            if (previewBox) previewBox.innerHTML = processedHTML;
+            if (previewBox) {
+                previewBox.innerHTML = processedHTML;
+                previewBox.style.transform = `scale(${currentPrintZoom})`;
+                previewBox.style.transformOrigin = 'top center';
+            }
         }
 
         function setPrintLayout(type) {
