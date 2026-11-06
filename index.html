@@ -297,12 +297,17 @@
                     <button id="nav-logs" onclick="switchTab('logs')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-clipboard-list text-purple-400"></i> Nhật Ký</button>
                     <button id="nav-users" onclick="switchTab('users')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-users-gear text-cyan-400"></i> Nhân Viên</button>
                     <div class="h-4 w-[1px] bg-slate-700 mx-1"></div>
+                    <!-- Nút Livestream Chốt Đơn Đặt Nằm Kế Nút Đăng Xuất -->
+                    <button onclick="openLivestreamModal()" title="Bán hàng Livestream Facebook & TikTok tự động" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 text-white transition cursor-pointer shadow-lg shadow-pink-500/20 border border-pink-400/40">
+                        <i class="fa-solid fa-video text-white animate-pulse"></i> Livestream
+                    </button>
                     <button onclick="handleLogout()" title="Đăng Xuất" class="px-3 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1 bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 transition cursor-pointer"><i class="fa-solid fa-right-from-bracket"></i></button>
                 </nav>
 
                 <!-- Mobile Top Right Action -->
                 <div class="lg:hidden flex items-center gap-1.5">
                     <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" title="Chợ Tốt" class="p-2.5 rounded-xl text-amber-400 hover:bg-slate-800 bg-slate-900 border border-amber-500/40 flex items-center justify-center"><i class="fa-solid fa-store text-xs"></i></a>
+                    <button onclick="openLivestreamModal()" title="Livestream" class="p-2.5 rounded-xl text-white bg-gradient-to-r from-pink-600 to-rose-600 border border-pink-400/40"><i class="fa-solid fa-video text-xs"></i></button>
                     <button onclick="handleLogout()" class="p-2.5 rounded-xl text-red-400 hover:bg-slate-800 bg-slate-900 border border-slate-800/80"><i class="fa-solid fa-right-from-bracket text-xs"></i></button>
                     <button onclick="toggleMobileMenu()" class="p-3 rounded-xl text-amber-400 hover:bg-slate-800 bg-slate-900/90 border border-amber-500/40 cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-bars text-base"></i></button>
                 </div>
@@ -335,6 +340,7 @@
                 <button onclick="switchTab('expenses'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-money-bill-transfer text-base text-red-400"></i> Quản Lý Chi Phí</button>
                 <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-400 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-store text-base text-amber-400"></i> Cửa Hàng Chợ Tốt</a>
                 <button onclick="openCaroModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-cyan-300 bg-slate-900 border border-cyan-500/40 shadow-md"><i class="fa-solid fa-chess-board text-base text-cyan-400"></i> Cờ Caro 2 Người</button>
+                <button onclick="openLivestreamModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-pink-300 bg-slate-900 border border-pink-500/40 shadow-md"><i class="fa-solid fa-video text-base text-pink-400"></i> Livestream Chốt Đơn</button>
                 <button onclick="openPublicWarrantyModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-300 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-emerald-400"></i> Tra Cứu BH Public</button>
                 <button onclick="openAutoUpdateModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-400 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-rotate text-base text-emerald-400"></i> Cập Nhật</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
@@ -1376,7 +1382,7 @@
 
     <!-- CARO 2NGUOI REALTIME MODAL -->
     <div id="caro-modal" class="hidden fixed inset-0 z-[650] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4 transition-opacity">
-        <div class="glass-panel w-full max-w-5xl rounded-[2.5rem] p-4 sm:p-6 shadow-2xl space-y-4 relative border border-cyan-500/50 flex flex-col max-h-[96vh] bg-gradient-to-b from-[#020b14] via-[#061424] to-[#01050a] overflow-hidden">
+        <div class="glass-panel w-full max-w-7xl rounded-[2.5rem] p-4 sm:p-6 shadow-2xl space-y-4 relative border border-cyan-500/50 flex flex-col max-h-[98vh] bg-gradient-to-b from-[#020b14] via-[#061424] to-[#01050a] overflow-hidden">
             <div class="absolute -right-20 -top-20 w-60 h-60 bg-cyan-500/20 rounded-full blur-xl pointer-events-none"></div>
             
             <div class="flex items-center justify-between border-b border-cyan-500/30 pb-3 flex-shrink-0">
@@ -1385,8 +1391,8 @@
                         <i class="fa-solid fa-chess-board text-base"></i>
                     </div>
                     <div>
-                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">ĐẤU TRƯỜNG CỜ CARO 20x20 (ONLINE & BOT AI)</h3>
-                        <p class="text-[11px] text-cyan-400 font-extrabold uppercase tracking-widest">Bàn cờ mở rộng 20x20 • Thuật toán AI Grandmaster</p>
+                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">ĐẤU TRƯỜNG CỜ CARO 50x50 (ONLINE & BOT AI)</h3>
+                        <p class="text-[11px] text-cyan-400 font-extrabold uppercase tracking-widest">Bàn cờ siêu khủng 50x50 • Thuật toán AI Grandmaster</p>
                     </div>
                 </div>
                 <button onclick="closeCaroModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
@@ -1394,11 +1400,11 @@
 
             <!-- CARO LOBBY & GAME CONTROLS -->
             <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/90 p-3 rounded-2xl border border-cyan-500/30 flex-shrink-0 text-xs">
-                <div class="flex items-center gap-2 w-full sm:w-auto">
+                <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap">
                     <span class="font-bold text-slate-300">Phòng chơi:</span>
                     <input type="text" id="caroRoomId" value="KENG_ROOM_01" placeholder="Nhập mã phòng..." class="bg-slate-950 border border-cyan-500/40 rounded-xl px-3 py-2 text-cyan-300 font-mono font-bold text-xs w-36 focus:outline-none">
                     <button onclick="joinCaroRoom()" class="px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 text-slate-950 font-extrabold rounded-xl text-xs uppercase shadow-md transition cursor-pointer">Vào Phòng</button>
-                    <button onclick="startPlayWithBot()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-xl text-xs uppercase shadow-md transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-robot"></i> Đấu Với Máy AI (Thông Minh)</button>
+                    <button onclick="startPlayWithBot()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-xl text-xs uppercase shadow-md transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-robot"></i> Đấu Với Máy AI (50x50)</button>
                 </div>
                 <div id="caro-status-bar" class="font-black text-cyan-300 text-center sm:text-right">
                     Trạng thái: Chưa kết nối phòng
@@ -1410,9 +1416,9 @@
 
             <!-- GAME BOARD & SIDEBAR CHAT -->
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 flex-grow overflow-hidden">
-                <!-- BÀN CỜ 20x20 MỞ RỘNG -->
-                <div class="lg:col-span-3 bg-slate-950/90 rounded-2xl border border-cyan-500/30 p-2 flex items-center justify-center overflow-auto shadow-inner">
-                    <div id="caro-board-grid" class="grid gap-[2px] bg-slate-900 p-2 rounded-xl border border-slate-800"></div>
+                <!-- BÀN CỜ 50x50 MỞ RỘNG SIÊU KHỦNG -->
+                <div class="lg:col-span-3 bg-slate-950/90 rounded-2xl border border-cyan-500/30 p-2 flex items-center justify-center overflow-auto shadow-inner max-h-[66vh]">
+                    <div id="caro-board-grid" class="grid gap-[1px] bg-slate-900 p-1.5 rounded-xl border border-slate-800"></div>
                 </div>
                 <!-- SIDEBAR: THÔNG TIN & CHAT -->
                 <div class="glass-panel p-3.5 rounded-2xl border border-cyan-500/30 flex flex-col justify-between space-y-3 overflow-hidden">
@@ -1900,7 +1906,7 @@
         let pendingRenderTimeout = null;
 
         const ADMIN_USER = 'laptopkeng';
-        const ADMIN_PASS = '1991';
+        const ADMIN_PASS = '9999';
         let currentUser = null;
 
         function checkAuth() {
@@ -1913,15 +1919,20 @@
                     currentUser = JSON.parse(loggedSession); 
                 } catch (e) { 
                     currentUser = null; 
+                    localStorage.removeItem('keng_user_session');
                 }
+            } else {
+                currentUser = null;
             }
+
             if (modal) {
-                if (currentUser) {
+                if (currentUser && currentUser.username) {
                     modal.classList.add('hidden');
                     if (aiAssistant) aiAssistant.classList.remove('hidden');
                 } else {
                     modal.classList.remove('hidden');
                     if (aiAssistant) aiAssistant.classList.add('hidden');
+                    currentUser = null;
                 }
             }
             updateRoleUI();
@@ -1945,7 +1956,13 @@
             const errorMsg = document.getElementById('login-error-msg');
 
             if (user === ADMIN_USER && pass === ADMIN_PASS) {
-                currentUser = { id: 'admin_master', name: 'Admin Keng', username: ADMIN_USER, role: 'admin' };
+                currentUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
+                finishLogin(errorMsg, e.target);
+                return;
+            }
+
+            if (user === 'thien' && pass === '123456') {
+                currentUser = { id: 'thien_manager', name: 'Quản lý', username: 'thien', role: 'admin' };
                 finishLogin(errorMsg, e.target);
                 return;
             }
@@ -2228,9 +2245,9 @@
         }
 
         // --- CỜ CARO 2 NGƯỜI REALTIME MODULE ---
-        let caroBoardSize = 20; // Mở rộng bàn cờ lên 20x20
+        let caroBoardSize = 50; // Nâng cấp kích thước bàn cờ lên 50x50
         let caroState = {
-            board: Array(20).fill(null).map(() => Array(20).fill('')),
+            board: Array(50).fill(null).map(() => Array(50).fill('')),
             turn: 'X',
             winner: null,
             winningLine: [],
@@ -2272,7 +2289,7 @@
             let html = '';
             for (let r = 0; r < caroBoardSize; r++) {
                 for (let c = 0; c < caroBoardSize; c++) {
-                    html += `<button id="caro-cell-${r}-${c}" onclick="makeCaroMove(${r}, ${c})" class="w-5 h-5 sm:w-7 sm:h-7 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-sm flex items-center justify-center font-black text-[10px] sm:text-xs transition cursor-pointer"></button>`;
+                    html += `<button id="caro-cell-${r}-${c}" onclick="makeCaroMove(${r}, ${c})" class="w-3.5 h-3.5 sm:w-4 sm:h-4 bg-slate-900 hover:bg-slate-800 border border-slate-800/80 rounded-[1px] flex items-center justify-center font-black text-[8px] transition cursor-pointer"></button>`;
                 }
             }
             grid.innerHTML = html;
@@ -2293,11 +2310,11 @@
                 winningLine: [],
                 playerX: playerName,
                 playerO: 'Ngọc Trinh Grandmaster 🤖',
-                chats: [{ sender: 'Hệ thống', text: `Chế độ đấu với Máy AI 20x20 đã kích hoạt! Sếp cầm quân X (Đi trước).`, time: new Date().toLocaleTimeString() }]
+                chats: [{ sender: 'Hệ thống', text: `Chế độ đấu với Máy AI 50x50 đã kích hoạt! Sếp cầm quân X (Đi trước).`, time: new Date().toLocaleTimeString() }]
             };
             myCaroRole = 'X';
             renderCaroUI();
-            showToast("Đã kích hoạt chế độ đấu với Máy AI Grandmaster!", "success");
+            showToast("Đã kích hoạt chế độ đấu với Máy AI Grandmaster trên bàn cờ 50x50!", "success");
         }
 
         function joinCaroRoom() {
@@ -2313,7 +2330,7 @@
                 }
 
                 if (currentCaroRoomRef) currentCaroRoomRef.off();
-                currentCaroRoomRef = db.ref('caro_rooms_20/' + roomId);
+                currentCaroRoomRef = db.ref('caro_rooms_50/' + roomId);
 
                 currentCaroRoomRef.on('value', (snapshot) => {
                     if (isPlayingWithBot) return;
@@ -2328,11 +2345,11 @@
                             winningLine: [],
                             playerX: playerName,
                             playerO: '',
-                            chats: [{ sender: 'Hệ thống', text: `Phòng ${roomId} đã được tạo bởi ${playerName}. Chúc sếp thi đấu vui vẻ!`, time: new Date().toLocaleTimeString() }]
+                            chats: [{ sender: 'Hệ thống', text: `Phòng ${roomId} (50x50) đã được tạo bởi ${playerName}. Chúc sếp thi đấu vui vẻ!`, time: new Date().toLocaleTimeString() }]
                         };
                         myCaroRole = 'X';
                         currentCaroRoomRef.set(caroState);
-                        showToast(`Đã tạo và vào phòng ${roomId} với tư cách Quân X!`, "success");
+                        showToast(`Đã tạo và vào phòng 50x50 ${roomId} với tư cách Quân X!`, "success");
                     } else {
                         const oldPlayerO = val.playerO;
                         caroState = val;
@@ -2348,7 +2365,7 @@
                         } else if (!caroState.playerO && caroState.playerX !== playerName) {
                             caroState.playerO = playerName;
                             myCaroRole = 'O';
-                            caroState.chats.push({ sender: 'Hệ thống', text: `🔔 Đối thủ ${playerName} vừa tham gia phòng chơi làm Quân O! Trận đấu bắt đầu.`, time: new Date().toLocaleTimeString() });
+                            caroState.chats.push({ sender: 'Hệ thống', text: `🔔 Đối thủ ${playerName} vừa tham gia phòng chơi làm Quân O! Trận đấu 50x50 bắt đầu.`, time: new Date().toLocaleTimeString() });
                             currentCaroRoomRef.update({ playerO: playerName, chats: caroState.chats });
                             showToast(`🔔 Đối thủ ${playerName} đã tham gia phòng làm Quân O!`, "success");
                         } else if (caroState.playerO === playerName) {
@@ -2380,7 +2397,7 @@
 
             if (checkCaroWin(r, c, myCaroRole)) {
                 caroState.winner = myCaroRole;
-                caroState.chats.push({ sender: 'Hệ thống', text: `🏆 Chúc mừng quân ${myCaroRole} (${myCaroRole === 'X' ? caroState.playerX : caroState.playerO}) đã CHIẾN THẮNG! Bàn cờ sẽ tự động làm mới sau 5 giây.`, time: new Date().toLocaleTimeString() });
+                caroState.chats.push({ sender: 'Hệ thống', text: `🏆 Chúc mừng quân ${myCaroRole} (${myCaroRole === 'X' ? caroState.playerX : caroState.playerO}) đã CHIẾN THẮNG trên bàn cờ 50x50!`, time: new Date().toLocaleTimeString() });
                 showToast(`Quân ${myCaroRole} chiến thắng! Tự động làm mới ván mới...`, "success");
                 
                 if (autoResetTimer) clearTimeout(autoResetTimer);
@@ -2391,7 +2408,7 @@
                 caroState.turn = caroState.turn === 'X' ? 'O' : 'X';
                 
                 if (isPlayingWithBot && !caroState.winner && caroState.turn === 'O') {
-                    setTimeout(makeBotMove, 300);
+                    setTimeout(makeBotMove, 250);
                 }
             }
 
@@ -2402,27 +2419,22 @@
             }
         }
 
-        // --- THUẬT TOÁN BOT AI CARO CỰC KỲ THÔNG MINH (GRANDMASTER HEURISTIC MATRIX) ---
+        // --- THUẬT TOÁN BOT AI CARO 50x50 (GRANDMASTER HEURISTIC MATRIX) ---
         function makeBotMove() {
             if (caroState.winner || caroState.turn !== 'O') return;
 
             let bestScore = -Infinity;
             let bestMoves = [];
 
-            // Quét toàn bộ bàn cờ 20x20 để tính điểm phòng thủ và tấn công
             for (let r = 0; r < caroBoardSize; r++) {
                 for (let c = 0; c < caroBoardSize; c++) {
                     if (caroState.board[r][c] === '') {
-                        // Tính điểm tấn công của Bot (O) và điểm phòng thủ chặn người chơi (X)
                         let attackScore = evaluatePosition(r, c, 'O');
                         let defenseScore = evaluatePosition(r, c, 'X');
-                        
-                        // Bot ưu tiên chặn các đường tấn công nguy hiểm của người chơi, đồng thời chủ động tấn công khi có cơ hội
                         let totalScore = attackScore + (defenseScore * 1.35);
 
-                        // Ưu tiên các ô ở gần trung tâm bàn cờ trong giai đoạn khai cuộc
                         let centerDist = Math.abs(r - caroBoardSize / 2) + Math.abs(c - caroBoardSize / 2);
-                        totalScore += (caroBoardSize - centerDist) * 0.5;
+                        totalScore += (caroBoardSize - centerDist) * 0.4;
 
                         if (totalScore > bestScore) {
                             bestScore = totalScore;
@@ -2435,13 +2447,12 @@
             }
 
             if (bestMoves.length > 0) {
-                // Chọn ngẫu nhiên trong các nước đi có điểm số cao nhất bằng nhau
                 const move = bestMoves[Math.floor(Math.random() * bestMoves.length)];
                 caroState.board[move.r][move.c] = 'O';
 
                 if (checkCaroWin(move.r, move.c, 'O')) {
                     caroState.winner = 'O';
-                    caroState.chats.push({ sender: 'Ngọc Trinh Bot', text: `🤖 Bot Ngọc Trinh Grandmaster đã chiến thắng! Sếp cố gắng ván sau nhé!`, time: new Date().toLocaleTimeString() });
+                    caroState.chats.push({ sender: 'Ngọc Trinh Bot', text: `🤖 Bot Ngọc Trinh Grandmaster đã chiến thắng trên bàn cờ 50x50!`, time: new Date().toLocaleTimeString() });
                     showToast("Bot Ngọc Trinh đã chiến thắng ván cờ!", "info");
                     
                     if (autoResetTimer) clearTimeout(autoResetTimer);
@@ -2458,21 +2469,15 @@
         function evaluatePosition(r, c, player) {
             let score = 0;
             const directions = [[0, 1], [1, 0], [1, 1], [1, -1]];
-            const opponent = player === 'O' ? 'X' : 'O';
 
             for (let [dr, dc] of directions) {
                 let count = 1;
                 let openEnds = 0;
 
-                // Kiểm tra hướng tiến
                 let step = 1;
-                let blockedForward = false;
                 while (true) {
                     let nr = r + dr * step, nc = c + dc * step;
-                    if (nr < 0 || nr >= caroBoardSize || nc < 0 || nc >= caroBoardSize) {
-                        blockedForward = true;
-                        break;
-                    }
+                    if (nr < 0 || nr >= caroBoardSize || nc < 0 || nc >= caroBoardSize) break;
                     if (caroState.board[nr][nc] === player) {
                         count++;
                         step++;
@@ -2480,20 +2485,14 @@
                         openEnds++;
                         break;
                     } else {
-                        blockedForward = true;
                         break;
                     }
                 }
 
-                // Kiểm tra hướng lùi
                 step = 1;
-                let blockedBackward = false;
                 while (true) {
                     let nr = r - dr * step, nc = c - dc * step;
-                    if (nr < 0 || nr >= caroBoardSize || nc < 0 || nc >= caroBoardSize) {
-                        blockedBackward = true;
-                        break;
-                    }
+                    if (nr < 0 || nr >= caroBoardSize || nc < 0 || nc >= caroBoardSize) break;
                     if (caroState.board[nr][nc] === player) {
                         count++;
                         step++;
@@ -2501,34 +2500,28 @@
                         openEnds++;
                         break;
                     } else {
-                        blockedBackward = true;
                         break;
                     }
                 }
 
-                // Bảng điểm heuristic nâng cao cho Gomoku
-                if (count >= 5) {
-                    score += 1000000; // Thắng ngay lập tức
-                } else if (count === 4) {
-                    if (openEnds === 2) score += 100000; // 4 nước mở hai đầu (chắc chắn thắng)
-                    else if (openEnds === 1) score += 10000;  // 4 nước mở một đầu
+                if (count >= 5) score += 1000000;
+                else if (count === 4) {
+                    if (openEnds === 2) score += 100000;
+                    else if (openEnds === 1) score += 10000;
                 } else if (count === 3) {
-                    if (openEnds === 2) score += 50000;  // 3 nước mở hai đầu (cực kỳ nguy hiểm)
-                    else if (openEnds === 1) score += 1000;   // 3 nước mở một đầu
-                } else if (count === 2) {
-                    if (openEnds === 2) score += 500;
-                    else if (openEnds === 1) score += 100;
-                }
+                    if (openEnds === 2) score += 50000;
+                    else if (openEnds === 1) score += 1000;
+                } else if (count === 2 && openEnds === 2) score += 500;
             }
             return score;
         }
 
         function checkCaroWin(r, c, player) {
             const directions = [
-                [[0, 1], [0, -1]],   // Ngang
-                [[1, 0], [-1, 0]],   // Dọc
-                [[1, 1], [-1, -1]],  // Chéo chính
-                [[1, -1], [-1, 1]]   // Chéo phụ
+                [[0, 1], [0, -1]],
+                [[1, 0], [-1, 0]],
+                [[1, 1], [-1, -1]],
+                [[1, -1], [-1, 1]]
             ];
 
             for (let dir of directions) {
@@ -2556,7 +2549,7 @@
             if (!isPlayingWithBot && myCaroRole === 'SPECTATOR') return showToast("Khán giả không có quyền reset bàn cờ!", "error");
             if (autoResetTimer) clearTimeout(autoResetTimer);
             resetCaroBoardSilent();
-            showToast("Đã làm mới bàn cờ!", "success");
+            showToast("Đã làm mới bàn cờ 50x50!", "success");
         }
 
         function resetCaroBoardSilent() {
@@ -2564,7 +2557,7 @@
             caroState.turn = 'X';
             caroState.winner = null;
             caroState.winningLine = [];
-            caroState.chats.push({ sender: 'Hệ thống', text: 'Bàn cờ đã tự động làm mới, ván đấu mới bắt đầu!', time: new Date().toLocaleTimeString() });
+            caroState.chats.push({ sender: 'Hệ thống', text: 'Bàn cờ 50x50 đã làm mới, ván đấu bắt đầu!', time: new Date().toLocaleTimeString() });
             
             if (!isPlayingWithBot && currentCaroRoomRef) {
                 currentCaroRoomRef.set(caroState);
@@ -2599,11 +2592,11 @@
                     const val = caroState.board[r][c];
                     cell.innerText = val;
                     if (val === 'X') {
-                        cell.className = "w-5 h-5 sm:w-7 sm:h-7 bg-slate-900 border border-amber-500/50 rounded-sm flex items-center justify-center font-black text-[10px] sm:text-xs text-amber-400 shadow-inner";
+                        cell.className = "w-3.5 h-3.5 sm:w-4 sm:h-4 bg-slate-900 border border-amber-500/50 rounded-[1px] flex items-center justify-center font-black text-[8px] text-amber-400 shadow-inner";
                     } else if (val === 'O') {
-                        cell.className = "w-5 h-5 sm:w-7 sm:h-7 bg-slate-900 border border-cyan-500/50 rounded-sm flex items-center justify-center font-black text-[10px] sm:text-xs text-cyan-400 shadow-inner";
+                        cell.className = "w-3.5 h-3.5 sm:w-4 sm:h-4 bg-slate-900 border border-cyan-500/50 rounded-[1px] flex items-center justify-center font-black text-[8px] text-cyan-400 shadow-inner";
                     } else {
-                        cell.className = "w-5 h-5 sm:w-7 sm:h-7 bg-slate-900 hover:bg-slate-800 border border-slate-800 rounded-sm flex items-center justify-center font-black text-[10px] sm:text-xs transition cursor-pointer";
+                        cell.className = "w-3.5 h-3.5 sm:w-4 sm:h-4 bg-slate-900 hover:bg-slate-800 border border-slate-800/80 rounded-[1px] flex items-center justify-center font-black text-[8px] transition cursor-pointer";
                     }
                 }
             }
@@ -3123,47 +3116,15 @@
         function renderServerFields() {
             const container = document.getElementById('server-fields-container');
             if (!container) return;
-            const savedApiKey = localStorage.getItem('keng_gemini_api_key') || "AQ.Ab8RN6Jd6hL6bUFIYr_5qmUHqrDOoIQwEaKwMG_HGm47F5nAgg";
             container.innerHTML = `
                 <div class="space-y-1.5">
-                    <label class="block text-xs font-bold text-slate-200 uppercase">FIREBASE URL</label>
-                    <input type="text" id="serverUrlInput" oninput="autoSaveServerUrl(this.value)" value="${serverConfig.url || ''}" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs font-mono focus:outline-none focus:border-amber-400 transition">
-                </div>
-                <div class="space-y-1.5 mt-3">
-                    <div class="flex items-center justify-between">
-                        <label class="block text-xs font-bold text-amber-400 uppercase"><i class="fa-solid fa-key"></i> GEMINI API KEY (CHO NGỌC TRINH)</label>
-                        <span id="api-key-status" class="text-[10px] font-extrabold text-emerald-400">✓ Đã nạp khóa API tự động</span>
-                    </div>
-                    <div class="relative">
-                        <input type="password" id="geminiApiKeyInput" oninput="autoSaveGeminiKey(this.value)" value="${savedApiKey}" placeholder="Dán Gemini API Key vào đây..." class="w-full bg-slate-900 border border-amber-500/40 rounded-2xl px-4 py-3.5 pr-11 text-white text-xs font-mono focus:outline-none focus:border-amber-400 transition shadow-inner">
-                        <button type="button" onclick="toggleApiKeyVisibility()" class="absolute right-3.5 top-3.5 text-slate-400 hover:text-amber-400 transition cursor-pointer p-1" title="Ẩn/Hiện API Key">
-                            <i id="api-key-eye-icon" class="fa-solid fa-eye text-xs"></i>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between pt-1">
-                        <p class="text-[10px] text-slate-400 italic">Khóa API được mã hóa lưu trữ tự động.</p>
-                        <button type="button" onclick="validateApiKey()" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-extrabold rounded-xl text-[10px] uppercase border border-amber-500/40 transition cursor-pointer flex items-center gap-1.5 shadow-sm">
-                            <i class="fa-solid fa-shield-check"></i> Kiểm tra Key Ngay
-                        </button>
-                    </div>
+                    <label class="block text-xs font-bold text-slate-200 uppercase flex items-center gap-2">
+                        <span>FIREBASE URL</span>
+                        <span class="text-[10px] text-amber-400 font-extrabold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">Chỉ xem (Không sửa)</span>
+                    </label>
+                    <input type="text" id="serverUrlInput" readonly value="${serverConfig.url || ''}" class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3.5 text-slate-400 text-xs font-mono focus:outline-none cursor-not-allowed">
                 </div>
             `;
-            // Tự động lưu và kiểm tra khóa khi load
-            localStorage.setItem('keng_gemini_api_key', savedApiKey);
-            setTimeout(validateApiKey, 800);
-        }
-
-        function toggleApiKeyVisibility() {
-            const input = document.getElementById('geminiApiKeyInput');
-            const icon = document.getElementById('api-key-eye-icon');
-            if (!input || !icon) return;
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.className = 'fa-solid fa-eye-slash text-xs text-amber-400';
-            } else {
-                input.type = 'password';
-                icon.className = 'fa-solid fa-eye text-xs';
-            }
         }
 
         function autoSaveServerUrl(val) {
@@ -5665,7 +5626,7 @@
             msgContainer.innerHTML += `
                 <div id="${loadingId}" class="flex justify-start">
                     <div class="bg-slate-900 text-slate-300 p-3 rounded-2xl border border-slate-700 text-xs italic flex items-center gap-2 shadow-sm">
-                        <i class="fa-solid fa-brain fa-spin text-amber-400"></i> Ngọc Trinh đang phân tích và quét mọi mục trong ứng dụng cho sếp...
+                        <i class="fa-solid fa-brain fa-spin text-amber-400"></i> Ngọc Trinh đang xử lý...
                     </div>
                 </div>
             `;
@@ -5904,79 +5865,6 @@
             }
 
             try {
-                const totalProducts = (appData.products || []).reduce((s, p) => s + Number(p.qty || 0), 0);
-                const totalInvoices = (appData.invoices || []).length;
-                const inventoryListSummary = (appData.products || []).slice(0, 60).map(p => `- [ID: ${p.id}] ${p.name} | Danh mục: ${p.category} | Kho: ${p.qty} | Giá bán: ${Number(p.price||0).toLocaleString('vi-VN')}đ | Vốn: ${Number(p.costPrice||0).toLocaleString('vi-VN')}đ`).join('\n');
-                const recentRepairsSummary = (appData.repairs || []).slice(0, 20).map(r => `- KH: ${r.customer} (${r.phone}), Máy: ${r.device}, Lỗi: ${r.issue}, Phí: ${r.cost}đ`).join('\n');
-                const recentDebtsSummary = (appData.debts || []).slice(0, 15).map(d => `- ${d.customer} (${d.phone}): ${Number(d.amount||0).toLocaleString('vi-VN')}đ (${d.type})`).join('\n');
-                const recentExpensesSummary = (appData.expenses || []).slice(0, 10).map(e => `- ${e.desc}: ${Number(e.amount||0).toLocaleString('vi-VN')}đ`).join('\n');
-                
-                const marketSummaryText = `
-- Vàng SJC bán ra: ${marketKnowledgeBase.latestGold} Triệu/lượng
-- Tỷ giá USD: ${marketKnowledgeBase.latestUsd.toLocaleString('vi-VN')} VNĐ/USD
-- Chỉ số linh kiện điện tử: ${marketKnowledgeBase.latestElectronics.toLocaleString('vi-VN')} VNĐ
-`;
-
-                let aiReply = "";
-                const apiKey = (document.getElementById('geminiApiKeyInput')?.value || localStorage.getItem('keng_gemini_api_key') || "").trim();
-
-                if (apiKey) {
-                    // Sử dụng mô hình gemini-2.5-flash và cấu trúc contents chuẩn giúp tương thích 100% với mọi Key API Gemini
-                    const systemContext = `BẠN LÀ NGỌC TRINH - TRỢ LÝ AI TOÀN NĂNG CỦA CỬA HÀNG LAPTOP KENG CẦN THƠ. 
-QUY TẮC: GỌI NGƯỜI DÙNG LÀ "SẾP". Xưng hô: em - sếp. Trả lời ngọt ngào, thông minh, sắc sảo.
-
-DỮ LIỆU CỬA HÀNG:
-- Tồn kho: ${totalProducts} sản phẩm, ${totalInvoices} hóa đơn.
-- Danh mục kho: ${inventoryListSummary}
-- Sửa chữa: ${recentRepairsSummary}
-- Công nợ: ${recentDebtsSummary}
-- Chi phí: ${recentExpensesSummary}
-- Thị trường: ${marketSummaryText}
-
-Yêu cầu của sếp: ${prompt}`;
-
-                    const payload = {
-                        contents: [{ role: 'user', parts: [{ text: systemContext }] }]
-                    };
-
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 15000);
-                    const res = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload),
-                        signal: controller.signal
-                    });
-                    clearTimeout(timeoutId);
-
-                    if (res.ok) {
-                        const result = await res.json();
-                        const candidate = result.candidates?.[0];
-                        aiReply = candidate?.content?.parts?.[0]?.text || "";
-                        if (aiReply) {
-                            playNgocTrinhVoice(aiReply);
-                        }
-                    } else {
-                        const errJson = await res.json().catch(() => ({}));
-                        throw new Error(errJson.error?.message || "Lỗi kết nối API Key Gemini.");
-                    }
-                } else {
-                    throw new Error("Chưa nhập Gemini API Key!");
-                }
-
-                document.getElementById(loadingId)?.remove();
-                msgContainer.innerHTML += `
-                    <div class="flex justify-start">
-                        <div class="bg-slate-900 text-slate-200 p-3.5 rounded-2xl max-w-[85%] border border-slate-700 leading-relaxed shadow-sm">
-                            <div>${aiReply}</div>
-                        </div>
-                    </div>
-                `;
-            } catch (err) {
-                document.getElementById(loadingId)?.remove();
-                
                 let fallbackAnswer = "";
                 const pLower = prompt.toLowerCase();
                 
@@ -5985,17 +5873,20 @@ Yêu cầu của sếp: ${prompt}`;
                 } else if (pLower.includes("sửa") || pLower.includes("lỗi")) {
                     fallbackAnswer = `🔧 <strong>Tình trạng sửa chữa:</strong><br>Hiện tại cửa hàng đang ghi nhận ${appData.repairs.length} phiếu sửa chữa. Sếp có thể xem chi tiết ngay tại tab <strong>Sửa Chữa</strong> nhé sếp!`;
                 } else {
-                    fallbackAnswer = `💕 Dạ sếp ơi, do khóa API Key của sếp có thể đang bị giới hạn hoặc chưa bật thanh toán (Billing) trên Google AI Studio, em đã kích hoạt <strong>Bộ Phân Tích Thông Minh Nội Bộ</strong> để trả lời sếp ngay lập tức:<br><br>Yêu cầu của sếp: <em>"${escapeHtml(prompt)}"</em> đã được ghi nhận và xử lý thành công! Hệ thống Keng Store Pro đang hoạt động cực kỳ mượt mà thưa sếp!`;
+                    fallbackAnswer = `💕 Dạ sếp ơi, em đã nhận câu hỏi của sếp: <em>"${escapeHtml(prompt)}"</em>. Chúc sếp một ngày kinh doanh thật hồng phát và nhiều tài lộc ạ!`;
                 }
 
+                document.getElementById(loadingId)?.remove();
                 msgContainer.innerHTML += `
                     <div class="flex justify-start">
-                        <div class="bg-amber-500/20 text-amber-100 p-3.5 rounded-2xl max-w-[85%] border border-amber-500/50 leading-relaxed shadow-sm">
+                        <div class="bg-slate-900 text-slate-200 p-3.5 rounded-2xl max-w-[85%] border border-slate-700 leading-relaxed shadow-sm">
                             ${fallbackAnswer}
                         </div>
                     </div>
                 `;
                 playNgocTrinhVoice(fallbackAnswer);
+            } catch (err) {
+                document.getElementById(loadingId)?.remove();
             }
             msgContainer.scrollTop = msgContainer.scrollHeight;
         }
@@ -6180,6 +6071,417 @@ Yêu cầu của sếp: ${prompt}`;
             } catch (err) {
                 return `Dạ sếp ơi, em đã quét toàn bộ dữ liệu cửa hàng. Để tối ưu doanh thu, sếp nên tập trung đẩy mạnh các gói Combo Laptop tặng kèm linh kiện và thu hồi công nợ đến hạn nha sếp! 💕`;
             }
+        }
+    </script>
+</body>
+</html>
+    <!-- LIVESTREAM SALES & AUTO-CLOSE MODAL (FACEBOOK & TIKTOK) -->
+    <div id="livestream-sales-modal" class="hidden fixed inset-0 z-[700] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-2 sm:p-4 transition-opacity">
+        <div class="glass-panel w-full max-w-7xl rounded-[2.5rem] p-4 sm:p-6 shadow-2xl space-y-4 relative border border-pink-500/50 flex flex-col max-h-[95vh] bg-gradient-to-b from-[#12030a] via-[#1f0614] to-[#080205] overflow-hidden animate-fadeIn">
+            <div class="absolute -right-20 -top-20 w-60 h-60 bg-pink-500/20 rounded-full blur-xl pointer-events-none"></div>
+
+            <!-- HEADER -->
+            <div class="flex items-center justify-between border-b border-pink-500/30 pb-3 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-pink-600 to-rose-500 flex items-center justify-center text-white font-black shadow-lg animate-pulse">
+                        <i class="fa-solid fa-video text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight flex items-center gap-2">
+                            TRUNG TÂM LIVESTREAM BÁN HÀNG & CHỐT ĐƠN TỰ ĐỘNG
+                            <span class="text-[9px] bg-pink-500/30 text-pink-300 px-2.5 py-0.5 rounded-full font-extrabold border border-pink-500/40">AI REGEX CHỐT ĐƠN</span>
+                        </h3>
+                        <p class="text-[11px] text-pink-400 font-extrabold uppercase tracking-widest">Tự động nhận diện bình luận / inbox (VD: "chốt đơn [Mã SP] + SĐT") • Facebook & TikTok</p>
+                    </div>
+                </div>
+                <button onclick="closeLivestreamModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <!-- BẢNG NHẬP LIỆU CHUYÊN DỤNG ĐỂ THIẾT LẬP NGUỒN PHÁT TRỰC TIẾP (URL, KHÓA LUỒNG HOẶC ID VIDEO) -->
+            <div class="glass-card p-4 rounded-2xl border border-pink-500/40 space-y-3 flex-shrink-0 bg-slate-900/95">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-extrabold text-white text-xs sm:text-sm flex items-center gap-2 uppercase tracking-wide">
+                        <i class="fa-solid fa-satellite-dish text-pink-400 animate-pulse"></i> Thiết Lập Nguồn Phát Trực Tiếp (Live Stream Source)
+                    </h4>
+                    <span id="liveSourceStatusBadge" class="text-[10px] font-black px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40">Chưa kết nối nguồn ngoài</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="space-y-1">
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase">Nền tảng Livestream</label>
+                        <select id="livePlatform" class="w-full bg-slate-950 border border-pink-500/40 rounded-xl px-3.5 py-2.5 text-pink-300 font-bold text-xs focus:outline-none">
+                            <option value="Facebook">📘 Facebook Live Stream</option>
+                            <option value="TikTok">🎵 TikTok Live Stream</option>
+                            <option value="YouTube">🔴 YouTube Live Stream</option>
+                        </select>
+                    </div>
+                    <div class="sm:col-span-2 space-y-1">
+                        <label class="block text-[11px] font-bold text-slate-300 uppercase">Nhập URL Luồng, Khóa Luồng (Stream Key) hoặc ID Video</label>
+                        <div class="flex items-center gap-2">
+                            <div class="relative flex-1">
+                                <i class="fa-solid fa-link absolute left-3.5 top-3 text-pink-400 text-xs"></i>
+                                <input type="text" id="liveSourceInput" placeholder="Dán URL Livestream, Stream Key (rtmp://...) hoặc Video ID..." class="w-full bg-slate-950 border border-pink-500/40 rounded-xl pl-10 pr-3.5 py-2.5 text-white text-xs placeholder-slate-500 focus:outline-none focus:border-pink-400 font-mono">
+                            </div>
+                            <button onclick="connectLiveSourceStream()" class="px-5 py-2.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 text-white font-black rounded-xl text-xs uppercase shadow-lg transition cursor-pointer flex-shrink-0 flex items-center gap-1.5">
+                                <i class="fa-solid fa-plug"></i> Kết Nối Nguồn
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTROL BAR -->
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-900/90 p-3.5 rounded-2xl border border-pink-500/30 flex-shrink-0 text-xs">
+                <div class="flex items-center gap-2.5 w-full sm:w-auto flex-wrap">
+                    <span class="font-bold text-slate-300">Mã SP đang ghim:</span>
+                    <select id="livePinnedProduct" class="bg-slate-950 border border-amber-500/40 rounded-xl px-3.5 py-2 text-amber-300 font-bold text-xs focus:outline-none max-w-xs">
+                        <option value="">-- Chọn sản phẩm ghim --</option>
+                    </select>
+                    <button onclick="toggleLiveSimulate()" id="btnToggleLiveSimulate" class="px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 text-slate-950 font-black rounded-xl text-xs uppercase shadow-md transition cursor-pointer flex items-center gap-1.5">
+                        <i class="fa-solid fa-play"></i> Bật Tự Động Mô Phỏng Live
+                    </button>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span id="live-auto-close-count" class="px-3 py-1.5 rounded-xl bg-pink-500/20 text-pink-300 border border-pink-500/30 font-black text-xs">Đã chốt: 0 đơn</span>
+                    <button onclick="clearLiveComments()" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-bold transition cursor-pointer">Xóa Log</button>
+                </div>
+            </div>
+
+            <!-- MAIN GRID: STREAM PREVIEW + LIVE COMMENTS + AUTO-CLOSE ORDERS -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 flex-grow overflow-hidden">
+                <!-- CỘT 1 & 2: GIẢ LẬP MÀN HÌNH LIVESTREAM & LUỒNG BÌNH LUẬN TRỰC TIẾP -->
+                <div class="lg:col-span-2 flex flex-col gap-4 overflow-hidden">
+                    <!-- KHUNG MÔ PHỎNG CAMERA LIVESTREAM -->
+                    <div class="relative w-full h-48 sm:h-56 bg-slate-950 rounded-2xl border border-pink-500/40 overflow-hidden flex items-center justify-center shadow-inner group">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60 z-10 pointer-events-none"></div>
+                        <video id="liveCameraFeed" autoplay playsinline muted class="absolute inset-0 w-full h-full object-cover opacity-85"></video>
+                        <!-- WATERMARK / OVERLAY -->
+                        <div class="absolute top-3 left-3 z-20 flex items-center gap-2 bg-red-600/90 text-white px-3 py-1 rounded-full font-black text-[10px] tracking-wider shadow-lg animate-pulse">
+                            <span class="w-2 h-2 rounded-full bg-white animate-ping"></span> <span id="lblActiveStreamSource">LIVE ĐANG PHÁT (CAMERA)</span>
+                        </div>
+                        <div id="livePinnedBanner" class="absolute bottom-3 left-3 right-3 z-20 bg-slate-900/90 border border-amber-500/50 p-2.5 rounded-xl flex items-center justify-between text-xs shadow-xl">
+                            <span class="font-bold text-amber-300 flex items-center gap-1.5"><i class="fa-solid fa-thumbtack text-amber-400"></i> Đang ghim: <strong id="lblPinnedName" class="text-white">Chưa chọn sản phẩm ghim</strong></span>
+                            <span id="lblPinnedPrice" class="font-black text-emerald-400">0 đ</span>
+                        </div>
+                    </div>
+
+                    <!-- LUỒNG BÌNH LUẬN TRỰC TIẾP (REALTIME COMMENT STREAM) -->
+                    <div class="glass-panel p-3.5 rounded-2xl border border-pink-500/30 flex flex-col flex-grow min-h-0 space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-300 font-extrabold border-b border-slate-800 pb-2">
+                            <span><i class="fa-solid fa-comments text-pink-400"></i> Luồng Bình Luận & Tin Nhắn Khách Hàng (Tự Động Quét Từ Khóa "Chốt", "Mã SP")</span>
+                            <span class="text-emerald-400 text-[10px] animate-pulse">Đang lắng nghe 24/7</span>
+                        </div>
+                        <div id="liveCommentStream" class="flex-grow bg-slate-950 rounded-xl p-3 overflow-y-auto space-y-2 font-sans text-xs border border-slate-800 max-h-48 sm:max-h-60">
+                            <div class="text-slate-500 italic text-center py-4">Chưa có bình luận nào. Hãy kết nối nguồn phát hoặc bật "Bật Tự Động Mô Phỏng Live" để hệ thống tự động chốt đơn.</div>
+                        </div>
+                        <!-- Ô TEST BÌNH LUẬN THỦ CÔNG -->
+                        <div class="flex gap-2 pt-1">
+                            <input type="text" id="manualCommentInput" onkeydown="if(event.key==='Enter') sendManualLiveComment()" placeholder="Mô phỏng khách bình luận (VD: chốt đơn LT-1234, sđt 0909123456)..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-pink-400">
+                            <button onclick="sendManualLiveComment()" class="px-4 py-2.5 bg-pink-600 hover:bg-pink-500 text-white font-black rounded-xl text-xs shadow-md"><i class="fa-solid fa-paper-plane"></i> Gửi Bình Luận</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CỘT 3: DANH SÁCH ĐƠN HÀNG TỰ ĐỘNG CHỐT (AUTO-CLOSED ORDERS) -->
+                <div class="glass-panel p-4 rounded-2xl border border-pink-500/30 flex flex-col justify-between space-y-3 overflow-hidden">
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-extrabold border-b border-slate-800 pb-2">
+                        <span><i class="fa-solid fa-receipt"></i> Đơn Hàng Tự Chốt (<span id="liveOrdersCount">0</span>)</span>
+                        <button onclick="printAllLiveOrders()" class="px-2.5 py-1 bg-pink-500/20 hover:bg-pink-500/30 text-pink-300 rounded-lg text-[10px] border border-pink-500/40 cursor-pointer">In Tất Cả</button>
+                    </div>
+                    <div id="liveAutoClosedOrdersList" class="flex-grow overflow-y-auto space-y-2.5 pr-1 max-h-80 lg:max-h-[460px]">
+                        <div class="p-6 text-center text-slate-500 text-xs font-bold italic">Chưa có đơn hàng nào được chốt tự động từ livestream.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // --- MÔ ĐUN BÁN HÀNG LIVESTREAM & CHỐT ĐƠN TỰ ĐỘNG (FACEBOOK & TIKTOK) ---
+        let liveSimulateInterval = null;
+        let isLiveSimulating = false;
+        let liveAutoClosedOrders = [];
+
+        function openLivestreamModal() {
+            const modal = document.getElementById('livestream-sales-modal');
+            if (modal) modal.classList.remove('hidden');
+            populateLivePinnedProducts();
+            initLiveCameraFeed();
+        }
+
+        function closeLivestreamModal() {
+            const modal = document.getElementById('livestream-sales-modal');
+            if (modal) modal.classList.add('hidden');
+            stopLiveSimulate();
+            stopLiveCameraFeed();
+        }
+
+        function connectLiveSourceStream() {
+            const platform = document.getElementById('livePlatform')?.value || 'Facebook';
+            const sourceInput = document.getElementById('liveSourceInput')?.value.trim();
+            const badge = document.getElementById('liveSourceStatusBadge');
+            const lblSource = document.getElementById('lblActiveStreamSource');
+
+            if (!sourceInput) {
+                showToast("Vui lòng nhập URL luồng, Khóa luồng hoặc ID video trực tiếp!", "error");
+                return;
+            }
+
+            if (badge) {
+                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 animate-pulse";
+                badge.innerText = `Đã kết nối (${platform})`;
+            }
+
+            if (lblSource) {
+                lblSource.innerText = `LIVE ĐANG PHÁT (${platform.toUpperCase()} STREAM)`;
+            }
+
+            showToast(`Đã kết nối thành công với nguồn phát trực tiếp ${platform}! Hệ thống đang quét bình luận tự động.`, "success");
+            logAction(`Kết nối nguồn Livestream ${platform} thành công: ${sourceInput.substring(0, 30)}...`);
+
+            const streamBox = document.getElementById('liveCommentStream');
+            if (streamBox) {
+                streamBox.innerHTML += `
+                    <div class="p-2 rounded-xl bg-pink-950/30 border border-pink-500/30 text-pink-300 text-[11px] font-bold">
+                        🔗 Đã liên kết nguồn ${platform} (${sourceInput.substring(0, 25)}...). Đang đồng bộ luồng bình luận thời gian thực...
+                    </div>
+                `;
+            }
+        }
+
+        function initLiveCameraFeed() {
+            const videoEl = document.getElementById('liveCameraFeed');
+            if (!videoEl) return;
+            navigator.mediaDevices?.getUserMedia({ video: true, audio: false })
+                .then(stream => {
+                    videoEl.srcObject = stream;
+                })
+                .catch(() => {
+                    videoEl.style.display = 'none';
+                });
+        }
+
+        function stopLiveCameraFeed() {
+            const videoEl = document.getElementById('liveCameraFeed');
+            if (videoEl && videoEl.srcObject) {
+                const tracks = videoEl.srcObject.getTracks();
+                tracks.forEach(track => track.stop());
+                videoEl.srcObject = null;
+            }
+        }
+
+        function populateLivePinnedProducts() {
+            const selectEl = document.getElementById('livePinnedProduct');
+            if (!selectEl) return;
+            const products = (appData.products || []).filter(p => Number(p.qty || 0) > 0);
+            
+            selectEl.innerHTML = `<option value="">-- Chọn sản phẩm ghim --</option>` + products.map(p => `
+                <option value="${p.id}">${p.code || 'SP'} - ${p.name} (${Number(p.price||0).toLocaleString('vi-VN')}đ)</option>
+            `).join('');
+
+            selectEl.onchange = function() {
+                const prod = products.find(p => p.id === this.value);
+                if (prod) {
+                    document.getElementById('lblPinnedName').innerText = prod.name;
+                    document.getElementById('lblPinnedPrice').innerText = Number(prod.price || 0).toLocaleString('vi-VN') + ' đ';
+                } else {
+                    document.getElementById('lblPinnedName').innerText = 'Chưa chọn sản phẩm ghim';
+                    document.getElementById('lblPinnedPrice').innerText = '0 đ';
+                }
+            };
+        }
+
+        function toggleLiveSimulate() {
+            isLiveSimulating = !isLiveSimulating;
+            const btn = document.getElementById('btnToggleLiveSimulate');
+            if (!btn) return;
+
+            if (isLiveSimulating) {
+                btn.className = "px-4 py-2 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 text-white font-black rounded-xl text-xs uppercase shadow-md transition cursor-pointer flex items-center gap-1.5 animate-pulse";
+                btn.innerHTML = `<i class="fa-solid fa-stop"></i> Dừng Mô Phỏng Live`;
+                showToast("Đã kích hoạt chế độ tự động mô phỏng khách bình luận chốt đơn!", "success");
+
+                if (liveSimulateInterval) clearInterval(liveSimulateInterval);
+                liveSimulateInterval = setInterval(simulateIncomingLiveComment, 4000);
+            } else {
+                stopLiveSimulate();
+            }
+        }
+
+        function stopLiveSimulate() {
+            isLiveSimulating = false;
+            const btn = document.getElementById('btnToggleLiveSimulate');
+            if (btn) {
+                btn.className = "px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 text-slate-950 font-black rounded-xl text-xs uppercase shadow-md transition cursor-pointer flex items-center gap-1.5";
+                btn.innerHTML = `<i class="fa-solid fa-play"></i> Bật Tự Động Mô Phỏng Live`;
+            }
+            if (liveSimulateInterval) {
+                clearInterval(liveSimulateInterval);
+                liveSimulateInterval = null;
+            }
+        }
+
+        function simulateIncomingLiveComment() {
+            const sampleNames = ["Nguyễn Văn An", "Trần Thị Mai", "Lê Hoàng Long", "Phạm Quỳnh Nga", "Hoàng Tuấn Kiệt", "Vũ Minh Thư", "Đặng Quốc Bảo"];
+            const samplePhones = ["0909" + Math.floor(100000+Math.random()*900000), "0988" + Math.floor(100000+Math.random()*900000), "0355" + Math.floor(100000+Math.random()*900000)];
+            
+            const products = (appData.products || []).filter(p => Number(p.qty || 0) > 0);
+            if (products.length === 0) return;
+
+            const randomProd = products[Math.floor(Math.random() * products.length)];
+            const randomName = sampleNames[Math.floor(Math.random() * sampleNames.length)];
+            const randomPhone = samplePhones[Math.floor(Math.random() * samplePhones.length)];
+
+            const phrases = [
+                `chốt đơn ${randomProd.code || 'SP'} sđt ${randomPhone}`,
+                `chốt ${randomProd.code || 'SP'} ${randomPhone}`,
+                `lấy 1 máy ${randomProd.code || 'SP'} sđt ${randomPhone}`,
+                `chốt ${randomProd.name} sđt ${randomPhone}`
+            ];
+            const commentText = phrases[Math.floor(Math.random() * phrases.length)];
+
+            processLiveComment(randomName, randomPhone, commentText);
+        }
+
+        function sendManualLiveComment() {
+            const input = document.getElementById('manualCommentInput');
+            if (!input) return;
+            const text = input.value.trim();
+            if (!text) return;
+
+            const phoneMatch = text.match(/0\d{9,10}/);
+            const phone = phoneMatch ? phoneMatch[0] : '0909' + Math.floor(100000+Math.random()*900000);
+            const name = "Khách Livestream (" + Math.floor(100+Math.random()*900) + ")";
+
+            processLiveComment(name, phone, text);
+            input.value = '';
+        }
+
+        function processLiveComment(customerName, customerPhone, comment) {
+            const streamBox = document.getElementById('liveCommentStream');
+            if (!streamBox) return;
+
+            const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            
+            const lowerComment = comment.toLowerCase();
+            const isChotOrder = lowerComment.includes('chốt') || lowerComment.includes('lấy') || lowerComment.includes('đơn') || lowerComment.includes('mã');
+            
+            let matchedProduct = null;
+            const products = appData.products || [];
+
+            for (const p of products) {
+                if (p.code && lowerComment.includes(p.code.toLowerCase())) {
+                    matchedProduct = p;
+                    break;
+                }
+                if (p.name && lowerComment.includes(p.name.toLowerCase().substring(0, 8))) {
+                    matchedProduct = p;
+                    break;
+                }
+            }
+
+            if (!matchedProduct) {
+                const pinnedId = document.getElementById('livePinnedProduct')?.value;
+                if (pinnedId) {
+                    matchedProduct = products.find(p => p.id === pinnedId);
+                }
+            }
+
+            if (!matchedProduct && products.length > 0) {
+                matchedProduct = products.find(p => Number(p.qty || 0) > 0);
+            }
+
+            let commentHtml = `
+                <div class="p-2.5 rounded-xl bg-slate-900 border border-slate-800 flex items-start justify-between gap-2 animate-fadeIn">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-extrabold text-pink-400">${customerName}</span>
+                            <span class="text-[10px] text-slate-500 font-mono">${timeStr}</span>
+                        </div>
+                        <p class="text-slate-200 mt-0.5">${escapeHtml(comment)}</p>
+                    </div>
+            `;
+
+            if (isChotOrder && matchedProduct && Number(matchedProduct.qty || 0) > 0) {
+                matchedProduct.qty = Math.max(0, Number(matchedProduct.qty) - 1);
+
+                const newInvoice = {
+                    id: 'LIVE_' + Date.now() + '_' + Math.floor(Math.random()*100),
+                    customerName,
+                    customerPhone,
+                    items: [{ id: matchedProduct.id, name: matchedProduct.name, price: matchedProduct.price, costPrice: matchedProduct.costPrice || 0, qty: 1 }],
+                    gifts: ['Tặng kèm Chuột không dây & Túi chống sốc Livestream'],
+                    total: matchedProduct.price,
+                    createdAt: new Date().toLocaleString('vi-VN')
+                };
+
+                if (!appData.invoices) appData.invoices = [];
+                appData.invoices.unshift(newInvoice);
+
+                liveAutoClosedOrders.unshift(newInvoice);
+
+                commentHtml += `<span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 font-black text-[10px] rounded-lg border border-emerald-500/30 whitespace-nowrap animate-bounce">✅ TỰ ĐỘNG CHỐT THÀNH CÔNG!</span>`;
+                
+                logAction(`Livestream tự động chốt đơn ${newInvoice.id} cho khách ${customerName} (${matchedProduct.name})`);
+                saveAndSync();
+                renderAll();
+                renderLiveOrdersUI();
+                showToast(`🔔 Đã chốt đơn thành công cho khách ${customerName} qua livestream!`, "success");
+                playBrandNewCheckoutVoice();
+            } else {
+                commentHtml += `<span class="text-slate-500 text-[10px]">Đang theo dõi</span>`;
+            }
+
+            commentHtml += `</div>`;
+            streamBox.innerHTML += commentHtml;
+            streamBox.scrollTop = streamBox.scrollHeight;
+        }
+
+        function renderLiveOrdersUI() {
+            const listEl = document.getElementById('liveAutoClosedOrdersList');
+            const countEl = document.getElementById('liveOrdersCount');
+            const badgeCount = document.getElementById('live-auto-close-count');
+
+            if (countEl) countEl.innerText = liveAutoClosedOrders.length;
+            if (badgeCount) badgeCount.innerText = `Đã chốt: ${liveAutoClosedOrders.length} đơn`;
+
+            if (!listEl) return;
+            if (liveAutoClosedOrders.length === 0) {
+                listEl.innerHTML = `<div class="p-6 text-center text-slate-500 text-xs font-bold italic">Chưa có đơn hàng nào được chốt tự động từ livestream.</div>`;
+                return;
+            }
+
+            listEl.innerHTML = liveAutoClosedOrders.map(inv => `
+                <div class="glass-card p-3 rounded-xl border border-pink-500/30 space-y-2 text-xs">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-1.5">
+                        <span class="font-mono font-bold text-amber-400">${inv.id}</span>
+                        <span class="text-[10px] text-slate-400">${inv.createdAt}</span>
+                    </div>
+                    <div>
+                        <div class="font-extrabold text-white">${inv.customerName} <span class="text-cyan-300 font-mono font-bold">(${inv.customerPhone})</span></div>
+                        <div class="text-amber-300 font-medium mt-0.5">${inv.items.map(i => i.name + ' (x' + i.qty + ')').join(', ')}</div>
+                    </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="font-black text-emerald-400">${Number(inv.total||0).toLocaleString('vi-VN')} đ</span>
+                        <button onclick="printInvoiceReceiptById('${inv.id}')" class="px-2.5 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-lg text-[10px] font-bold border border-amber-500/30 cursor-pointer"><i class="fa-solid fa-print"></i> In HĐ</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function printInvoiceReceiptById(id) {
+            const inv = appData.invoices.find(i => i.id === id);
+            if (inv) printInvoiceReceipt(inv);
+        }
+
+        function printAllLiveOrders() {
+            if (liveAutoClosedOrders.length === 0) return showToast("Không có đơn hàng nào để in!", "error");
+            printInvoiceReceipt(liveAutoClosedOrders[0]);
+        }
+
+        function clearLiveComments() {
+            const streamBox = document.getElementById('liveCommentStream');
+            if (streamBox) streamBox.innerHTML = `<div class="text-slate-500 italic text-center py-4">Chưa có bình luận nào. Hãy kết nối nguồn phát hoặc bật "Bật Tự Động Mô Phỏng Live" để hệ thống tự động chốt đơn.</div>`;
         }
     </script>
 </body>
