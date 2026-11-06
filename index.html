@@ -655,13 +655,13 @@
                     <button onclick="closeExportModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
                 
-                <!-- THANH CÔNG CỤ TÙY CHỈNH MÁY IN -->
+                <!-- THANH CÔNG CỤ TÙY CHỈNH MÁY IN (CHUẨN A5 VÀ K80) -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-900 p-3.5 rounded-2xl border border-slate-700 text-xs">
                     <div class="space-y-1">
-                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-sliders text-amber-400"></i> Khổ Giấy In Nhiệt / Khổ Lớn:</span>
+                        <span class="font-bold text-slate-300 uppercase block"><i class="fa-solid fa-sliders text-amber-400"></i> Khổ Giấy In Nhiệt / Khổ A5:</span>
                         <div class="flex items-center gap-2">
                             <button onclick="setPrintLayout('k80')" id="btn-layout-k80" class="flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer">Khổ K80 (POS 80mm)</button>
-                            <button onclick="setPrintLayout('a4')" id="btn-layout-a4" class="flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer">Khổ A4 / A5 (Chuẩn)</button>
+                            <button onclick="setPrintLayout('a5')" id="btn-layout-a5" class="flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer">Khổ Giấy A5 (Chuẩn)</button>
                         </div>
                     </div>
                     <div class="space-y-1">
@@ -5393,7 +5393,7 @@
             currentDocumentInfo = docInfo;
             
             buildFinalPrintHTML();
-            setPrintLayout('k80');
+            setPrintLayout('a5'); // Đặt mặc định khởi tạo ở chuẩn khổ giấy A5
             document.getElementById('export-modal').classList.remove('hidden');
         }
 
@@ -5404,11 +5404,9 @@
 
         function buildFinalPrintHTML() {
             let processedHTML = currentBaseHTMLTemplate;
-            // Thay thế hoặc bổ sung footer note tùy chỉnh vào cuối template trước thẻ đóng cuối cùng
             if (processedHTML.includes('id="custom-footer-slot"')) {
                 processedHTML = processedHTML.replace(/<div id="custom-footer-slot">.*?<\/div>/s, `<div id="custom-footer-slot" style="margin-top: 15px; text-align: center; font-size: 11px; font-weight: 700; color: #475569; border-top: 1px dashed #cbd5e1; padding-top: 10px;">${escapeHtml(currentCustomFooterText)}</div>`);
             } else {
-                // Chèn vào trước thẻ đóng cuối
                 const lastDivIdx = processedHTML.lastIndexOf('</div>');
                 if (lastDivIdx !== -1) {
                     const footerSlotHTML = `<div id="custom-footer-slot" style="margin-top: 15px; text-align: center; font-size: 11px; font-weight: 700; color: #475569; border-top: 1px dashed #cbd5e1; padding-top: 10px;">${escapeHtml(currentCustomFooterText)}</div>`;
@@ -5416,7 +5414,7 @@
                 }
             }
 
-            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${window.currentExportFilename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: auto; margin: 5mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style></head><body style="background:#fff; padding:5px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${processedHTML}</body></html>`;
+            window.currentWarrantyExportHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${window.currentExportFilename}</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"><style>@media print { @page { size: A5 portrait; margin: 10mm; } body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }</style></head><body style="background:#fff; padding:10px; font-family:'Plus Jakarta Sans', Arial, sans-serif;">${processedHTML}</body></html>`;
             
             const previewBox = document.getElementById('export-content-preview');
             if (previewBox) previewBox.innerHTML = processedHTML;
@@ -5425,14 +5423,15 @@
         function setPrintLayout(type) {
             const previewBox = document.getElementById('export-content-preview');
             const btnK80 = document.getElementById('btn-layout-k80');
-            const btnA5 = document.getElementById('btn-layout-a4');
+            const btnA5 = document.getElementById('btn-layout-a5');
             
             if (type === 'k80') {
                 if(previewBox) previewBox.style.width = '320px';
                 if(btnK80) btnK80.className = "flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
                 if(btnA5) btnA5.className = "flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
             } else {
-                if(previewBox) previewBox.style.width = '100%';
+                // Khổ giấy A5 tiêu chuẩn
+                if(previewBox) previewBox.style.width = '520px';
                 if(btnA5) btnA5.className = "flex-1 px-3 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer";
                 if(btnK80) btnK80.className = "flex-1 px-3 py-2 rounded-xl font-semibold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer";
             }
