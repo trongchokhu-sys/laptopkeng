@@ -39,42 +39,71 @@
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #030712;
+            background-color: #010308;
             color: #f8fafc;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(245, 158, 11, 0.22) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.18) 0px, transparent 50%),
-                radial-gradient(at 50% 100%, rgba(59, 130, 246, 0.15) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(3, 7, 18, 1) 0px, transparent 100%);
+                radial-gradient(at 15% 10%, rgba(245, 158, 11, 0.35) 0px, transparent 45%),
+                radial-gradient(at 85% 15%, rgba(236, 72, 153, 0.3) 0px, transparent 45%),
+                radial-gradient(at 50% 85%, rgba(6, 182, 212, 0.28) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(168, 85, 247, 0.22) 0px, transparent 45%),
+                radial-gradient(at 50% 50%, rgba(1, 3, 8, 1) 0px, transparent 100%);
             background-attachment: fixed;
             -webkit-tap-highlight-color: transparent;
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: #030712; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #f59e0b, #ec4899); border-radius: 9999px; }
+        ::-webkit-scrollbar-track { background: #010308; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #f59e0b, #ec4899, #06b6d4); border-radius: 9999px; }
         .glass-panel {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.1);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(7, 11, 22, 0.96));
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(251, 191, 36, 0.35);
+            box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.98), 0 0 45px rgba(245, 158, 11, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.18);
         }
         .glass-card {
-            background: linear-gradient(135deg, rgba(17, 24, 39, 0.98), rgba(30, 41, 59, 0.95)) !important;
-            border: 1px solid rgba(245, 158, 11, 0.2) !important;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(145deg, rgba(17, 24, 39, 0.95), rgba(10, 15, 29, 0.98)) !important;
+            border: 1px solid rgba(251, 191, 36, 0.25) !important;
+            box-shadow: 0 12px 30px -6px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.12);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .glass-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -120%;
+            width: 60%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            transform: skewX(-25deg);
+            transition: 0.7s;
+            pointer-events: none;
+        }
+        .glass-card:hover::after {
+            left: 150%;
         }
         .glass-card:hover {
-            border-color: rgba(245, 158, 11, 0.8) !important;
-            background: linear-gradient(135deg, rgba(30, 41, 59, 1), rgba(51, 65, 85, 0.95)) !important;
-            transform: translateY(-3px);
-            box-shadow: 0 20px 35px -10px rgba(245, 158, 11, 0.35), 0 0 15px rgba(236, 72, 153, 0.2);
+            border-color: rgba(251, 191, 36, 0.9) !important;
+            background: linear-gradient(145deg, rgba(24, 34, 56, 0.98), rgba(15, 23, 42, 1)) !important;
+            transform: translateY(-6px) scale(1.008);
+            box-shadow: 0 25px 50px -12px rgba(245, 158, 11, 0.45), 0 0 30px rgba(236, 72, 153, 0.3), inset 0 1px 3px rgba(255, 255, 255, 0.25);
+        }
+        input, select, textarea {
+            transition: all 0.25s ease !important;
+        }
+        input:focus, select:focus, textarea:focus {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(245, 158, 11, 0.12) !important;
+        }
+        button {
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+        button:active {
+            transform: scale(0.95);
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .animate-fadeIn { animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .animate-fadeIn { animation: fadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
         /* Hiệu ứng Mèo Thần Tài vẫy tay tài lộc */
         @keyframes wavePaw {
@@ -92,8 +121,8 @@
             100% { transform: translateY(100%); }
         }
         @keyframes hologramPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.45), inset 0 0 20px rgba(6, 182, 212, 0.3); border-color: rgba(245, 158, 11, 0.7); }
-            50% { box-shadow: 0 0 35px rgba(6, 182, 212, 0.75), inset 0 0 30px rgba(245, 158, 11, 0.5); border-color: rgba(6, 182, 212, 0.9); }
+            0%, 100% { box-shadow: 0 0 25px rgba(245, 158, 11, 0.5), inset 0 0 25px rgba(6, 182, 212, 0.35); border-color: rgba(245, 158, 11, 0.8); }
+            50% { box-shadow: 0 0 40px rgba(6, 182, 212, 0.85), inset 0 0 35px rgba(245, 158, 11, 0.6); border-color: rgba(6, 182, 212, 0.95); }
         }
         @keyframes hologramRotateRing {
             0% { transform: rotate(0deg); }
@@ -102,25 +131,25 @@
         .hologram-box {
             position: relative;
             animation: hologramPulse 4s infinite ease-in-out;
-            background: linear-gradient(135deg, rgba(7, 11, 20, 0.97), rgba(15, 23, 42, 0.98)) !important;
+            background: linear-gradient(135deg, rgba(7, 11, 20, 0.98), rgba(15, 23, 42, 0.99)) !important;
         }
         .hologram-box::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.08) 50%, transparent 100%);
+            background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.1) 50%, transparent 100%);
             pointer-events: none;
             animation: hologramScanline 6s linear infinite;
             z-index: 10;
         }
         .hologram-ring-aura {
             position: absolute;
-            inset: -4px;
+            inset: -5px;
             border-radius: 9999px;
             background: conic-gradient(from 0deg, #f59e0b, #06b6d4, #ec4899, #f59e0b);
             animation: hologramRotateRing 4s linear infinite;
-            filter: blur(5px);
-            opacity: 0.85;
+            filter: blur(6px);
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -233,9 +262,10 @@
                     <span class="text-2xl sm:text-3xl tracking-tighter leading-none">K</span>
                 </div>
                 <div>
-                    <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight">LAPTOP KENG CẦN THƠ</h2>
-                    <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest mt-1 flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-lock text-[10px]"></i> Cổng Xác Thực Quản Trị Viên An Toàn
+                    <!-- CHỮ LAPTOPKENG CẦN THƠ Ở BÊN NGOÀI GIAO DIỆN ĐĂNG NHẬP ĐƯỢC RÚT GỌN VÀ GỌN GÀNG -->
+                    <h2 class="text-base sm:text-lg font-bold text-amber-300 tracking-wide uppercase">LAPTOPKENG CẦN THƠ</h2>
+                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1 flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-lock text-[10px]"></i> Đăng Nhập Hệ Thống
                     </p>
                 </div>
             </div>
@@ -296,10 +326,14 @@
                         <span class="text-lg sm:text-xl tracking-tighter leading-none">K</span>
                     </div>
                     <div class="min-w-0">
-                        <h1 class="font-black text-sm sm:text-lg leading-tight tracking-tight text-white flex items-center gap-1.5 sm:gap-2.5 truncate">
-                            LAPTOP KENG <span class="text-[9px] sm:text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/30 flex-shrink-0">CẦN THƠ</span>
+                        <!-- LÀM NỔI BẬT CỰC ĐẠI TÊN CỬA HÀNG TRÊN HEADER GIAO DIỆN CHÍNH KÈM HUY HIỆU VIP PRO MỚI -->
+                        <h1 class="font-black text-base sm:text-2xl leading-tight tracking-tighter bg-gradient-to-r from-yellow-100 via-amber-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_25px_rgba(245,158,11,0.9)] flex items-center gap-2 sm:gap-3 truncate uppercase">
+                            LAPTOP KENG CẦN THƠ 
+                            <span class="inline-flex items-center gap-1.5 text-[9px] sm:text-[11px] font-black px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 text-slate-950 border border-yellow-100 shadow-[0_0_25px_rgba(245,158,11,0.95)] flex-shrink-0 animate-pulse tracking-wide">
+                                <i class="fa-solid fa-crown text-[10px] text-slate-950"></i> VIP PRO MAX
+                            </span>
                         </h1>
-                        <p class="text-[10px] sm:text-xs text-slate-300 font-semibold truncate">Bán Lẻ - Sửa Chữa - Bảo Hành • Tác giả: <span class="text-amber-400 font-bold">Trọng Nguyễn</span></p>
+                        <p class="text-[10px] sm:text-xs text-slate-200 font-bold truncate mt-0.5">Bán Lẻ - Sửa Chữa - Bảo Hành • Tác giả: <span class="text-amber-400 font-black">Trọng Nguyễn</span></p>
                     </div>
                 </div>
                 
@@ -509,7 +543,7 @@
                 <!-- CỘT PHẢI: KHUNG BIỂU ĐỒ TRỰC QUAN (CANVAS) -->
                 <div class="lg:col-span-2 bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 shadow-inner flex flex-col justify-between">
                     <div class="flex items-center justify-between text-xs text-slate-400">
-                        <span id="market-chart-title" class="font-black text-purple-300 uppercase"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (VNĐ)</span>
+                        <span id="market-chart-title" class="font-black text-purple-300 uppercase"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (Đơn vị: VNĐ)</span>
                         <span id="market-update-time" class="font-mono text-[11px]">Đang cập nhật...</span>
                     </div>
                     <div class="relative w-full h-44 sm:h-56">
@@ -519,6 +553,55 @@
                         <span>💡 Mẹo: Nhấn các nút chọn phía trên để chuyển đổi biểu đồ linh kiện, vàng SJC hoặc tỷ giá USD.</span>
                         <span class="text-purple-400 font-bold">Cập nhật tự động mỗi 10 giây</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- BIỂU ĐỒ SO SÁNH GIÁ VIỆT NAM VS TRUNG QUỐC (VNĐ) -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-purple-500/30 space-y-2 shadow-inner flex flex-col justify-between mt-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2 border-b border-slate-800 pb-2">
+                    <span class="font-black text-amber-400 uppercase flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced"></i> Biểu đồ so sánh giá thị trường Việt Nam vs Trung Quốc (RAM/SSD/Linh kiện - Đơn vị: VNĐ)</span>
+                    <div class="flex items-center gap-3 text-[11px]">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Việt Nam</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Trung Quốc (Quy đổi VNĐ)</span>
+                    </div>
+                </div>
+                <div class="relative w-full h-44 sm:h-56">
+                    <canvas id="vnCnComparisonChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                </div>
+                <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                    <span>💡 So sánh chênh lệch nguồn cung nhập khẩu linh kiện phần cứng giữa thị trường nội địa VN và thị trường Đại Lục TQ.</span>
+                    <span class="text-amber-400 font-bold">Cập nhật thời gian thực</span>
+                </div>
+            </div>
+
+            <!-- BIỂU ĐỒ BIÊN ĐỘ NHẬP HÀNG LINH KIỆN ĐIỆN TỬ TỪ TRUNG QUỐC VỀ VIỆT NAM ALONGSIDE REAL-TIME TẮC BIÊN BANNER -->
+            <div class="bg-slate-950 p-4 rounded-2xl border border-pink-500/30 space-y-3 shadow-inner flex flex-col justify-between mt-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2 border-b border-slate-800 pb-2">
+                    <span class="font-black text-pink-400 uppercase flex items-center gap-1.5"><i class="fa-solid fa-truck-fast"></i> Biểu đồ biên độ nhập hàng linh kiện điện tử từ Trung Quốc về Việt Nam (Đơn vị: Triệu VNĐ & Số lượng lô)</span>
+                    <div class="flex items-center gap-3 text-[11px]">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-pink-400 inline-block"></span> Kim ngạch nhập khẩu (Triệu VNĐ)</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Sản lượng lô hàng</span>
+                    </div>
+                </div>
+
+                <!-- REAL-TIME TẮC BIÊN WARNING BANNER -->
+                <div id="border-congestion-banner" class="p-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300">
+                    <div class="flex items-center gap-2.5 text-xs">
+                        <span id="border-status-dot" class="text-base">🟢</span>
+                        <div>
+                            <span id="border-status-title" class="font-black text-emerald-300 uppercase tracking-wide">THÔNG THOÁNG & ỔN ĐỊNH:</span>
+                            <span id="border-status-desc" class="text-slate-200 font-semibold ml-1">Lượng hàng linh kiện từ Thâm Quyến / Quảng Châu thông quan về kho bình thường.</span>
+                        </div>
+                    </div>
+                    <span id="border-status-badge" class="text-[10px] font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">Real-time Live</span>
+                </div>
+
+                <div class="relative w-full h-48 sm:h-60">
+                    <canvas id="importAmplitudeChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                </div>
+                <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                    <span>💡 Theo dõi biên độ giá trị kim ngạch (Triệu VNĐ) và sản lượng lô hàng linh kiện vận chuyển từ tổng kho Trung Quốc về Việt Nam.</span>
+                    <span class="text-pink-400 font-bold">Cập nhật thời gian thực</span>
                 </div>
             </div>
         </div>
@@ -979,6 +1062,45 @@
             </div>
         </div>
 
+        <!-- REVOKE WARRANTY MODAL (THU HỒI THẺ BẢO HÀNH & KHÔI PHỤC LINH KIỆN + TIỀN) -->
+        <div id="revoke-warranty-modal" class="hidden fixed inset-0 z-[200] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
+            <div class="glass-panel w-full max-w-md rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-red-500/50 animate-fadeIn">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                    <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2 uppercase">
+                        <div class="w-8 h-8 rounded-2xl bg-red-500/20 border border-red-500/40 flex items-center justify-center text-red-400"><i class="fa-solid fa-rotate-left"></i></div> Thu Hồi Thẻ Bảo Hành
+                    </h3>
+                    <button onclick="closeRevokeWarrantyModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+                <form onsubmit="confirmRevokeWarranty(event)" class="space-y-4">
+                    <input type="hidden" id="revokeWarId" value="">
+                    <div class="p-3.5 bg-red-500/10 border border-red-500/30 rounded-2xl text-xs text-red-200 space-y-1.5 leading-relaxed">
+                        <p class="font-extrabold text-red-400 flex items-center gap-1.5"><i class="fa-solid fa-circle-info"></i> Hệ thống sẽ tự động xử lý:</p>
+                        <ul class="list-disc pl-4 space-y-1 text-[11px]">
+                            <li>Chuyển trạng thái thẻ bảo hành sang <strong>ĐÃ THU HỒI</strong>.</li>
+                            <li><strong>Khôi phục lại số lượng linh kiện / sản phẩm</strong> của thẻ này về lại Kho Hàng.</li>
+                            <li><strong>Hoàn tác doanh thu & quỹ Tiền Của Thiện</strong> tương ứng với hóa đơn/phiếu sửa chữa của thẻ bảo hành này.</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Thông Tin Thẻ</label>
+                        <input type="text" id="revokeWarInfo" readonly class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-amber-300 text-xs font-bold cursor-not-allowed">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-yellow-400 uppercase"><i class="fa-solid fa-hand-holding-dollar"></i> Số Tiền Của Thiện Bị Thu Hồi (VNĐ)</label>
+                        <input type="number" id="revokeWarThienAmount" min="0" value="0" class="w-full bg-slate-900 border border-yellow-500/50 rounded-2xl px-4 py-3.5 text-yellow-400 font-black text-xs focus:outline-none focus:border-yellow-400 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Lý Do Thu Hồi <span class="text-red-400">*</span></label>
+                        <input type="text" id="revokeWarReason" required placeholder="VD: Khách trả hàng hoàn tiền, đổi linh kiện khác..." class="w-full bg-slate-900 border border-red-500/40 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-red-400 transition">
+                    </div>
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" onclick="closeRevokeWarrantyModal()" class="px-5 py-3 rounded-2xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer">Hủy Bỏ</button>
+                        <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 text-white font-black rounded-2xl text-xs uppercase shadow-lg shadow-red-500/25 flex items-center gap-2 active:scale-95 transition cursor-pointer"><i class="fa-solid fa-rotate-left"></i> Xác Nhận Thu Hồi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- HỘP THOẠI CHỌN NHIỀU LINH KIỆN TỪ KHO CHO PHIẾU SỬA CHỮA -->
         <div id="multi-parts-modal" class="hidden fixed inset-0 z-[205] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
             <div class="glass-panel w-full max-w-xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-amber-500/50 animate-fadeIn bg-slate-950">
@@ -1292,38 +1414,17 @@
                 <div class="bg-slate-900/90 text-slate-200 p-3.5 rounded-2xl border border-cyan-500/30 leading-relaxed shadow-sm flex items-start gap-2.5">
                     <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100&h=100&fit=crop&crop=faces" alt="Avatar" class="w-7 h-7 rounded-full object-cover flex-shrink-0 mt-0.5 border border-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                     <div>
-                        Dạ em chào sếp! Em là <strong>Ngọc Trinh</strong>, trợ lý AI Hologram thế hệ mới của sếp đây ạ. 💕<br>
-                        <span class="text-[10px] text-cyan-300 font-bold block mt-1"><i class="fa-solid fa-circle-info"></i> Giao diện Hologram 3D đa sắc đã được kích hoạt hoàn hảo!</span>
+                        Dạ em chào sếp! Em là <strong>Ngọc Trinh</strong>, trợ lý AI Hologram thế hệ mới kiêm Quản lý Cửa hàng Thông minh của sếp đây ạ. 💕<br>
+                        <span class="text-[10px] text-cyan-300 font-bold block mt-1"><i class="fa-solid fa-circle-info"></i> Hệ thống Quản lý Thông minh tích hợp Real-time đã sẵn sàng phục vụ sếp!</span>
                     </div>
                 </div>
-            </div>
-            
-            <!-- MÔ-ĐUN ĐĂNG NHẬP TÀI KHOẢN GEMINI ĐỂ KẾT NỐI TRỢ LÝ -->
-            <div id="gemini-login-panel" class="px-3 py-2.5 bg-slate-950/95 border-t border-cyan-500/30 flex items-center justify-between gap-2 flex-shrink-0 relative z-20">
-                <div class="flex items-center gap-2 min-w-0">
-                    <div class="w-7 h-7 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white text-xs font-black shadow flex-shrink-0">
-                        <i class="fa-solid fa-key"></i>
-                    </div>
-                    <div class="min-w-0">
-                        <div class="text-[11px] font-extrabold text-white truncate flex items-center gap-1.5">
-                            <span>Tài khoản Gemini AI:</span>
-                            <span id="gemini-auth-status" class="text-[9px] text-amber-400 font-bold">Chưa kết nối</span>
-                        </div>
-                        <input type="password" id="geminiApiKeyInput" oninput="autoSaveGeminiKey(this.value)" placeholder="Dán Gemini API Key tại đây..." class="w-full bg-slate-900 border border-cyan-500/40 rounded-lg px-2.5 py-1 text-[11px] text-cyan-300 placeholder-slate-500 focus:outline-none focus:border-cyan-400 font-mono mt-0.5">
-                    </div>
-                </div>
-                <button onclick="validateApiKey()" class="px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-slate-950 font-black rounded-xl text-[10px] uppercase shadow transition cursor-pointer flex-shrink-0">
-                    Kết Nối
-                </button>
             </div>
 
             <!-- AI QUICK PROMPTS CHIPS -->
-            <div class="px-3 py-2 bg-slate-950/90 border-t border-slate-800/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-shrink-0">
-                <button onclick="sendQuickPrompt('Báo cáo doanh thu')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-chart-pie text-amber-400"></i> Doanh Thu</button>
-                <button onclick="sendQuickPrompt('Kiểm tra tồn kho')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-boxes-stacked text-amber-400"></i> Tồn Kho</button>
-                <button onclick="sendQuickPrompt('Phân tích kinh doanh và cảnh báo thông minh')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-triangle-exclamation text-red-400"></i> 🔔 Cảnh Báo AI</button>
-                <button onclick="sendQuickPrompt('Cố vấn chiến lược kinh doanh')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-lightbulb text-emerald-400"></i> Cố Vấn Lãi</button>
-                <button onclick="sendQuickPrompt('Mở cờ caro')" class="px-2.5 py-1 rounded-full bg-slate-900 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-[10px] font-extrabold whitespace-nowrap transition cursor-pointer flex items-center gap-1 shadow-sm"><i class="fa-solid fa-chess-board text-cyan-400"></i> Cờ Caro</button>
+            <div id="ai-quick-prompts-bar" class="px-3 py-2 bg-slate-950/90 border-t border-slate-800/80 flex items-center gap-1.5 overflow-x-auto scrollbar-none flex-shrink-0">
+                <button onclick="sendQuickPrompt('Chương trình quản lý cửa hàng thông minh')" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-cyan-500/20 to-amber-500/20 text-cyan-300 hover:text-white border border-cyan-500/40 font-extrabold text-[11px] whitespace-nowrap transition cursor-pointer flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-brain text-cyan-400"></i> Quản Lý Thông Minh
+                </button>
             </div>
             <div class="p-3 bg-slate-950 border-t border-slate-800 flex items-center gap-2 relative z-20">
                 <button id="btn-voice-chat" onclick="toggleVoiceChat()" title="Nhấn để nói chuyện" class="w-11 h-11 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center transition cursor-pointer border border-slate-700"><i class="fa-solid fa-microphone"></i></button>
@@ -1750,7 +1851,11 @@
         let marketHistoryData = {
             gold: [85.0, 85.1, 85.05, 85.2, 85.3, 85.25, 85.4, 85.35, 85.5, 85.2, 85.3, 85.5],
             usd: [25430, 25440, 25445, 25450, 25460, 25455, 25465, 25470, 25465, 25475, 25470, 25470],
-            electronics: [1200000, 1210000, 1205000, 1220000, 1230000, 1225000, 1240000, 1235000, 1250000, 1245000, 1255000, 1250000]
+            electronics: [1200000, 1210000, 1205000, 1220000, 1230000, 1225000, 1240000, 1235000, 1250000, 1245000, 1255000, 1250000],
+            vnMarket: [1250000, 1260000, 1255000, 1270000, 1280000, 1275000, 1290000, 1285000, 1300000, 1295000, 1310000, 1305000],
+            cnMarket: [1050000, 1055000, 1052000, 1060000, 1070000, 1065000, 1080000, 1075000, 1090000, 1085000, 1095000, 1090000],
+            importVolume: [52.0, 54.5, 51.0, 48.5, 42.0, 35.5, 33.0, 44.0, 50.5, 55.0, 58.2, 56.5],
+            importBatches: [16, 18, 15, 14, 11, 8, 7, 12, 15, 18, 20, 19]
         };
         let marketTimeLabels = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', 'Hiện tại'];
         let marketIntervalId = null;
@@ -1769,13 +1874,13 @@
 
             if (type === 'gold') {
                 if (btnGold) btnGold.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá Vàng SJC (Triệu VNĐ/Lượng)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá Vàng SJC (Đơn vị: Triệu VNĐ/Lượng)`;
             } else if (type === 'usd') {
                 if (btnUsd) btnUsd.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-blue-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động tỷ giá USD (VNĐ/USD)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động tỷ giá USD (Đơn vị: VNĐ / 1 USD)`;
             } else {
                 if (btnElec) btnElec.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (VNĐ)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (Đơn vị: VNĐ)`;
             }
             renderMarketChart();
         }
@@ -1803,12 +1908,35 @@
             marketHistoryData.electronics.push(newElec);
             if (marketHistoryData.electronics.length > 15) marketHistoryData.electronics.shift();
 
+            // Cập nhật dữ liệu so sánh VN vs TQ
+            const lastVn = marketHistoryData.vnMarket[marketHistoryData.vnMarket.length - 1];
+            const newVn = Math.round(lastVn + (Math.random() * 10000 - 4500));
+            marketHistoryData.vnMarket.push(newVn);
+            if (marketHistoryData.vnMarket.length > 15) marketHistoryData.vnMarket.shift();
+
+            const lastCn = marketHistoryData.cnMarket[marketHistoryData.cnMarket.length - 1];
+            const newCn = Math.round(lastCn + (Math.random() * 9000 - 4000));
+            marketHistoryData.cnMarket.push(newCn);
+            if (marketHistoryData.cnMarket.length > 15) marketHistoryData.cnMarket.shift();
+
+            // Cập nhật dữ liệu biên độ nhập hàng linh kiện TQ - VN
+            const lastVol = marketHistoryData.importVolume[marketHistoryData.importVolume.length - 1];
+            const newVol = Math.max(25, Number((lastVol + (Math.random() * 14 - 7)).toFixed(1)));
+            marketHistoryData.importVolume.push(newVol);
+            if (marketHistoryData.importVolume.length > 15) marketHistoryData.importVolume.shift();
+
+            const newBatch = Math.max(5, Math.round(newVol / 3.1));
+            marketHistoryData.importBatches.push(newBatch);
+            if (marketHistoryData.importBatches.length > 15) marketHistoryData.importBatches.shift();
+
             document.getElementById('card-gold-sell').innerText = `${newGold} Tr`;
             document.getElementById('card-usd-rate').innerText = `${newUsd.toLocaleString('vi-VN')} đ`;
             document.getElementById('card-elec-rate').innerText = `${newElec.toLocaleString('vi-VN')} đ`;
             document.getElementById('market-update-time').innerText = `Cập nhật lần cuối: ${timeStr}`;
 
             renderMarketChart();
+            renderVnCnComparisonChart();
+            renderImportAmplitudeChart();
             showToast("Đã cập nhật dữ liệu thị trường trực tuyến (Vàng, Đô La & Linh Kiện)!", "success");
         }
 
@@ -1915,10 +2043,264 @@
             });
         }
 
+        function renderVnCnComparisonChart() {
+            const canvas = document.getElementById('vnCnComparisonChartCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 220;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const vnData = marketHistoryData.vnMarket;
+            const cnData = marketHistoryData.cnMarket;
+            const labels = marketTimeLabels;
+            if (!vnData || !cnData) return;
+
+            const padding = 35;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+
+            const allVals = [...vnData, ...cnData];
+            const minVal = Math.min(...allVals) * 0.995;
+            const maxVal = Math.max(...allVals) * 1.005;
+            const valRange = maxVal - minVal || 1;
+
+            ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = '#94a3b8';
+
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (chartHeight / 4) * i;
+                const val = maxVal - (valRange / 4) * i;
+                
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillText((val / 1000000).toFixed(2) + 'Tr', 2, y + 3);
+            }
+
+            const vnPoints = vnData.map((val, idx) => ({
+                x: padding + (chartWidth / (vnData.length - 1 || 1)) * idx,
+                y: padding + chartHeight - ((val - minVal) / valRange) * chartHeight
+            }));
+
+            const cnPoints = cnData.map((val, idx) => ({
+                x: padding + (chartWidth / (cnData.length - 1 || 1)) * idx,
+                y: padding + chartHeight - ((val - minVal) / valRange) * chartHeight
+            }));
+
+            // Vẽ đường Việt Nam (Màu Vàng / Amber)
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#f59e0b';
+            ctx.beginPath();
+            vnPoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            });
+            ctx.stroke();
+
+            // Vẽ đường Trung Quốc (Màu Xanh Ngọc / Cyan)
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#06b6d4';
+            ctx.beginPath();
+            cnPoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            });
+            ctx.stroke();
+
+            // Vẽ điểm mốc VN
+            vnPoints.forEach((p, idx) => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#fbbf24';
+                ctx.fill();
+
+                if (idx % 2 === 0 || idx === vnPoints.length - 1) {
+                    ctx.fillStyle = '#64748b';
+                    ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
+                }
+            });
+
+            // Vẽ điểm mốc TQ
+            cnPoints.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#22d3ee';
+                ctx.fill();
+            });
+        }
+
+        function updateBorderCongestionBanner(latestVol, latestBatch) {
+            const banner = document.getElementById('border-congestion-banner');
+            const dot = document.getElementById('border-status-dot');
+            const title = document.getElementById('border-status-title');
+            const desc = document.getElementById('border-status-desc');
+            const badge = document.getElementById('border-status-badge');
+            if (!banner || !dot || !title || !desc || !badge) return;
+
+            if (latestVol < 38 || latestBatch <= 9) {
+                banner.className = "p-3 rounded-xl border border-red-500/60 bg-red-500/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300 animate-pulse";
+                dot.innerText = "🔴";
+                title.className = "font-black text-red-400 uppercase tracking-wide";
+                title.innerText = "BÁO ĐỘNG ĐỎ (TẮC BIÊN NẶNG):";
+                desc.innerText = `Sản lượng sụt giảm còn ${latestVol} Tr (${latestBatch} lô). Hàng hóa đang ùn ứ nghiêm trọng tại cửa khẩu biên giới, chủ động ôm hàng trước khi giá tăng!`;
+                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-red-500/30 text-red-200 border border-red-500/50 whitespace-nowrap";
+                badge.innerText = "Cảnh Báo Khẩn Cấp";
+            } else if (latestVol < 47 || latestBatch <= 13) {
+                banner.className = "p-3 rounded-xl border border-amber-500/50 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300";
+                dot.innerText = "🟡";
+                title.className = "font-black text-amber-300 uppercase tracking-wide";
+                title.innerText = "CHÚ Ý TẮC BIÊN CẤP ĐỘ 1:";
+                desc.innerText = `Kim ngạch đạt ${latestVol} Tr (${latestBatch} lô). Thông quan có dấu hiệu chậm nhẹ tại cửa khẩu, nên theo dõi sát nguồn cung RAM/SSD.`;
+                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 whitespace-nowrap";
+                badge.innerText = "Ùn Ứ Nhẹ";
+            } else {
+                banner.className = "p-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300";
+                dot.innerText = "🟢";
+                title.className = "font-black text-emerald-300 uppercase tracking-wide";
+                title.innerText = "THÔNG THOÁNG & ỔN ĐỊNH:";
+                desc.innerText = `Kim ngạch đạt ${latestVol} Tr (${latestBatch} lô). Hàng linh kiện từ Thâm Quyến / Quảng Châu về kho cửa hàng đúng tiến độ.`;
+                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap";
+                badge.innerText = "Thông Quan Tốt";
+            }
+        }
+
+        function renderImportAmplitudeChart() {
+            const canvas = document.getElementById('importAmplitudeChartCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 240;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const volData = marketHistoryData.importVolume;
+            const batchData = marketHistoryData.importBatches;
+            const labels = marketTimeLabels;
+            if (!volData || !batchData || volData.length === 0) return;
+
+            updateBorderCongestionBanner(volData[volData.length - 1], batchData[batchData.length - 1]);
+
+            const padding = 40;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+
+            const minVol = Math.min(...volData) * 0.9;
+            const maxVol = Math.max(...volData) * 1.08;
+            const volRange = maxVol - minVol || 1;
+
+            const minBatch = 0;
+            const maxBatch = Math.max(...batchData) * 1.2 || 25;
+
+            ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (chartHeight / 4) * i;
+                const valVol = maxVol - (volRange / 4) * i;
+                const valBatch = Math.round(maxBatch - (maxBatch / 4) * i);
+                
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillStyle = '#f472b6';
+                ctx.textAlign = 'left';
+                ctx.fillText(valVol.toFixed(1) + 'Tr', 2, y + 3);
+
+                ctx.fillStyle = '#fbbf24';
+                ctx.textAlign = 'right';
+                ctx.fillText(valBatch + ' lô', canvas.width - 2, y + 3);
+            }
+
+            const stepX = chartWidth / (volData.length - 1 || 1);
+            const barWidth = Math.max(8, Math.min(20, stepX * 0.35));
+
+            // Vẽ cột Sản lượng lô hàng (Màu vàng Amber)
+            batchData.forEach((bVal, idx) => {
+                const x = padding + stepX * idx;
+                const bHeight = (bVal / maxBatch) * chartHeight;
+                const y = padding + chartHeight - bHeight;
+
+                ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
+                ctx.strokeStyle = 'rgba(245, 158, 11, 0.7)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.rect(x - barWidth / 2, y, barWidth, bHeight);
+                ctx.fill();
+                ctx.stroke();
+            });
+
+            // Tính tọa độ đường Kim ngạch nhập khẩu (Màu hồng Pink)
+            const volPoints = volData.map((val, idx) => ({
+                x: padding + stepX * idx,
+                y: padding + chartHeight - ((val - minVol) / volRange) * chartHeight,
+                val,
+                batch: batchData[idx]
+            }));
+
+            const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
+            gradient.addColorStop(0, 'rgba(236, 72, 153, 0.4)');
+            gradient.addColorStop(1, 'rgba(236, 72, 153, 0.0)');
+
+            ctx.beginPath();
+            ctx.moveTo(volPoints[0].x, canvas.height - padding);
+            volPoints.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.lineTo(volPoints[volPoints.length - 1].x, canvas.height - padding);
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#ec4899';
+            ctx.beginPath();
+            volPoints.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            });
+            ctx.stroke();
+
+            volPoints.forEach((p, idx) => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = p.val < 38 ? '#ef4444' : '#f472b6';
+                ctx.fill();
+                ctx.strokeStyle = '#030712';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                if (idx % 2 === 0 || idx === volPoints.length - 1) {
+                    ctx.fillStyle = '#e2e8f0';
+                    ctx.font = 'bold 9px "Plus Jakarta Sans", sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(`${p.val}Tr`, p.x, p.y - 8);
+
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                    ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
+                }
+            });
+        }
+
         // Tự động làm mới dữ liệu biểu đồ mỗi 10 giây
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 renderMarketChart();
+                renderVnCnComparisonChart();
+                renderImportAmplitudeChart();
                 if (marketIntervalId) clearInterval(marketIntervalId);
                 marketIntervalId = setInterval(refreshMarketData, 10000);
                 
@@ -2441,6 +2823,7 @@
                     const expDate = parseViDate(w.expiryDate);
                     let isExpired = false;
                     let remainingDays = 0;
+                    const isRevoked = w.revoked === true;
                     
                     if (expDate) {
                         const diffTime = expDate.getTime() - now.getTime();
@@ -2448,12 +2831,14 @@
                         if (remainingDays < 0) isExpired = true;
                     }
 
-                    const statusBadge = isExpired ? 
+                    const statusBadge = isRevoked ?
+                        `<span class="text-[10px] font-black px-2.5 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/40 flex items-center gap-1"><i class="fa-solid fa-ban"></i> ĐÃ THU HỒI (${w.revokeReason || 'Hoàn trả'})</span>` :
+                        (isExpired ? 
                         `<span class="text-[10px] font-black px-2.5 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/40 flex items-center gap-1"><i class="fa-solid fa-circle-xmark"></i> HẾT BẢO HÀNH</span>` : 
-                        `<span class="text-[10px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse"><i class="fa-solid fa-circle-check"></i> CÒN BẢO HÀNH (Còn ${remainingDays} ngày)</span>`;
+                        `<span class="text-[10px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse"><i class="fa-solid fa-circle-check"></i> CÒN BẢO HÀNH (Còn ${remainingDays} ngày)</span>`);
 
                     html += `
-                        <div class="glass-card p-4 rounded-2xl border ${isExpired ? 'border-red-500/30 bg-red-950/10' : 'border-emerald-500/40 bg-emerald-950/10'} space-y-3 shadow-lg">
+                        <div class="glass-card p-4 rounded-2xl border ${isRevoked || isExpired ? 'border-red-500/30 bg-red-950/10' : 'border-emerald-500/40 bg-emerald-950/10'} space-y-3 shadow-lg">
                             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-700/60 pb-2.5">
                                 <div>
                                     <span class="text-[10px] font-mono font-bold text-amber-400">Mã BH: ${w.id}</span>
@@ -3745,6 +4130,7 @@
         }
 
         function renderAll() {
+            reconcileRevokedWarrantiesForThien();
             renderStats(); renderPOS(); renderProducts();
             renderSoldProducts(); renderRepairs(); renderCleanings(); renderWarranties(); renderDebts(); renderExpenses(); renderThienFunds(); renderStaffList(); renderActivityLogs();
             populateRepairPartOptions();
@@ -4076,8 +4462,13 @@
             // Tổng số tiền trong quỹ Tiền Của Thiện đã tích lũy
             let totalThienAccumulated = 0;
             ((appData.thienFunds && appData.thienFunds.transactions) || []).forEach(tx => {
-                if (tx.amount > 0) totalThienAccumulated += Number(tx.amount || 0);
+                if (tx.amount > 0) {
+                    totalThienAccumulated += Number(tx.amount || 0);
+                } else if (tx.isRecall) {
+                    totalThienAccumulated += Number(tx.amount || 0); // Trừ khoản bị thu hồi bảo hành
+                }
             });
+            totalThienAccumulated = Math.max(0, totalThienAccumulated);
             
             // Doanh Thu thực tế = Tổng tiền thu - Tiền vốn sản phẩm đã bán - Chi phí cố định/phát sinh - Quỹ Thiện
             let netRevenue = totalReceived - totalSoldProductCost - totalExpenses - totalThienAccumulated;
@@ -4620,9 +5011,12 @@
             const sigCanvas = document.getElementById('checkout-signature-pad');
             const customerSignature = sigCanvas && sigCanvas._getSigData ? sigCanvas._getSigData() : '';
 
+            // ĐẢM BẢO TRỪ TRỰC TIẾP TỒN KHO KHI THANH TOÁN THÀNH CÔNG
             cart.forEach(item => {
                 const prod = appData.products.find(p => p.id === item.id);
-                if (prod) prod.qty = Math.max(0, prod.qty - item.qty);
+                if (prod) {
+                    prod.qty = Math.max(0, Number(prod.qty || 0) - Number(item.qty || 1));
+                }
             });
 
             const subtotal = cart.reduce((s, i) => s + (i.price * i.qty), 0);
@@ -4677,11 +5071,23 @@
             const expiryDate = new Date(); expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
             if(!appData.warranties) appData.warranties = [];
             cart.forEach((item, index) => {
+                const prodRef = appData.products.find(p => p.id === item.id);
+                let itemThienCut = 0;
+                if (prodRef) {
+                    const itemProfit = (item.price - (prodRef.costPrice || 0)) * item.qty;
+                    if (prodRef.category === 'Laptop') itemThienCut = 200000 * item.qty;
+                    else if (prodRef.category === 'Linh kiện' && itemProfit > 0) itemThienCut = Math.round(itemProfit * 0.10);
+                }
                 appData.warranties.unshift({
                     id: 'WAR_' + Date.now() + '_' + index,
                     customer: customerName,
                     phone: customerPhone || '',
                     product: item.name,
+                    productId: item.id,
+                    qty: item.qty,
+                    price: item.price * item.qty,
+                    invoiceId: newInvoice.id,
+                    thienCut: itemThienCut,
                     imei: item.serial || imei || 'HĐ #' + newInvoice.id.slice(-6),
                     warrantyMonths,
                     gifts: selectedGifts,
@@ -5160,9 +5566,10 @@
             });
 
             const profit = finalCost - totalPartsCost;
+            let thienCut = 0;
             if (profit > 0) {
                 if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
-                const thienCut = Math.round(profit * 0.3);
+                thienCut = Math.round(profit * 0.3);
                 appData.thienFunds.balance = (appData.thienFunds.balance || 0) + thienCut;
                 appData.thienFunds.transactions.push({
                     desc: `Trích 30% Sửa chữa: ${rep.device}`,
@@ -5190,6 +5597,11 @@
                 customer: rep.customer,
                 phone: rep.phone || '',
                 product: `Sửa chữa: ${rep.device}${usedPartsSummary}`,
+                repairId: rep.id,
+                invoiceId: newInv.id,
+                parts: partsList,
+                price: finalCost,
+                thienCut: thienCut,
                 imei: 'REP #' + rep.id.slice(-6),
                 warrantyMonths,
                 expiryDate: expiryDate.toLocaleDateString('vi-VN'),
@@ -5257,27 +5669,282 @@
             if (warranties.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy thẻ bảo hành nào.</div>`;
             
             const isAdmin = currentUser?.role === 'admin';
-            list.innerHTML = warranties.map(w => `
-                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-slate-700/80">
+            list.innerHTML = warranties.map(w => {
+                const isRevoked = w.revoked === true;
+                return `
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${isRevoked ? 'border-red-500/40 bg-red-950/15 opacity-80' : 'border-slate-700/80'}">
                     <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
                         <div class="lg:w-[40%] space-y-1 min-w-0">
-                            <div class="font-extrabold text-white text-sm sm:text-base truncate">${w.customer} ${w.phone ? '<span class="text-xs text-cyan-300 font-mono font-bold">(' + w.phone + ')</span>' : ''}</div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <div class="font-extrabold text-white text-sm sm:text-base truncate">${w.customer} ${w.phone ? '<span class="text-xs text-cyan-300 font-mono font-bold">(' + w.phone + ')</span>' : ''}</div>
+                                ${isRevoked ? `<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-500/20 text-red-400 border border-red-500/40">ĐÃ THU HỒI</span>` : ''}
+                            </div>
                             <div class="text-amber-400 font-bold text-xs truncate">${w.product}</div>
+                            ${isRevoked ? `<div class="text-[11px] text-red-300 italic">Lý do thu hồi: ${w.revokeReason || 'Hoàn trả'} (${w.revokedAt || ''})</div>` : ''}
                         </div>
                         <div class="lg:w-[30%] text-xs font-mono text-cyan-300 font-bold truncate">
                             IMEI: ${w.imei || 'Không có'}
                         </div>
-                        <div class="lg:w-[30%] lg:text-right text-xs font-extrabold text-emerald-400">
-                            Hạn: ${w.expiryDate}<br><span class="text-[11px] text-slate-300 font-semibold">(${w.warrantyMonths} tháng)</span>
+                        <div class="lg:w-[30%] lg:text-right text-xs font-extrabold ${isRevoked ? 'text-red-400 line-through' : 'text-emerald-400'}">
+                            Hạn: ${w.expiryDate}<br><span class="text-[11px] text-slate-300 font-semibold">(${w.warrantyMonths || 6} tháng)</span>
                         </div>
                     </div>
-                    <div class="flex items-center justify-end gap-2.5 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
-                        <button onclick="printWarrantyCard('${w.id}')" class="px-3.5 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-file-arrow-down"></i> In Thẻ</button>
-                        ${isAdmin ? `<button onclick="editWarranty('${w.id}')" class="px-3.5 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-pen-to-square"></i></button>
-                                     <button onclick="deleteWarranty('${w.id}')" class="px-3.5 py-2 text-red-400 hover:bg-red-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    <div class="flex items-center justify-end gap-2 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l flex-wrap">
+                        <button onclick="printWarrantyCard('${w.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-file-arrow-down"></i> In Thẻ</button>
+                        ${!isRevoked ? `<button onclick="openRevokeWarrantyModal('${w.id}')" class="px-3 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-300 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-red-500/40" title="Thu hồi thẻ bảo hành & khôi phục kho + tiền"><i class="fa-solid fa-rotate-left"></i> Thu hồi</button>` : ''}
+                        ${isAdmin ? `<button onclick="editWarranty('${w.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-pen-to-square"></i></button>
+                                     <button onclick="deleteWarranty('${w.id}')" class="px-3 py-2 text-red-400 hover:bg-red-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
                     </div>
                 </div>
-            `).join('');
+            `;}).join('');
+        }
+
+        function openRevokeWarrantyModal(id) {
+            const war = (appData.warranties || []).find(w => w.id === id);
+            if (!war) return;
+            document.getElementById('revokeWarId').value = war.id;
+            document.getElementById('revokeWarInfo').value = `${war.customer} - ${war.product}`;
+            document.getElementById('revokeWarReason').value = 'Khách hoàn trả / Thu hồi bảo hành';
+            
+            const estimatedThien = calculateThienRecallForWarranty(war);
+            const thienInput = document.getElementById('revokeWarThienAmount');
+            if (thienInput) thienInput.value = estimatedThien;
+
+            document.getElementById('revoke-warranty-modal').classList.remove('hidden');
+        }
+
+        function closeRevokeWarrantyModal() {
+            document.getElementById('revoke-warranty-modal').classList.add('hidden');
+        }
+
+        function calculateThienRecallForWarranty(war) {
+            if (!war) return 0;
+            if (war.thienCut && Number(war.thienCut) > 0) return Number(war.thienCut);
+
+            const cleanProd = (war.product || '').replace(/^Sửa chữa:\s*/i, '').split('•')[0].trim().toLowerCase();
+
+            // 1. Tìm trực tiếp trong lịch sử giao dịch Tiền Của Thiện xem đơn này đã cộng bao nhiêu
+            const txs = (appData.thienFunds && appData.thienFunds.transactions) || [];
+            for (let i = txs.length - 1; i >= 0; i--) {
+                const tx = txs[i];
+                if (tx.amount > 0 && !tx.isRecall && tx.desc) {
+                    const descLower = tx.desc.toLowerCase();
+                    if (cleanProd && descLower.includes(cleanProd)) {
+                        return Number(tx.amount);
+                    }
+                }
+            }
+
+            // 2. Nếu là bảo hành từ phiếu sửa chữa
+            if (war.repairId || (war.imei && war.imei.startsWith('REP #')) || (war.product || '').toLowerCase().includes('sửa chữa')) {
+                const shortRepId = (war.imei || '').replace('REP #', '').trim();
+                const rep = (appData.repairs || []).find(r => r.id === war.repairId || (shortRepId && r.id.endsWith(shortRepId)) || (r.customer && r.customer.toLowerCase() === (war.customer || '').toLowerCase()));
+                let repRevenue = Number(war.price || (rep ? rep.cost : 0) || 0);
+                let partsCost = 0;
+                const partsList = war.parts || (rep && rep.parts) || [];
+                partsList.forEach(partItem => {
+                    const prod = (appData.products || []).find(p => p.id === partItem.id || (p.name && p.name.toLowerCase() === (partItem.name || '').toLowerCase()));
+                    if (prod) partsCost += Number(prod.costPrice || 0) * Number(partItem.qty || 1);
+                });
+                const profit = Math.max(0, repRevenue - partsCost);
+                if (profit > 0) return Math.round(profit * 0.3);
+            }
+
+            // 3. Nếu là bảo hành bán lẻ Laptop hoặc Linh kiện
+            const qty = Number(war.qty || 1);
+            const matchedProd = (appData.products || []).find(p => p.id === war.productId || (p.name && (war.product || '').toLowerCase().includes(p.name.toLowerCase())));
+            if (matchedProd) {
+                if (matchedProd.category === 'Laptop') {
+                    return 200000 * qty;
+                } else if (matchedProd.category === 'Linh kiện') {
+                    const price = Number(war.price || matchedProd.price || 0);
+                    const cost = Number(matchedProd.costPrice || 0) * qty;
+                    const profit = Math.max(0, price - cost);
+                    if (profit > 0) return Math.round(profit * 0.10);
+                }
+            }
+
+            const pLower = (war.product || '').toLowerCase();
+            if (pLower.includes('laptop') || pLower.includes('macbook') || pLower.includes('dell') || pLower.includes('asus') || pLower.includes('hp') || pLower.includes('acer') || pLower.includes('lenovo') || pLower.includes('msi') || pLower.includes('thinkpad')) {
+                return 200000 * qty;
+            }
+
+            return 0;
+        }
+
+        // Đồng bộ tự động thu hồi Tiền Của Thiện cho các thẻ bảo hành đã thu hồi trước đó nhưng chưa trừ quỹ Thiện
+        function reconcileRevokedWarrantiesForThien() {
+            if (!appData.warranties || !Array.isArray(appData.warranties)) return;
+            if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
+            if (!appData.thienFunds.transactions) appData.thienFunds.transactions = [];
+
+            let changed = false;
+            appData.warranties.forEach(war => {
+                if (war.revoked === true && !war.thienRecalled) {
+                    const alreadyHasRecallTx = appData.thienFunds.transactions.some(tx => tx.isRecall && tx.warId === war.id);
+                    if (!alreadyHasRecallTx) {
+                        const thienRefund = calculateThienRecallForWarranty(war);
+                        if (thienRefund > 0) {
+                            appData.thienFunds.balance = Math.max(0, Number(appData.thienFunds.balance || 0) - thienRefund);
+                            appData.thienFunds.transactions.push({
+                                warId: war.id,
+                                desc: `Thu hồi thẻ BH (${war.product}) - Khấu trừ lại Tiền Của Thiện`,
+                                amount: -thienRefund,
+                                isRecall: true,
+                                date: war.revokedAt || new Date().toLocaleString('vi-VN')
+                            });
+                            war.thienCut = thienRefund;
+                            changed = true;
+                        }
+                    }
+                    war.thienRecalled = true;
+                }
+            });
+
+            if (changed) {
+                saveAndSync();
+            }
+        }
+
+        function confirmRevokeWarranty(e) {
+            e.preventDefault();
+            const id = document.getElementById('revokeWarId').value;
+            const reason = document.getElementById('revokeWarReason').value.trim() || 'Thu hồi thẻ bảo hành';
+            const manualThienRefund = Number(document.getElementById('revokeWarThienAmount')?.value || 0);
+            const war = (appData.warranties || []).find(w => w.id === id);
+            if (!war || war.revoked) {
+                closeRevokeWarrantyModal();
+                return;
+            }
+
+            let restoredItemsLog = [];
+            let restoredMoney = 0;
+
+            // Tính toán số tiền quỹ Thiện cần thu hồi trước khi xóa hóa đơn
+            const autoThienRefund = calculateThienRecallForWarranty(war);
+            const thienRefund = manualThienRefund > 0 ? manualThienRefund : autoThienRefund;
+
+            // 1. Khôi phục linh kiện từ phiếu sửa chữa hoặc thẻ bảo hành sửa chữa
+            let partsToRestore = war.parts || [];
+            if (partsToRestore.length === 0 && (war.repairId || (war.imei && war.imei.startsWith('REP #')))) {
+                const rep = (appData.repairs || []).find(r => r.id === war.repairId || (war.imei && r.id.endsWith(war.imei.replace('REP #', '').trim())));
+                if (rep && rep.parts) {
+                    partsToRestore = rep.parts;
+                }
+            }
+
+            if (partsToRestore && partsToRestore.length > 0) {
+                partsToRestore.forEach(partItem => {
+                    let prod = (appData.products || []).find(p => p.id === partItem.id || p.name.toLowerCase() === (partItem.name || '').toLowerCase());
+                    const restoreQty = Number(partItem.qty || 1);
+                    if (prod) {
+                        prod.qty = Number(prod.qty || 0) + restoreQty;
+                        restoredItemsLog.push(`${prod.name} (+${restoreQty})`);
+                    }
+                });
+            } else if (war.productId) {
+                // 2. Khôi phục sản phẩm / linh kiện bán lẻ trực tiếp qua productId
+                let prod = (appData.products || []).find(p => p.id === war.productId);
+                const restoreQty = Number(war.qty || 1);
+                if (prod) {
+                    prod.qty = Number(prod.qty || 0) + restoreQty;
+                    restoredItemsLog.push(`${prod.name} (+${restoreQty})`);
+                }
+            } else {
+                // 3. Tìm kiếm linh kiện hoặc sản phẩm theo tên trong thẻ bảo hành (cho các thẻ cũ)
+                const cleanProdName = (war.product || '').replace(/^Sửa chữa:\s*/i, '').trim();
+                (appData.products || []).forEach(prod => {
+                    if (prod.name && (cleanProdName.toLowerCase() === prod.name.toLowerCase() || (war.product || '').toLowerCase().includes(prod.name.toLowerCase()))) {
+                        prod.qty = Number(prod.qty || 0) + 1;
+                        restoredItemsLog.push(`${prod.name} (+1)`);
+                    }
+                });
+            }
+
+            // 4. Khôi phục / hoàn tác tiền doanh thu (Hóa đơn bán hàng hoặc Hóa đơn sửa chữa)
+            let matchedInvIndex = -1;
+            if (war.invoiceId) {
+                matchedInvIndex = (appData.invoices || []).findIndex(inv => inv.id === war.invoiceId);
+            } else if (war.imei && war.imei.startsWith('HĐ #')) {
+                const shortInvId = war.imei.replace('HĐ #', '').trim();
+                matchedInvIndex = (appData.invoices || []).findIndex(inv => inv.id.endsWith(shortInvId));
+            } else if (war.imei && war.imei.startsWith('REP #')) {
+                matchedInvIndex = (appData.invoices || []).findIndex(inv => 
+                    inv.customerName.toLowerCase() === war.customer.toLowerCase() &&
+                    (inv.id.startsWith('INV_REP_') || (inv.items && inv.items.some(i => (i.name || '').toLowerCase().includes('sửa chữa'))))
+                );
+            } else {
+                matchedInvIndex = (appData.invoices || []).findIndex(inv => 
+                    inv.customerName.toLowerCase() === war.customer.toLowerCase() &&
+                    inv.items && inv.items.some(i => (war.product || '').toLowerCase().includes((i.name || '').toLowerCase()))
+                );
+            }
+
+            if (matchedInvIndex !== -1) {
+                const inv = appData.invoices[matchedInvIndex];
+                if (inv.items && inv.items.length > 1 && !war.repairId && !(war.imei || '').startsWith('REP #')) {
+                    const itemIdx = inv.items.findIndex(i => i.id === war.productId || (war.product || '').toLowerCase().includes((i.name || '').toLowerCase()));
+                    if (itemIdx !== -1) {
+                        const removedItem = inv.items[itemIdx];
+                        const itemAmount = Number(removedItem.price || 0) * Number(removedItem.qty || 1);
+                        restoredMoney = itemAmount;
+                        inv.total = Math.max(0, Number(inv.total || 0) - itemAmount);
+                        inv.items.splice(itemIdx, 1);
+                        if (inv.items.length === 0) {
+                            appData.invoices.splice(matchedInvIndex, 1);
+                        }
+                    } else {
+                        restoredMoney = Number(inv.total || 0);
+                        appData.invoices.splice(matchedInvIndex, 1);
+                    }
+                } else {
+                    restoredMoney = Number(inv.total || 0);
+                    appData.invoices.splice(matchedInvIndex, 1);
+                }
+            } else if (war.price) {
+                restoredMoney = Number(war.price || 0);
+            }
+
+            // 5. Cập nhật lại trạng thái phiếu sửa chữa nếu là bảo hành sửa chữa
+            if (war.repairId || (war.imei && war.imei.startsWith('REP #'))) {
+                const shortRepId = (war.imei || '').replace('REP #', '').trim();
+                const rep = (appData.repairs || []).find(r => r.id === war.repairId || (shortRepId && r.id.endsWith(shortRepId)));
+                if (rep) {
+                    rep.completed = false;
+                    if (!restoredMoney && rep.cost > 0) restoredMoney = Number(rep.cost);
+                }
+            }
+
+            // 6. Khấu trừ trực tiếp vào số dư Tiền Của Thiện
+            if (thienRefund > 0) {
+                if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
+                appData.thienFunds.balance = Math.max(0, Number(appData.thienFunds.balance || 0) - thienRefund);
+                appData.thienFunds.transactions.push({
+                    warId: war.id,
+                    desc: `Thu hồi thẻ BH (${war.product}) - Khấu trừ lại Tiền Của Thiện`,
+                    amount: -thienRefund,
+                    isRecall: true,
+                    date: new Date().toLocaleString('vi-VN')
+                });
+            }
+
+            // 7. Đánh dấu thẻ bảo hành đã thu hồi và đã thu hồi quỹ Thiện
+            war.revoked = true;
+            war.thienRecalled = true;
+            war.thienCut = thienRefund;
+            war.revokeReason = reason;
+            war.revokedAt = new Date().toLocaleString('vi-VN');
+
+            logAction(`Thu hồi thẻ BH ${war.id} (${war.customer}) | Khôi phục kho: ${restoredItemsLog.join(', ') || 'Không'} | Hoàn tác tiền: ${restoredMoney.toLocaleString('vi-VN')}đ | Thu hồi Tiền Của Thiện: -${thienRefund.toLocaleString('vi-VN')}đ`);
+            closeRevokeWarrantyModal();
+            saveAndSync();
+            renderAll();
+
+            const msgParts = [];
+            if (restoredItemsLog.length > 0) msgParts.push(`Kho: ${restoredItemsLog.join(', ')}`);
+            if (restoredMoney > 0) msgParts.push(`Tiền: ${restoredMoney.toLocaleString('vi-VN')}đ`);
+            if (thienRefund > 0) msgParts.push(`Trừ quỹ Thiện: -${thienRefund.toLocaleString('vi-VN')}đ`);
+            showToast(`Đã thu hồi thẻ BH! (${msgParts.join(' | ') || 'Hoàn tất'})`, "success");
         }
 
         // --- DEBT MANAGEMENT FUNCTIONS ---
@@ -6213,8 +6880,13 @@
 
             let totalThienAccumulated = 0;
             ((appData.thienFunds && appData.thienFunds.transactions) || []).forEach(tx => {
-                if (tx.amount > 0) totalThienAccumulated += Number(tx.amount || 0);
+                if (tx.amount > 0) {
+                    totalThienAccumulated += Number(tx.amount || 0);
+                } else if (tx.isRecall) {
+                    totalThienAccumulated += Number(tx.amount || 0);
+                }
             });
+            totalThienAccumulated = Math.max(0, totalThienAccumulated);
 
             // Tính tổng tiền vốn sản phẩm đã bán để hiển thị chính xác trong báo cáo AI
             let totalSoldCostAI = 0;
@@ -6248,6 +6920,16 @@
             }
             else if (lowerPrompt.includes("chiến lược") || lowerPrompt.includes("cố vấn") || lowerPrompt.includes("tư vấn") || lowerPrompt.includes("khuyến mãi") || lowerPrompt.includes("tăng doanh thu") || lowerPrompt.includes("combo") || lowerPrompt.includes("định giá")) {
                 actionMsg = getBusinessStrategyAdvice();
+                actionHandled = true;
+            }
+            else if (lowerPrompt.includes("chương trình quản lý cửa hàng thông minh") || lowerPrompt.includes("quản lý cửa hàng thông minh")) {
+                actionMsg = `🧠 <strong>CHƯƠNG TRÌNH QUẢN LÝ CỬA HÀNG THÔNG MINH (NGỌC TRINH MANAGER v5.0):</strong><br><br>` +
+                `Dạ sếp ơi, em đã kích hoạt toàn quyền hệ thống quản lý thông minh cho em rồi ạ! Em có thể giúp sếp:<br>` +
+                `1. 📊 <strong>Báo cáo tài chính & doanh thu thời gian thực</strong> (Đã trừ vốn, chi phí, quỹ Thiện).<br>` +
+                `2. 📦 <strong>Tự động quét và cảnh báo tồn kho</strong>, nhắc nhở nhập hàng.<br>` +
+                `3. 💡 <strong>Cố vấn chiến lược kinh doanh</strong>, đề xuất combo tăng doanh số.<br>` +
+                `4. 🛒 <strong>Lên đơn, thêm sản phẩm, tra cứu bảo hành & kiểm tra công nợ</strong> bằng giọng nói hoặc tin nhắn.<br><br>` +
+                `Sếp cần em làm việc gì cứ ra lệnh cho em nha sếp! 💕`;
                 actionHandled = true;
             }
             else if (lowerPrompt.includes("mở") || lowerPrompt.includes("vào") || lowerPrompt.includes("xem") || lowerPrompt.includes("chơi")) {
