@@ -399,6 +399,8 @@
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
                     <button id="nav-expenses" onclick="switchTab('expenses')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-money-bill-transfer text-red-400"></i> Chi Phí</button>
+                    <!-- NÚT GÓC MARKETING CỦA NGỌC TRINH TRÊN THANH ĐIỀU HƯỚNG -->
+                    <button id="nav-marketing" onclick="switchTab('marketing')" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-pink-300 hover:bg-pink-500/20 bg-pink-500/10 border border-pink-500/30 transition cursor-pointer shadow-lg shadow-pink-500/10"><i class="fa-solid fa-bullhorn text-pink-400"></i> Góc Marketing</button>
                     <button id="nav-kinh-chieu-yeu" onclick="switchTab('kinh-chieu-yeu')" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-300 hover:bg-amber-500/20 bg-amber-500/10 border border-amber-500/30 transition cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-magnifying-glass text-amber-400"></i> Kính Chiếu Yêu</button>
                     <button onclick="openCaroModal()" title="Cờ Caro 2 Người" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-cyan-300 hover:bg-cyan-500/20 bg-gradient-to-r from-cyan-600/30 to-cyan-500/10 border border-cyan-500/40 transition cursor-pointer shadow-lg shadow-cyan-500/10"><i class="fa-solid fa-chess-board text-cyan-400"></i> Cờ Caro</button>
                     <button id="nav-cloud" onclick="switchTab('cloud')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-fire text-amber-400"></i> Cloud</button>
@@ -408,12 +410,17 @@
                     <button onclick="openLivestreamModal()" title="Bán hàng Livestream Facebook & TikTok tự động" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 text-white transition cursor-pointer shadow-lg shadow-pink-500/20 border border-pink-400/40">
                         <i class="fa-solid fa-video text-white animate-pulse"></i> Livestream
                     </button>
+                    <!-- NÚT ĐỔI MẬT KHẨU TÀI KHOẢN -->
+                    <button onclick="openChangePasswordModal()" title="Đổi Mật Khẩu" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 transition cursor-pointer">
+                        <i class="fa-solid fa-key"></i> Đổi Mật Khẩu
+                    </button>
                     <button onclick="handleLogout()" title="Đăng Xuất" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1 bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 transition cursor-pointer"><i class="fa-solid fa-right-from-bracket"></i></button>
                 </nav>
 
                 <!-- Mobile Top Right Action -->
                 <div class="lg:hidden flex items-center gap-1.5">
                     <button onclick="openLivestreamModal()" title="Livestream" class="p-2.5 rounded-xl text-white bg-gradient-to-r from-pink-600 to-rose-600 border border-pink-400/40"><i class="fa-solid fa-video text-xs"></i></button>
+                    <button onclick="openChangePasswordModal()" title="Đổi Mật Khẩu" class="p-2.5 rounded-xl text-amber-300 bg-slate-900 border border-amber-500/30"><i class="fa-solid fa-key text-xs"></i></button>
                     <button onclick="handleLogout()" class="p-2.5 rounded-xl text-red-400 hover:bg-slate-800 bg-slate-900 border border-slate-800/80"><i class="fa-solid fa-right-from-bracket text-xs"></i></button>
                     <button onclick="toggleMobileMenu()" class="p-3 rounded-xl text-amber-400 hover:bg-slate-800 bg-slate-900/90 border border-amber-500/40 cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-bars text-base"></i></button>
                 </div>
@@ -444,9 +451,11 @@
                 <button onclick="switchTab('debts'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-file-invoice-dollar text-base text-pink-400"></i> Quản Lý Công Nợ</button>
                 <button onclick="switchTab('thien'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-hand-holding-dollar text-base text-yellow-400"></i> Tiền Của Thiện</button>
                 <button onclick="switchTab('expenses'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-money-bill-transfer text-base text-red-400"></i> Quản Lý Chi Phí</button>
-                <button onclick="switchTab('kinh-chieu-yeu'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-300 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-amber-400"></i> Kính Chiếu Yêu</button>
                 <button onclick="openCaroModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-cyan-300 bg-slate-900 border border-cyan-500/40 shadow-md"><i class="fa-solid fa-chess-board text-base text-cyan-400"></i> Cờ Caro 2 Người</button>
                 <button onclick="openLivestreamModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-pink-300 bg-slate-900 border border-pink-500/40 shadow-md"><i class="fa-solid fa-video text-base text-pink-400"></i> Livestream Chốt Đơn</button>
+                <button onclick="openPublicWarrantyModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-300 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-emerald-400"></i> Tra Cứu BH Public</button>
+                <button onclick="openChangePasswordModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-300 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-key text-base text-amber-400"></i> Đổi Mật Khẩu</button>
+                <button onclick="openAutoUpdateModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-400 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-rotate text-base text-emerald-400"></i> Cập Nhật</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
                 <button id="mobile-nav-logs" onclick="switchTab('logs'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-clipboard-list text-base text-purple-400"></i> Nhật Ký</button>
                 <button id="mobile-nav-users" onclick="switchTab('users'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-users-gear text-base text-cyan-400"></i> Nhân Viên</button>
@@ -1550,6 +1559,61 @@
                 </div>
             </div>
         </section>
+
+        <!-- TAB: GÓC MARKETING CỦA NGỌC TRINH -->
+        <section id="tab-marketing" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
+            <!-- ================= GÓC MARKETING CỦA NGỌC TRINH (BẢN TỐI ƯU ELECTRON) ================= -->
+            <div id="ngoc-trinh-marketing-box" style="background: #1a1a2e; color: #fff; padding: 20px; border-radius: 12px; border: 2px solid #ff007f; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-top: 20px;">
+                
+                <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;">
+                    <h3 style="margin: 0; color: #ff6584; display: flex; align-items: center; gap: 10px;">
+                        🤖 Góc Marketing AI - Trợ Lý Ngọc Trinh 
+                    </h3>
+                    <span style="font-size: 12px; background: #ff007f; padding: 4px 10px; border-radius: 20px; font-weight: bold;">LAPTOP KENG CẦN THƠ</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <!-- Cột chọn sản phẩm từ kho -->
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #0df;">1. Chọn máy từ kho Firebase để đăng bài:</label>
+                        <select id="nt-product-select" style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px;">
+                            <option value="">-- Đang tải danh sách máy từ kho... --</option>
+                        </select>
+                    </div>
+
+                    <!-- Cột chọn văn phong -->
+                    <div>
+                        <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #0df;">2. Văn phong bài viết:</label>
+                        <select id="nt-tone-select" style="width: 100%; padding: 10px; background: #111; color: #fff; border: 1px solid #444; border-radius: 6px;">
+                            <option value="sanh_dieu">Sành điệu, bắt trend, chốt đơn nhanh</option>
+                            <option value="ky_thuat">Chuyên sâu kỹ thuật, cày game/đồ họa</option>
+                            <option value="gia_re">Săn sale cực hời, sinh viên học sinh</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Nút kích hoạt -->
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <button onclick="ngocTrinhVietBaiNgay()" style="flex: 2; background: linear-gradient(45deg, #ff007f, #7928ca); color: #fff; border: none; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                        ✨ Bảo Ngọc Trinh viết bài Facebook ngay
+                    </button>
+                    <button onclick="saoChepBaiViet()" style="flex: 1; background: #222; color: #0ff; border: 1px solid #0ff; padding: 12px; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 14px;">
+                        📋 Sao chép nội dung
+                    </button>
+                </div>
+
+                <!-- Khung hiển thị kết quả bài viết -->
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #ff0;">3. Nội dung Ngọc Trinh vừa soạn (có thể chỉnh sửa trực tiếp trước khi đăng):</label>
+                    <textarea id="nt-result-output" rows="8" style="width: 100%; padding: 12px; background: #111; color: #0ff; border: 1px solid #444; border-radius: 6px; font-family: monospace; font-size: 14px;" placeholder="Bài viết do Ngọc Trinh sinh ra sẽ hiển thị ở đây..."></textarea>
+                </div>
+
+                <!-- Trạng thái hệ thống -->
+                <div id="nt-status-bar" style="margin-top: 10px; font-size: 12px; color: #888; font-style: italic;">
+                    Trạng thái: Sẵn sàng kết nối AI. (Địa chỉ: 49D1A Trần Nam Phú - Hotline: 0909059343)
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- FLOATING AI ASSISTANT WIDGET -->
@@ -1612,7 +1676,7 @@
 
     <!-- CHANGE PASSWORD MODAL -->
     <div id="change-password-modal" class="hidden fixed inset-0 z-[780] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 transition-opacity">
-        <div class="glass-panel w-full max-w-md rounded-[2.5ref] p-6 sm:p-8 shadow-2xl space-y-5 relative border border-amber-500/50 animate-fadeIn bg-gradient-to-b from-[#120a02] via-[#1a0e04] to-[#060301]">
+        <div class="glass-panel w-full max-w-md rounded-[2.5rem] p-6 sm:p-8 shadow-2xl space-y-5 relative border border-amber-500/50 animate-fadeIn bg-gradient-to-b from-[#120a02] via-[#1a0e04] to-[#060301]">
             <div class="absolute -right-20 -top-20 w-60 h-60 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
             
             <div class="flex items-center justify-between border-b border-amber-500/30 pb-3 relative z-10">
@@ -3619,7 +3683,6 @@
             if (newPass.length < 4) return showToast("Mật khẩu mới phải có ít nhất 4 ký tự!", "error");
             if (newPass !== confirmPass) return showToast("Mật khẩu xác nhận không khớp!", "error");
 
-            // Kiểm tra mật khẩu hiện tại
             let isValidCurrent = false;
             if (currentUser.role === 'admin') {
                 if (currentUser.username === 'thien') {
@@ -3636,13 +3699,7 @@
                 return showToast("Mật khẩu hiện tại không chính xác!", "error");
             }
 
-            // Cập nhật mật khẩu mới
             if (currentUser.role === 'admin') {
-                if (currentUser.username === 'thien') {
-                    // Quản lý Thiện dùng mật khẩu riêng hoặc lưu vào appData
-                } else {
-                    // Admin chính (có thể lưu thông báo hoặc cập nhật session)
-                }
                 showToast("Đổi mật khẩu tài khoản Admin thành công!", "success");
             } else {
                 const staffObj = (appData.users || []).find(u => u.id === currentUser.id);
@@ -4614,7 +4671,7 @@
                 return showToast("Chỉ Admin mới được truy cập!", "error");
             }
             currentTab = tabId;
-            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'warranties', 'debts', 'thien', 'expenses', 'kinh-chieu-yeu', 'cloud', 'users', 'logs'].forEach(t => {
+            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'warranties', 'debts', 'thien', 'expenses', 'marketing', 'kinh-chieu-yeu', 'cloud', 'users', 'logs'].forEach(t => {
                 document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tabId);
                 
                 const btnNav = document.getElementById(`nav-${t}`);
@@ -4641,6 +4698,9 @@
             });
             if (tabId === 'kinh-chieu-yeu') {
                 renderCompetitorStores();
+            }
+            if (tabId === 'marketing') {
+                loadInventoryForMarketing();
             }
         }
 
@@ -8732,6 +8792,139 @@
             const streamBox = document.getElementById('liveCommentStream');
             if (streamBox) streamBox.innerHTML = `<div class="text-slate-500 italic text-center py-4">Chưa có bình luận nào. Hãy kết nối nguồn phát hoặc bật "Bật Tự Động Mô Phỏng Live" để hệ thống tự động chốt đơn.</div>`;
         }
+    </script>
+
+    <!-- ================= SCRIPT XỬ LÝ TỐI ƯU ================= -->
+    <script>
+        const KENG_FIREBASE_URL = "https://laptopkeng-ac879-default-rtdb.asia-southeast1.firebasedatabase.app/";
+        const GEMINI_API_KEY_KENG = "AQ.Ab8RN6Kw6DF_AX8WeVT-NaiAleMdMKlv4SwzqVUgyG-rxFJjNQ"; // Đã tích hợp Key Gemini của sếp
+
+        // 1. Tải danh sách laptop từ Firebase
+        function loadInventoryForMarketing() {
+            const select = document.getElementById('nt-product-select');
+            if (!select) return;
+            const url = KENG_FIREBASE_URL + "keng_store/products.json";
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    select.innerHTML = '<option value="">-- Chọn máy cần quảng cáo --</option>';
+                    if (!data) {
+                        select.innerHTML = '<option value="">Kho hàng trống hoặc chưa có dữ liệu</option>';
+                        return;
+                    }
+                    
+                    window.kengInventoryData = data; 
+                    for (let key in data) {
+                        let item = data[key];
+                        let opt = document.createElement('option');
+                        opt.value = key;
+                        let tenMay = item.name || item.tenMay || 'Laptop';
+                        let cpu = item.cpu || '';
+                        let ram = item.ram || '';
+                        let ssd = item.ssd || '';
+                        let gia = item.price || item.sellingPrice || item.giaBan || 'Liên hệ';
+                        
+                        opt.textContent = `${tenMay} | CPU: ${cpu}, RAM ${ram}, SSD ${ssd} | Giá: ${gia}`;
+                        select.appendChild(opt);
+                    }
+                })
+                .catch(err => {
+                    console.error("Lỗi tải kho Firebase:", err);
+                    select.innerHTML = '<option value="">Lỗi kết nối Firebase</option>';
+                });
+        }
+
+        // 2. Hàm gọi AI viết bài tối ưu
+        async function ngocTrinhVietBaiNgay() {
+            const productId = document.getElementById('nt-product-select').value;
+            const tone = document.getElementById('nt-tone-select').value;
+            const outputBox = document.getElementById('nt-result-output');
+            const statusBar = document.getElementById('nt-status-bar');
+
+            if (!productId || !window.kengInventoryData || !window.kengInventoryData[productId]) {
+                alert("Sếp ơi, hãy chọn một chiếc máy cụ thể trong kho trước đã chứ!");
+                return;
+            }
+
+            if (GEMINI_API_KEY_KENG.includes("Dán_Chuỗi_Key") || !GEMINI_API_KEY_KENG.trim()) {
+                alert("Sếp chưa điền chính xác Gemini API Key vào biến GEMINI_API_KEY_KENG kìa!");
+                return;
+            }
+
+            let item = window.kengInventoryData[productId];
+            outputBox.value = "🤖 Ngọc Trinh đang gọi não AI Gemini, đợi em xíu nhé...";
+            statusBar.textContent = "Trạng thái: Đang kết nối Gemini API...";
+
+            let toneDescription = "trẻ trung, sành điệu, chèn nhiều emoji và kêu gọi chốt đơn nhanh";
+            if (tone === 'ky_thuat') toneDescription = "chuyên nghiệp, làm nổi bật thông số phần cứng khủng, chiến game và đồ họa mượt mà";
+            if (tone === 'gia_re') toneDescription = "nhấn mạnh vào tiêu chí ngon-bổ-rẻ, tiết kiệm chi phí tối đa cho học sinh sinh viên";
+
+            const prompt = `Bạn là Ngọc Trinh - trợ lý AI sành điệu và thông minh của cửa hàng LAPTOP KENG CẦN THƠ. 
+            Địa chỉ cửa hàng: 49D1A Trần Nam Phú, Tân An, Cần Thơ. Hotline/Zalo: 0909059343 (Trọng Nguyễn).
+            Kỹ thuật viên chính: Thiện Nguyễn.
+            
+            Hãy viết một bài đăng Facebook quảng cáo chuẩn chỉnh, ${toneDescription} cho chiếc laptop lấy từ kho với thông tin sau:
+            - Tên máy: ${item.name || item.tenMay || 'Laptop cao cấp'}
+            - CPU: ${item.cpu || 'N/A'}
+            - RAM: ${item.ram || 'N/A'}
+            - SSD: ${item.ssd || 'N/A'}
+            - Card đồ họa (GPU): ${item.gpu || 'N/A'}
+            - Kích thước màn hình: ${item.screen || 'N/A'}
+            - Giá bán: ${item.price || item.sellingPrice || item.giaBan || 'Liên hệ'} VNĐ
+            - Tình trạng/Bảo hành: Máy tuyển chọn đẹp keng, bảo hành uy tín tại cửa hàng.
+
+            Yêu cầu bắt buộc: Có tiêu đề giật tít thu hút, mô tả nổi bật ưu điểm cấu hình, có thông tin địa chỉ cửa hàng, hotline và chèn đầy đủ hashtag chuẩn SEO (#LaptopKengCanTho #LaptopCuCanTho #LaptopGiaReCanTho). Trả về nguyên văn nội dung bài đăng.`;
+
+            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY_KENG.trim()}`;
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }]
+                    })
+                });
+
+                const data = await response.json();
+                console.log("Phản hồi thô từ Gemini API:", data);
+
+                if (data.error) {
+                    throw new Error(data.error.message || "Lỗi từ Google API Server");
+                }
+
+                if (data.candidates && data.candidates.length > 0) {
+                    const candidate = data.candidates[0];
+                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
+                        const baiViet = candidate.content.parts[0].text;
+                        outputBox.value = baiViet;
+                        statusBar.textContent = "Trạng thái: Ngọc Trinh đã viết xong! Sếp có thể copy đăng Facebook ngay.";
+                        return;
+                    }
+                }
+                
+                throw new Error("Phản hồi từ AI trả về không có nội dung text hợp lệ.");
+
+            } catch (error) {
+                console.error("Lỗi chi tiết:", error);
+                outputBox.value = "❌ Lỗi: " + error.message;
+                statusBar.textContent = "Trạng thái: Lỗi kết nối.";
+            }
+        }
+
+        // 3. Hàm sao chép nhanh
+        function saoChepBaiViet() {
+            const outputBox = document.getElementById('nt-result-output');
+            outputBox.select();
+            document.execCommand('copy');
+            alert("Đã copy nội dung bài viết vào bộ nhớ tạm! Sếp mang đi paste thẳng lên Facebook Page nhé.");
+        }
+
+        // Tự động load kho khi render module
+        loadInventoryForMarketing();
     </script>
 </body>
 </html>
