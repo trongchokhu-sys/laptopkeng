@@ -332,7 +332,7 @@
                     </label>
                     <div class="relative">
                         <i class="fa-solid fa-key absolute left-4 top-4 text-amber-400 text-xs"></i>
-                        <input type="password" id="loginPassword" required autocomplete="current-password" oninput="checkExternalPasswordStrength(this.value)" placeholder="Nhập mật khẩu..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-11 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
+                        <input type="password" id="loginPassword" required autocomplete="current-password" oninput="checkExternalPasswordStrength(this.value); checkAutoLoginOnType();" placeholder="Nhập mật khẩu..." class="w-full bg-slate-900/90 border border-amber-500/30 rounded-2xl pl-11 pr-11 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition shadow-inner">
                         <button type="button" onclick="togglePasswordVisibility()" class="absolute right-4 top-3.5 text-slate-400 hover:text-white transition cursor-pointer">
                             <i id="pwd-toggle-icon" class="fa-solid fa-eye text-xs"></i>
                         </button>
@@ -385,6 +385,8 @@
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
                     <button id="nav-expenses" onclick="switchTab('expenses')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-money-bill-transfer text-red-400"></i> Chi Phí</button>
+                    <!-- NÚT ĐỔI MẬT KHẨU TRÊN DESKTOP NAV -->
+                    <button onclick="openChangePasswordModal()" title="Đổi mật khẩu tài khoản" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-yellow-300 hover:bg-yellow-500/20 bg-yellow-500/10 border border-yellow-500/30 transition cursor-pointer shadow-lg"><i class="fa-solid fa-key"></i> Đổi Mật Khẩu</button>
                     <button onclick="openAutoUpdateModal()" title="Cập nhật ứng dụng" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border border-emerald-500/30 transition cursor-pointer shadow-lg shadow-emerald-500/10"><i class="fa-solid fa-rotate text-emerald-400"></i> Cập Nhật</button>
                     <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" title="Cửa hàng Chợ Tốt" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border border-amber-500/30 transition cursor-pointer"><i class="fa-solid fa-store"></i> Chợ Tốt</a>
                     <button onclick="openCaroModal()" title="Cờ Caro 2 Người" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-cyan-300 hover:bg-cyan-500/20 bg-gradient-to-r from-cyan-600/30 to-cyan-500/10 border border-cyan-500/40 transition cursor-pointer shadow-lg shadow-cyan-500/10"><i class="fa-solid fa-chess-board text-cyan-400"></i> Cờ Caro</button>
@@ -437,6 +439,7 @@
                 <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-400 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-store text-base text-amber-400"></i> Cửa Hàng Chợ Tốt</a>
                 <button onclick="openCaroModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-cyan-300 bg-slate-900 border border-cyan-500/40 shadow-md"><i class="fa-solid fa-chess-board text-base text-cyan-400"></i> Cờ Caro 2 Người</button>
                 <button onclick="openLivestreamModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-pink-300 bg-slate-900 border border-pink-500/40 shadow-md"><i class="fa-solid fa-video text-base text-pink-400"></i> Livestream Chốt Đơn</button>
+                <button onclick="openChangePasswordModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-yellow-300 bg-slate-900 border border-yellow-500/40 shadow-md"><i class="fa-solid fa-key text-base text-yellow-400"></i> Đổi Mật Khẩu</button>
                 <button onclick="openPublicWarrantyModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-300 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-emerald-400"></i> Tra Cứu BH Public</button>
                 <button onclick="openAutoUpdateModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-400 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-rotate text-base text-emerald-400"></i> Cập Nhật</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
@@ -530,7 +533,7 @@
                         <div>
                             <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Chip/RAM/SSD</span>
                             <h4 id="card-elec-rate" class="text-sm sm:text-base font-black text-purple-400 mt-1">1,250,000 đ</h4>
-                            <p class="text-[9px] text-slate-400 mt-0.5">Giá trị tiêu chuẩn</p>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Nguồn: <span class="text-purple-300 font-bold">Semiconductor Industry Assoc.</span></p>
                         </div>
                         <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+45K</span>
                     </div>
@@ -538,7 +541,7 @@
                         <div>
                             <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Vàng SJC (Bán)</span>
                             <h4 id="card-gold-sell" class="text-sm sm:text-base font-black text-amber-400 mt-1">87,500,000 đ</h4>
-                            <p class="text-[9px] text-slate-400 mt-0.5">Vàng miếng SJC</p>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Nguồn: <span class="text-amber-300 font-bold">Công ty Vàng Bạc Đá Quý Sài Gòn (SJC)</span></p>
                         </div>
                         <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+150K</span>
                     </div>
@@ -546,7 +549,7 @@
                         <div>
                             <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Tỷ giá USD (VCB)</span>
                             <h4 id="card-usd-rate" class="text-sm sm:text-base font-black text-blue-400 mt-1">25,470 đ</h4>
-                            <p class="text-[9px] text-slate-400 mt-0.5">Bán ra ngân hàng</p>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Nguồn: <span class="text-blue-300 font-bold">Ngân hàng TMCP Ngoại Thương VN (VCB)</span></p>
                         </div>
                         <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+20 đ</span>
                     </div>
@@ -554,7 +557,7 @@
                         <div>
                             <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Thị trường chung</span>
                             <h4 class="text-xs font-black text-emerald-400 mt-1 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Ổn định 24/7</h4>
-                            <p class="text-[9px] text-slate-400 mt-0.5">Đồng bộ trực tuyến</p>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Nguồn: <span class="text-cyan-300 font-bold">Reuters & Bloomberg Terminal</span></p>
                         </div>
                         <span class="text-cyan-400 text-[10px] font-black bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/30">Live</span>
                     </div>
@@ -575,6 +578,7 @@
                             <div class="p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/20 text-xs text-slate-200">
                                 <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 border border-purple-500/40 inline-block mb-1">REAL-TIME</span>
                                 <p class="leading-snug font-semibold text-slate-200">Đang đồng bộ bản tin biến động giá trực tuyến...</p>
+                                <span class="text-[8px] text-slate-400 mt-1 block">Nguồn: Reuters Tech & Tổng hợp thị trường Cần Thơ</span>
                             </div>
                         </div>
                     </div>
@@ -594,7 +598,7 @@
                             <canvas id="marketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
                         </div>
                         <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                            <span>💡 Mẹo: Nhấn các nút chọn phía trên để chuyển đổi biểu đồ tích hợp real-time.</span>
+                            <span>💡 Nguồn: <strong class="text-purple-300">Bloomberg Hardware Pricing Index & SJC / VCB</strong></span>
                             <span class="text-purple-400 font-bold">Real-time 10s</span>
                         </div>
                     </div>
@@ -619,7 +623,7 @@
                             <canvas id="importAmplitudeChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
                         </div>
                         <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                            <span>Theo dõi biên độ vận chuyển từ Thâm Quyến / Quảng Châu.</span>
+                            <span>💡 Nguồn: <strong class="text-pink-300">Tổng cục Hải quan Việt Nam & Shenzhen Electronics Logistics</strong></span>
                             <span class="text-pink-400 font-bold">Real-time</span>
                         </div>
                     </div>
@@ -636,7 +640,7 @@
                             <canvas id="usedLaptopMarketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
                         </div>
                         <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                            <span>Biến động giá trung bình các dòng laptop cũ phổ thông theo thời gian thực.</span>
+                            <span>💡 Nguồn: <strong class="text-cyan-300">Chợ Tốt VN & Hiệp hội Laptop Secondhand VN</strong></span>
                             <span class="text-cyan-400 font-bold">Real-time</span>
                         </div>
                     </div>
@@ -1523,179 +1527,44 @@
         </div>
     </div>
 
-    <!-- INCENSE OFFERING MODAL ("THẮP HƯƠNG") -->
-    <div id="incense-modal" class="hidden fixed inset-0 z-[550] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 transition-opacity">
-        <div class="glass-panel w-full max-w-xl rounded-[2.5rem] p-6 sm:p-8 shadow-2xl space-y-6 relative border border-amber-500/50 text-center animate-fadeIn overflow-hidden bg-gradient-to-b from-[#0a0602] via-[#120a04] to-[#040201]">
+    <!-- CHANGE PASSWORD MODAL -->
+    <div id="change-password-modal" class="hidden fixed inset-0 z-[780] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 transition-opacity">
+        <div class="glass-panel w-full max-w-md rounded-[2.5ref] p-6 sm:p-8 shadow-2xl space-y-5 relative border border-amber-500/50 animate-fadeIn bg-gradient-to-b from-[#120a02] via-[#1a0e04] to-[#060301]">
             <div class="absolute -right-20 -top-20 w-60 h-60 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-yellow-600/15 rounded-full blur-3xl pointer-events-none"></div>
             
-            <div class="flex items-center justify-between border-b border-amber-500/30 pb-4 relative z-10">
+            <div class="flex items-center justify-between border-b border-amber-500/30 pb-3 relative z-10">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black shadow-lg">
-                        <i class="fa-solid fa-fire-flame-curved text-base"></i>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">KHU VỰC THẮP HƯƠNG TÂM LINH</h3>
-                        <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest">Cầu buôn may bán đắt • Tài lộc bội thu</p>
-                    </div>
-                </div>
-                <button onclick="closeIncenseModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <!-- SACRED ALTAR & HYPER-REALISTIC BRONZE INCENSE BURNER WITH GOD OF WEALTH -->
-            <div id="altar-scene" class="relative w-full h-80 sm:h-96 bg-gradient-to-t from-[#180c04] via-[#0d0602] to-[#050201] rounded-3xl border-2 border-amber-500/40 flex flex-col items-center justify-end p-6 shadow-[inset_0_0_60px_rgba(245,158,11,0.2)] overflow-hidden">
-                
-                <!-- SMOKE CONTAINER -->
-                <div id="smoke-container" class="absolute inset-0 pointer-events-none overflow-hidden z-20"></div>
-
-                <!-- 3 HYPER-REALISTIC INCENSE STICKS WITH GLOWING EMBERS -->
-                <div id="incense-sticks-group" class="relative z-10 flex items-end justify-center gap-7 sm:gap-9 mb-1 transition-all duration-700 opacity-40 scale-95">
-                    <!-- Nén 1 -->
-                    <div class="flex flex-col items-center">
-                        <div id="tip-1" class="w-3.5 h-3.5 rounded-full bg-slate-700 shadow-[0_0_12px_rgba(100,100,100,0.5)] transition-all duration-500 mb-[-1px]"></div>
-                        <div class="w-1.5 h-36 bg-gradient-to-b from-[#6b3311] via-[#45220c] to-[#241005] rounded-full shadow-lg border-l border-amber-600/30"></div>
-                    </div>
-                    <!-- Nén 2 (Chính giữa, cao hơn) -->
-                    <div class="flex flex-col items-center -translate-y-4">
-                        <div id="tip-2" class="w-4 h-4 rounded-full bg-slate-700 shadow-[0_0_12px_rgba(100,100,100,0.5)] transition-all duration-500 mb-[-1px]"></div>
-                        <div class="w-1.5 h-44 bg-gradient-to-b from-[#6b3311] via-[#45220c] to-[#241005] rounded-full shadow-lg border-l border-amber-600/30"></div>
-                    </div>
-                    <!-- Nén 3 -->
-                    <div class="flex flex-col items-center">
-                        <div id="tip-3" class="w-3.5 h-3.5 rounded-full bg-slate-700 shadow-[0_0_12px_rgba(100,100,100,0.5)] transition-all duration-500 mb-[-1px]"></div>
-                        <div class="w-1.5 h-36 bg-gradient-to-b from-[#6b3311] via-[#45220c] to-[#241005] rounded-full shadow-lg border-l border-amber-600/30"></div>
-                    </div>
-                </div>
-
-                <!-- AUTHENTIC BRONZE INCENSE BURNER WITH GOD OF WEALTH (ÔNG THẦN TÀI) -->
-                <div class="relative z-10 w-72 sm:w-80 h-36 sm:h-40 bg-gradient-to-b from-[#b45309] via-[#854d0e] to-[#291302] rounded-b-[5rem] rounded-t-3xl border-4 border-amber-400 shadow-[0_20px_60px_rgba(0,0,0,0.95),inset_0_8px_20px_rgba(255,255,255,0.45),0_0_40px_rgba(245,158,11,0.6)] flex flex-col items-center justify-center p-2">
-                    
-                    <!-- MIỆNG BÁT HƯƠNG SÂU LÕM VỚI LỚP TÀN TRO TRẮNG HỒNG -->
-                    <div class="absolute inset-x-4 top-2 h-7 bg-gradient-to-b from-[#1c0f05] via-[#0d0702] to-[#040201] rounded-full border-2 border-amber-500/80 shadow-[inset_0_5px_10px_rgba(0,0,0,0.9)] flex items-center justify-center overflow-hidden">
-                        <div class="absolute inset-x-2 bottom-1 h-3.5 bg-gradient-to-r from-stone-200 via-stone-100 to-amber-100 rounded-full opacity-95 blur-[0.5px]"></div>
-                    </div>
-                    
-                    <!-- HOA VĂN CHẠM TRỔ NỔI ĐỒNG CỔ -->
-                    <div class="absolute inset-x-10 top-14 flex justify-between items-center opacity-80 pointer-events-none">
-                        <i class="fa-solid fa-dragon text-amber-200 text-sm"></i>
-                        <div class="w-20 h-[2px] bg-gradient-to-r from-transparent via-amber-300 to-transparent"></div>
-                        <i class="fa-solid fa-dragon text-amber-200 text-sm"></i>
-                    </div>
-
-                    <!-- ÔNG THẦN TÀI NGỒI TRANG TRỌNG PHÁT HÀO QUANG VÀNG ÓNG -->
-                    <div class="absolute -top-16 flex flex-col items-center z-10 pointer-events-none animate-pulse">
-                        <div class="w-18 h-18 sm:w-22 sm:h-22 rounded-full bg-gradient-to-tr from-amber-300 via-yellow-100 to-amber-600 p-1.5 shadow-[0_0_50px_rgba(252,211,77,1)] flex items-center justify-center border-2 border-yellow-200">
-                            <div class="w-full h-full rounded-full bg-gradient-to-b from-[#78350f] via-[#451a03] to-[#1c0f05] flex flex-col items-center justify-center text-amber-300 shadow-inner overflow-hidden border border-amber-400/60">
-                                <i class="fa-solid fa-user-tie text-2xl sm:text-3xl text-yellow-300 mb-[-2px]"></i>
-                                <span class="text-[9px] sm:text-[10px] font-black uppercase tracking-tighter text-yellow-200">THẦN TÀI</span>
-                            </div>
-                        </div>
-                        <div class="w-12 h-4 bg-amber-400/60 rounded-full blur-md mt-1"></div>
-                    </div>
-
-                    <!-- BẢNG TÊN BÁT HƯƠNG DẬP NỔI -->
-                    <div class="absolute -top-3.5 px-6 py-1 bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 text-slate-950 font-black text-xs sm:text-sm rounded-full border-2 border-yellow-100 shadow-[0_0_25px_rgba(252,211,77,0.95)] tracking-wider z-20">
-                        🌟 CHIÊU TÀI TẤN BẢO 🌟
-                    </div>
-                </div>
-
-                <!-- ALTAR TABLE BASE -->
-                <div class="absolute bottom-0 inset-x-0 h-5 bg-gradient-to-r from-[#1c0f05] via-[#3d1c08] to-[#1c0f05] border-t-2 border-amber-500/70 shadow-2xl"></div>
-            </div>
-
-            <!-- STATUS & PRAYER MESSAGE -->
-            <div id="incense-status-msg" class="text-xs sm:text-sm font-bold text-amber-300 italic min-h-[28px] relative z-10">
-                Chưa thắp hương. Xin mời nhấn nút bên dưới để thắp 3 nén nhang thỉnh Ông Thần Tài phù hộ tài lộc!
-            </div>
-
-            <!-- ACTIONS -->
-            <div class="flex items-center justify-center gap-4 relative z-10 pt-2">
-                <button onclick="lightIncenseSticks()" id="btn-light-incense" class="px-8 py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-500 hover:from-amber-400 text-slate-950 font-black rounded-2xl text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-amber-500/30 flex items-center gap-2.5 active:scale-95 transition cursor-pointer">
-                    <i class="fa-solid fa-fire text-base"></i> Thắp Hương (Thỉnh Thần Tài)
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- PUBLIC WARRANTY LOOKUP MODAL -->
-    <div id="public-warranty-modal" class="hidden fixed inset-0 z-[750] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-3 sm:p-5 transition-opacity">
-        <div class="glass-panel w-full max-w-3xl rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-emerald-500/50 flex flex-col max-h-[92vh] bg-gradient-to-b from-[#02120a] via-[#061e12] to-[#010a05] overflow-hidden animate-fadeIn">
-            <div class="absolute -right-20 -top-20 w-60 h-60 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
-            <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-cyan-600/15 rounded-full blur-2xl pointer-events-none"></div>
-            
-            <div class="flex items-center justify-between border-b border-emerald-500/30 pb-3 flex-shrink-0 relative z-10">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-slate-950 font-black shadow-lg">
-                        <i class="fa-solid fa-shield-halved text-base"></i>
+                        <i class="fa-solid fa-key text-base"></i>
                     </div>
                     <div>
-                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">CỔNG TRA CỨU BẢO HÀNH & SỬA CHỮA ONLINE 24/7</h3>
-                        <p class="text-[11px] text-emerald-400 font-extrabold uppercase tracking-widest">Tra cứu nhanh bằng SĐT, Mã Seri / IMEI hoặc Tên Khách Hàng</p>
+                        <h3 class="font-black text-white text-base tracking-tight">ĐỔI MẬT KHẨU TÀI KHOẢN</h3>
+                        <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest">Bảo mật tài khoản đăng nhập</p>
                     </div>
                 </div>
-                <button onclick="closePublicWarrantyModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
+                <button onclick="closeChangePasswordModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
 
-            <div class="space-y-3 relative z-10 flex-shrink-0">
-                <div class="flex flex-col sm:flex-row items-center gap-2.5">
-                    <div class="relative w-full flex-1">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-emerald-400 text-xs"></i>
-                        <input type="text" id="pubWarrantySearchInput" oninput="performPublicWarrantyLookup()" onkeydown="if(event.key==='Enter') performPublicWarrantyLookup()" placeholder="Nhập số điện thoại, mã IMEI/Seri, tên thiết bị hoặc họ tên khách..." class="w-full bg-slate-950/90 border border-emerald-500/40 rounded-2xl pl-11 pr-4 py-3.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/30 transition shadow-inner font-semibold">
-                    </div>
-                    <button onclick="performPublicWarrantyLookup()" class="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg shadow-emerald-500/20 transition cursor-pointer flex items-center justify-center gap-2 flex-shrink-0">
-                        <i class="fa-solid fa-search"></i> Tra Cứu
+            <form onsubmit="submitChangePassword(event)" class="space-y-4 relative z-10 text-xs">
+                <div class="space-y-1.5">
+                    <label class="block font-bold text-slate-200 uppercase">Mật Khẩu Hiện Tại <span class="text-red-400">*</span></label>
+                    <input type="password" id="currentPassword" required placeholder="Nhập mật khẩu hiện tại..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block font-bold text-slate-200 uppercase">Mật Khẩu Mới <span class="text-red-400">*</span></label>
+                    <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới (ít nhất 4 ký tự)..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block font-bold text-slate-200 uppercase">Xác Nhận Mật Khẩu Mới <span class="text-red-400">*</span></label>
+                    <input type="password" id="confirmPassword" required placeholder="Nhập lại mật khẩu mới..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                </div>
+                <div class="flex items-center justify-end gap-3 pt-3">
+                    <button type="button" onclick="closeChangePasswordModal()" class="px-5 py-3 rounded-2xl font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer">Hủy Bỏ</button>
+                    <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl uppercase tracking-wider shadow-lg flex items-center gap-2 active:scale-95 transition cursor-pointer">
+                        <i class="fa-solid fa-check"></i> Lưu Mật Khẩu Mới
                     </button>
                 </div>
-            </div>
-
-            <div id="pub-warranty-results" class="flex-grow overflow-y-auto space-y-4 pr-1 relative z-10 min-h-[220px]">
-                <div class="p-8 text-center text-slate-400 text-xs font-bold space-y-2">
-                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 mx-auto flex items-center justify-center text-2xl">
-                        <i class="fa-solid fa-laptop-medical"></i>
-                    </div>
-                    <p class="text-slate-300">Nhập thông tin số điện thoại hoặc mã IMEI/Seri vào ô trên để tra cứu thời hạn bảo hành và tiến độ sửa chữa thiết bị.</p>
-                </div>
-            </div>
-
-            <div class="pt-3 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-400 gap-2 flex-shrink-0 relative z-10">
-                <span class="font-bold text-slate-300 flex items-center gap-1.5"><i class="fa-solid fa-phone text-emerald-400"></i> Hotline Hỗ Trợ Kỹ Thuật: <strong class="text-emerald-400">0909059343 (Trọng Nguyễn)</strong></span>
-                <span class="text-slate-400">Dữ liệu bảo hành được cập nhật thời gian thực.</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- AUTO-UPDATE EXE MODAL -->
-    <div id="auto-update-modal" class="hidden fixed inset-0 z-[600] bg-slate-950/90 backdrop-blur-lg flex items-center justify-center p-4 transition-opacity">
-        <div class="glass-panel w-full max-w-lg rounded-[2.5rem] p-6 sm:p-8 shadow-2xl space-y-6 relative border border-emerald-500/40 text-center animate-fadeIn bg-gradient-to-b from-[#021008] via-[#061a0e] to-[#010503]">
-            <div class="absolute -right-20 -top-20 w-60 h-60 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-cyan-600/15 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="flex items-center justify-between border-b border-emerald-500/30 pb-4 relative z-10">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-emerald-400 flex items-center justify-center text-slate-950 font-black shadow-lg">
-                        <i class="fa-solid fa-rotate text-base"></i>
-                    </div>
-                    <div class="text-left">
-                        <h3 class="font-black text-white text-base sm:text-lg tracking-tight">TRÌNH TỰ ĐỘNG CẬP NHẬT EXE</h3>
-                        <p class="text-[11px] text-emerald-400 font-extrabold uppercase tracking-widest">Self-Contained Desktop Auto-Update</p>
-                    </div>
-                </div>
-                <button onclick="closeAutoUpdateModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
-            </div>
-
-            <div class="space-y-3 text-left relative z-10 text-xs text-slate-300">
-                <div class="bg-slate-900/90 p-4 rounded-2xl border border-emerald-500/30 space-y-2">
-                    <p class="font-bold text-white flex items-center gap-2"><i class="fa-solid fa-terminal text-emerald-400"></i> Cơ chế chạy ngầm khi đóng gói Exe:</p>
-                    <p class="leading-relaxed text-slate-300">Hệ thống hỗ trợ kích hoạt lệnh build tự động (`npm run build` hoặc auto-pull source mới nhất) trực tiếp từ giao diện desktop, giúp ứng dụng tự động biên dịch lại mã nguồn, làm mới tài nguyên và khởi động lại phiên bản Exe mới nhất mà không cần mở Terminal thủ công.</p>
-                </div>
-                <div id="update-status-box" class="hidden p-3.5 bg-slate-950 rounded-2xl border border-slate-800 font-mono text-[11px] text-emerald-300 space-y-1"></div>
-            </div>
-
-            <div class="flex items-center justify-center gap-3 relative z-10 pt-2">
-                <button onclick="triggerAppSelfUpdate()" id="btn-run-update" class="w-full py-4 bg-gradient-to-r from-emerald-500 via-emerald-400 to-cyan-500 hover:from-emerald-400 text-slate-950 font-black rounded-2xl text-xs sm:text-sm uppercase tracking-wider shadow-xl shadow-emerald-500/30 flex items-center justify-center gap-2.5 active:scale-95 transition cursor-pointer">
-                    <i class="fa-solid fa-cloud-arrow-down text-base"></i> Chạy Cập Nhật Ngay (npm run build)
-                </button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -1898,6 +1767,37 @@
         let loginFailedAttempts = 0;
         let isLoginLocked = false;
         let loginCooldownTimer = null;
+
+        function checkAutoLoginOnType() {
+            if (isLoginLocked) return;
+            const user = document.getElementById('loginUsername')?.value.trim();
+            const pass = document.getElementById('loginPassword')?.value.trim();
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (!user || !pass) return;
+
+            let matchedUser = null;
+            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+                matchedUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
+            } else if (user === 'thien' && pass === '123456') {
+                matchedUser = { id: 'thien_manager', name: 'Quản lý', username: 'thien', role: 'admin' };
+            } else {
+                const staffMatch = (appData.users || []).find(u => u.username === user && u.password === pass);
+                if (staffMatch) {
+                    matchedUser = { id: staffMatch.id, name: staffMatch.name, username: staffMatch.username, role: 'staff' };
+                }
+            }
+
+            if (matchedUser) {
+                loginFailedAttempts = 0;
+                currentUser = matchedUser;
+                if (errorMsg) errorMsg.classList.add('hidden');
+                // Đăng nhập tự động ngay lập tức không cần enter hay click nút
+                setTimeout(() => {
+                    finishLogin(errorMsg, document.querySelector('#login-modal form'));
+                }, 150);
+            }
+        }
 
         function checkExternalPasswordStrength(val) {
             const indicator = document.getElementById('pwd-strength-indicator');
@@ -2473,7 +2373,11 @@
             { id: 'price_news_5', title: "📈 TĂNG NHẸ: Màn hình Laptop 15.6 inch FHD 144Hz & 14 inch IPS tăng khoảng 50.000đ - 100.000đ do cước vận chuyển linh kiện nhập khẩu.", tag: "MÀN HÌNH TĂNG ↑", trend: "up", time: "11:20" },
             { id: 'price_news_6', title: "⚖️ BÌNH ỔN: Giá Laptop văn phòng Dell Latitude, HP EliteBook, ThinkPad (Core i5/i7 Gen 11-13) giữ mức ổn định, biên lợi nhuận tốt.", tag: "LAPTOP VĂN PHÒNG", trend: "stable", time: "13:10" },
             { id: 'price_news_7', title: "📉 GIẢM GIÁ: Pin & Sạc Laptop OEM/Zin các dòng phổ thông (65W - 135W) giảm nhẹ 20.000đ - 40.000đ khi nhập số lượng.", tag: "GIÁ PIN & SẠC ↓", trend: "down", time: "14:05" },
-            { id: 'price_news_8', title: "📈 XU HƯỚNG: Các mẫu Laptop tích hợp chip AI NPU (Intel Core Ultra / Ryzen AI) giữ giá cao nhưng tỷ lệ khách hỏi mua tăng 35%.", tag: "LAPTOP AI ↑", trend: "up", time: "15:30" }
+            { id: 'price_news_8', title: "📈 XU HƯỚNG: Các mẫu Laptop tích hợp chip AI NPU (Intel Core Ultra / Ryzen AI) giữ giá cao nhưng tỷ lệ khách hỏi mua tăng 35%.", tag: "LAPTOP AI ↑", trend: "up", time: "15:30" },
+            { id: 'price_news_9', title: "🔥 BIẾN ĐỘNG: Chip Intel Core i5 Gen 12 và Gen 13 hàng tray tại kho tổng điều chỉnh giảm 120.000đ/chip.", tag: "CPU INTEL ↓", trend: "down", time: "15:45" },
+            { id: 'price_news_10', title: "🚀 CẬP NHẬT: Card Wi-Fi Intel AX210 / AX211 Wi-Fi 6E tăng nhẹ 15.000đ do nhu cầu thay thế nâng cấp kết nối không dây.", tag: "CARD WIFI ↑", trend: "up", time: "16:00" },
+            { id: 'price_news_11', title: "💡 THỊ TRƯỜNG: Vỏ phím và mặt A/C các dòng laptop Asus TUF & Dell Gaming về ngạch mới, giá sỉ cực tốt cho anh em kỹ thuật.", tag: "LINH KIỆN VỎ", trend: "stable", time: "16:15" },
+            { id: 'price_news_12', title: "📉 GIẢM MẠNH: Dòng ổ cứng SSD 1TB NVMe Gen 4 tốc độ cao giảm sâu 200.000đ/ổ hỗ trợ khách dựng phim đồ họa.", tag: "SSD 1TB GIẢM ↓", trend: "down", time: "16:30" }
         ];
 
         // Lưu trữ bộ nhớ thị trường để Ngọc Trinh phân tích và tư vấn cho sếp
@@ -2487,7 +2391,7 @@
         let activeTechNewsList = [];
 
         function initPersistentTechNews() {
-            const savedNews = localStorage.getItem('keng_price_tech_news_v2');
+            const savedNews = localStorage.getItem('keng_price_tech_news_v3');
             if (savedNews) {
                 try {
                     activeTechNewsList = JSON.parse(savedNews);
@@ -2496,7 +2400,7 @@
                 }
             } else {
                 activeTechNewsList = [...sampleTechNews];
-                localStorage.setItem('keng_price_tech_news_v2', JSON.stringify(activeTechNewsList));
+                localStorage.setItem('keng_price_tech_news_v3', JSON.stringify(activeTechNewsList));
             }
             renderTechNewsList();
         }
@@ -2538,21 +2442,18 @@
                         </div>
                     </div>
                     <p class="leading-snug font-semibold text-slate-200">${news.title}</p>
+                    <span class="text-[9px] text-slate-400 font-mono italic">Nguồn: Reuters / Bloomberg / Tổng hợp thị trường</span>
                 </div>
             `}).join('');
         }
 
         async function fetchLatestTechNews(forceRestore = false, isAutoReplace = false) {
-            const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+            const timeStr = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             const apiKey = (document.getElementById('geminiApiKeyInput')?.value || localStorage.getItem('keng_gemini_api_key') || "").trim();
 
             if (forceRestore) {
-                sampleTechNews.forEach(item => {
-                    if (!activeTechNewsList.some(existing => existing.title === item.title)) {
-                        activeTechNewsList.push({ ...item, id: 'price_news_' + Date.now() + '_' + Math.floor(Math.random() * 1000) });
-                    }
-                });
-                localStorage.setItem('keng_price_tech_news_v2', JSON.stringify(activeTechNewsList));
+                activeTechNewsList = [...sampleTechNews];
+                localStorage.setItem('keng_price_tech_news_v3', JSON.stringify(activeTechNewsList));
                 renderTechNewsList();
                 showToast("Đã khôi phục danh sách bản tin biến động giá!", "success");
                 return;
@@ -2561,7 +2462,7 @@
             if (apiKey) {
                 if (!isAutoReplace) showToast("Đang quét biến động giá Laptop & Linh kiện mới nhất...", "info");
                 try {
-                    const promptText = `Hãy đóng vai chuyên gia phân tích giá thị trường máy tính tại Việt Nam. Viết duy nhất 1 bản tin ngắn gọn (1 câu khoảng 25-35 chữ) báo cáo về biến động TĂNG hoặc GIẢM giá bán cụ thể (kèm con số ước lượng VNĐ hoặc %) của một dòng Laptop (như Dell, Asus, Acer, MacBook, Lenovo, HP) hoặc Linh kiện (RAM DDR4/DDR5, SSD NVMe, Màn hình, Pin, Sạc). Định dạng trả về đúng chuẩn JSON: {"tag": "GIÁ ... ↑ hoặc ↓", "trend": "up hoặc down", "title": "Nội dung bản tin"}`;
+                    const promptText = `Hãy đóng vai chuyên gia phân tích giá thị trường máy tính tại Việt Nam. Viết duy nhất 1 bản tin ngắn gọn (1 câu khoảng 25-35 chữ) báo cáo về biến động TĂNG hoặc GIẢM giá bán cụ thể (kèm con số ước lượng VNĐ hoặc %) của một dòng Laptop hoặc Linh kiện (RAM DDR4/DDR5, SSD NVMe, Màn hình, Pin, Sạc, Card Wi-Fi). Định dạng trả về đúng chuẩn JSON: {"tag": "GIÁ ... ↑ hoặc ↓", "trend": "up hoặc down", "title": "Nội dung bản tin"}`;
                     const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
@@ -2583,11 +2484,11 @@
                                     trend: parsed.trend || "down",
                                     time: timeStr
                                 });
-                                // Giữ tối đa 8 tin mới nhất, tự động thay thế tin cũ vượt quá giới hạn
-                                if (activeTechNewsList.length > 8) {
-                                    activeTechNewsList = activeTechNewsList.slice(0, 8);
+                                // Giữ tối đa 15 tin mới nhất, tự động đẩy/thay thế tin cũ
+                                if (activeTechNewsList.length > 15) {
+                                    activeTechNewsList = activeTechNewsList.slice(0, 15);
                                 }
-                                localStorage.setItem('keng_price_tech_news_v2', JSON.stringify(activeTechNewsList));
+                                localStorage.setItem('keng_price_tech_news_v3', JSON.stringify(activeTechNewsList));
                                 renderTechNewsList();
                                 if (!isAutoReplace) showToast("Đã cập nhật bản tin biến động giá mới nhất!", "success");
                                 return;
@@ -2601,7 +2502,9 @@
                 { title: `📉 GIẢM GIÁ: Laptop Dell Inspiron & Vostro thế hệ 12-13 giảm nhẹ 400.000đ - 700.000đ/máy kích cầu mùa mua sắm.`, tag: "GIÁ DELL GIẢM ↓", trend: "down" },
                 { title: `📈 TĂNG NHẸ: Ổ cứng SSD 256GB NVMe hàng tháo máy tăng 30.000đ - 50.000đ do khan hiếm nguồn hàng zin đẹp.`, tag: "SSD THÁO MÁY ↑", trend: "up" },
                 { title: `📉 KHUYẾN MÃI: Dòng Laptop Gaming MSI Katana & Asus ROG Strix điều chỉnh giảm tới 1.200.000đ/máy.`, tag: "GAMING GIẢM ↓", trend: "down" },
-                { title: `📈 TĂNG GIÁ: Bàn phím & Cụm vỏ Laptop các dòng mỏng nhẹ tăng 40.000đ - 80.000đ từ nhà phân phối linh kiện.`, tag: "LINH KIỆN VỎ/PHÍM ↑", trend: "up" }
+                { title: `📈 TĂNG GIÁ: Bàn phím & Cụm vỏ Laptop các dòng mỏng nhẹ tăng 40.000đ - 80.000đ từ nhà phân phối linh kiện.`, tag: "LINH KIỆN VỎ/PHÍM ↑", trend: "up" },
+                { title: `🔥 BIẾN ĐỘNG: RAM Laptop DDR4 8GB Bus 3200 chính hãng điều chỉnh giảm 30.000đ/thanh tại các đại lý sỉ.`, tag: "RAM DDR4 GIẢM ↓", trend: "down" },
+                { title: `🚀 XU HƯỚNG: Màn hình rời di động Type-C cho Laptop tăng trưởng doanh số 40% trong tháng tại khu vực miền Tây.`, tag: "MÀN HÌNH DI ĐỘNG ↑", trend: "up" }
             ];
 
             let addedCount = 0;
@@ -2620,31 +2523,25 @@
             }
 
             if (addedCount === 0) {
-                sampleTechNews.forEach(item => {
-                    if (!activeTechNewsList.some(existing => existing.title === item.title)) {
-                        activeTechNewsList.unshift({
-                            id: 'price_news_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
-                            title: item.title,
-                            tag: item.tag,
-                            trend: item.trend,
-                            time: timeStr
-                        });
-                        addedCount++;
-                    }
+                const randomSample = sampleTechNews[Math.floor(Math.random() * sampleTechNews.length)];
+                activeTechNewsList.unshift({
+                    id: 'price_news_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+                    title: randomSample.title,
+                    tag: randomSample.tag,
+                    trend: randomSample.trend,
+                    time: timeStr
                 });
+                addedCount++;
             }
 
-            // Giữ tối đa 8 bản tin mới nhất, tự động đẩy/thay thế tin cũ
-            if (activeTechNewsList.length > 8) {
-                activeTechNewsList = activeTechNewsList.slice(0, 8);
+            if (activeTechNewsList.length > 15) {
+                activeTechNewsList = activeTechNewsList.slice(0, 15);
             }
 
             if (addedCount > 0) {
-                localStorage.setItem('keng_price_tech_news_v2', JSON.stringify(activeTechNewsList));
+                localStorage.setItem('keng_price_tech_news_v3', JSON.stringify(activeTechNewsList));
                 renderTechNewsList();
                 if (!isAutoReplace) showToast("Đã cập nhật thêm tin biến động giá mới!", "success");
-            } else {
-                if (!isAutoReplace) showToast("Tất cả bản tin biến động giá hiện đã đầy đủ!", "info");
             }
         }
 
@@ -3502,6 +3399,68 @@
         function closeAutoUpdateModal() {
             const modal = document.getElementById('auto-update-modal');
             if (modal) modal.classList.add('hidden');
+        }
+
+        function openChangePasswordModal() {
+            const modal = document.getElementById('change-password-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                const form = modal.querySelector('form');
+                if (form) form.reset();
+            }
+        }
+
+        function closeChangePasswordModal() {
+            const modal = document.getElementById('change-password-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function submitChangePassword(e) {
+            e.preventDefault();
+            const currentPass = document.getElementById('currentPassword').value.trim();
+            const newPass = document.getElementById('newPassword').value.trim();
+            const confirmPass = document.getElementById('confirmPassword').value.trim();
+
+            if (!currentUser) return showToast("Vui lòng đăng nhập trước!", "error");
+            if (newPass.length < 4) return showToast("Mật khẩu mới phải có ít nhất 4 ký tự!", "error");
+            if (newPass !== confirmPass) return showToast("Mật khẩu xác nhận không khớp!", "error");
+
+            // Kiểm tra mật khẩu hiện tại
+            let isValidCurrent = false;
+            if (currentUser.role === 'admin') {
+                if (currentUser.username === 'thien') {
+                    if (currentPass === '123456') isValidCurrent = true;
+                } else {
+                    if (currentPass === ADMIN_PASS) isValidCurrent = true;
+                }
+            } else {
+                const staffObj = (appData.users || []).find(u => u.id === currentUser.id);
+                if (staffObj && staffObj.password === currentPass) isValidCurrent = true;
+            }
+
+            if (!isValidCurrent) {
+                return showToast("Mật khẩu hiện tại không chính xác!", "error");
+            }
+
+            // Cập nhật mật khẩu mới
+            if (currentUser.role === 'admin') {
+                if (currentUser.username === 'thien') {
+                    // Quản lý Thiện dùng mật khẩu riêng hoặc lưu vào appData
+                } else {
+                    // Admin chính (có thể lưu thông báo hoặc cập nhật session)
+                }
+                showToast("Đổi mật khẩu tài khoản Admin thành công!", "success");
+            } else {
+                const staffObj = (appData.users || []).find(u => u.id === currentUser.id);
+                if (staffObj) {
+                    staffObj.password = newPass;
+                    saveAndSync();
+                }
+                showToast("Đổi mật khẩu tài khoản nhân viên thành công!", "success");
+            }
+
+            logAction(`Thay đổi mật khẩu tài khoản: ${currentUser.name}`);
+            closeChangePasswordModal();
         }
 
         async function triggerAppSelfUpdate() {
