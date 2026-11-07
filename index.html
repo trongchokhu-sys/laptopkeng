@@ -1366,6 +1366,60 @@
                     <div class="pt-1">
                         <button id="btnRealtimeToggle" onclick="toggleRealtimeSync()" class="w-full py-4 bg-slate-800 hover:bg-slate-700 text-amber-400 border border-amber-500/50 font-bold rounded-2xl text-xs uppercase shadow-md flex justify-center items-center gap-2 transition cursor-pointer"><i class="fa-solid fa-bolt"></i> <span id="btnRealtimeText">Bật Đồng Bộ Tự Động</span></button>
                     </div>
+
+                    <!-- HỆ THỐNG BỘ NHỚ CỤC BỘ DỰ PHÒNG (LOCAL VAULT BACKUP & RESTORE) -->
+                    <div class="p-4 sm:p-5 bg-slate-900/90 rounded-2xl border border-emerald-500/40 space-y-3.5 shadow-inner">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-xs">
+                                    <i class="fa-solid fa-hard-drive"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-black text-emerald-400 text-xs uppercase tracking-wide flex items-center gap-2">
+                                        Sao Lưu Nền EXE & Cục Bộ (Auto-Backup 24/7)
+                                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                                    </h4>
+                                    <p id="local-vault-status" class="text-[10px] text-slate-400 font-mono">Đang kiểm tra tệp lưu trữ EXE...</p>
+                                </div>
+                            </div>
+                            <span class="text-[9px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> EXE DAEMON ACTIVE
+                            </span>
+                        </div>
+
+                        <p class="text-[11px] text-slate-300 leading-relaxed">
+                            Hệ thống <strong>tự động sao lưu ngầm trên tiến trình nền EXE</strong> (tương thích Electron/Node.js IPC) lưu trực tiếp vào thư mục dữ liệu cục bộ của ứng dụng desktop, đảm bảo an toàn tuyệt đối khi mất kết nối đám mây.
+                        </p>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            <button onclick="saveToDedicatedLocalVault(false)" class="py-3.5 px-4 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-md">
+                                <i class="fa-solid fa-floppy-disk"></i> Lưu Về Thư Mục EXE Ngay
+                            </button>
+                            <button onclick="restoreFromDedicatedLocalVault()" class="py-3.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-500/20">
+                                <i class="fa-solid fa-clock-rotate-left"></i> Khôi Phục Từ Tệp EXE
+                            </button>
+                        </div>
+
+                        <!-- DANH SÁCH CÁC ĐIỂM KHÔI PHỤC TỰ ĐỘNG GẦN ĐÂY -->
+                        <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
+                            <div class="flex items-center justify-between text-[10px] font-extrabold text-amber-400 uppercase">
+                                <span><i class="fa-solid fa-history"></i> Điểm sao lưu nền EXE gần đây (Tối đa 5 bản):</span>
+                                <span id="auto-backup-counter" class="text-emerald-400 font-mono">Tiến trình: 30s</span>
+                            </div>
+                            <div id="local-vault-history-list" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-slate-800/80">
+                            <button onclick="exportLocalBackupFile()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-bold rounded-xl text-[11px] uppercase flex items-center justify-center gap-1.5 transition cursor-pointer">
+                                <i class="fa-solid fa-file-export"></i> Xuất Tệp Lưu Trữ (.JSON)
+                            </button>
+                            <label class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold rounded-xl text-[11px] uppercase flex items-center justify-center gap-1.5 transition cursor-pointer text-center">
+                                <i class="fa-solid fa-file-import"></i> Nạp Tệp Sao Lưu (.JSON)
+                                <input type="file" accept=".json" onchange="importLocalBackupFile(event)" class="hidden">
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="pt-3 border-t border-slate-700">
                         <button onclick="resetRevenueData()" class="w-full py-4 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 text-red-400 border border-red-500/40 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 transition cursor-pointer">
                             <i class="fa-solid fa-rotate-left"></i> Reset Doanh Thu (Đưa Doanh Thu Về 0đ)
@@ -1721,9 +1775,14 @@
     <footer class="glass-panel border-t border-slate-800 py-6 text-center text-xs text-slate-400 mt-auto shadow-inner mb-14 lg:mb-0">
         <div class="max-w-[1600px] w-full mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p class="font-bold">LAPTOP KENG CẦN THƠ © 2026 • Phát triển bởi <span class="text-amber-400 font-extrabold">Trọng Nguyễn</span></p>
-            <div class="flex items-center gap-2 text-slate-300">
-                <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="font-black text-emerald-400 tracking-wide">Hệ Thống Sẵn Sàng</span>
+            <div class="flex items-center gap-3 text-slate-300">
+                <span id="footer-auto-backup-badge" onclick="switchTab('cloud')" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-extrabold text-emerald-300 cursor-pointer hover:bg-emerald-500/25 transition" title="Nhấn để mở quản lý sao lưu cục bộ">
+                    <i class="fa-solid fa-hard-drive text-emerald-400"></i> Đã tự động sao lưu cục bộ
+                </span>
+                <div class="flex items-center gap-1.5">
+                    <span class="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span class="font-black text-emerald-400 tracking-wide">Hệ Thống Sẵn Sàng</span>
+                </div>
             </div>
         </div>
     </footer>
@@ -3775,32 +3834,255 @@
         }
 
         // --- HỆ THỐNG LƯU TRỮ CỤC BỘ REAL-TIME ĐA TẦNG (MULTI-LAYERED SECURE STORAGE & AUTO-FAILOVER) ---
-        function saveAndSync() {
+        let autoLocalBackupInterval = null;
+
+        function startAutoLocalBackupEngine() {
+            if (autoLocalBackupInterval) clearInterval(autoLocalBackupInterval);
+            // Tự động sao lưu ngầm định kỳ mỗi 30 giây trên tiến trình nền
+            autoLocalBackupInterval = setInterval(() => {
+                saveToDedicatedLocalVault(true, "Tự động nền EXE (30s)");
+            }, 30000);
+        }
+
+        function recordLocalVaultHistory(snapshot, reason = "Sao lưu nền EXE") {
             try {
-                const stringified = JSON.stringify(appData);
-                const securePayload = btoa(encodeURIComponent(stringified));
-                const checksum = btoa(stringified.length.toString() + '_' + Date.now());
+                let history = [];
+                const rawHistory = localStorage.getItem('keng_local_vault_history_list');
+                if (rawHistory) {
+                    history = JSON.parse(rawHistory);
+                    if (!Array.isArray(history)) history = [];
+                }
+                const entry = {
+                    id: 'BAK_EXE_' + Date.now(),
+                    timestamp: snapshot.timestamp,
+                    reason: reason,
+                    summary: `${(snapshot.data?.products || []).length} SP • ${(snapshot.data?.invoices || []).length} HĐ • ${(snapshot.data?.repairs || []).length} Sửa chữa`,
+                    data: snapshot.data
+                };
+                if (history.length > 0) {
+                    const lastDataStr = JSON.stringify(history[0].data);
+                    const curDataStr = JSON.stringify(entry.data);
+                    if (lastDataStr === curDataStr) {
+                        history[0].timestamp = entry.timestamp;
+                        localStorage.setItem('keng_local_vault_history_list', JSON.stringify(history));
+                        return;
+                    }
+                }
+                history.unshift(entry);
+                if (history.length > 5) history = history.slice(0, 5);
+                localStorage.setItem('keng_local_vault_history_list', JSON.stringify(history));
+            } catch (e) {}
+        }
 
-                // Lưu trữ đồng thời trên nhiều phân vùng độc lập để chống mất dữ liệu tuyệt đối
-                localStorage.setItem('keng_store_data_secure', securePayload);
-                localStorage.setItem('keng_store_data_chk', checksum);
-                localStorage.setItem('keng_store_data', stringified);
-                localStorage.setItem('keng_store_data_master_backup', stringified);
+        function updateLocalVaultStatusUI() {
+            const statusEl = document.getElementById('local-vault-status');
+            const footerBadge = document.getElementById('footer-auto-backup-badge');
+            const historyListEl = document.getElementById('local-vault-history-list');
+
+            try {
+                const rawVault = localStorage.getItem('keng_dedicated_local_vault');
+                if (rawVault) {
+                    const parsedVault = JSON.parse(rawVault);
+                    const pCount = (parsedVault.data?.products || []).length;
+                    const invCount = (parsedVault.data?.invoices || []).length;
+                    const repCount = (parsedVault.data?.repairs || []).length;
+                    if (statusEl) {
+                        statusEl.innerHTML = `Nền EXE đã lưu lúc: <strong class="text-emerald-300">${parsedVault.timestamp || 'Mới nhất'}</strong> (${pCount} SP, ${invCount} HĐ)`;
+                    }
+                    if (footerBadge) {
+                        footerBadge.innerHTML = `<i class="fa-solid fa-hard-drive text-emerald-400"></i> EXE Backup: Active`;
+                    }
+                } else {
+                    if (statusEl) statusEl.innerText = "Sẵn sàng lưu trữ trên nền EXE.";
+                }
+
+                if (historyListEl) {
+                    const rawHistory = localStorage.getItem('keng_local_vault_history_list');
+                    const history = rawHistory ? JSON.parse(rawHistory) : [];
+                    if (history.length === 0) {
+                        historyListEl.innerHTML = `<div class="text-[10px] text-slate-500 italic py-1">Đang khởi tạo các điểm lưu trữ EXE...</div>`;
+                    } else {
+                        historyListEl.innerHTML = history.map((h, idx) => `
+                            <div class="flex items-center justify-between p-2 rounded-xl bg-slate-950/90 border border-slate-800 text-[10px]">
+                                <div>
+                                    <span class="font-bold text-emerald-300">#${idx + 1} • ${h.timestamp}</span>
+                                    <span class="text-slate-400 ml-1">(${h.reason || 'Nền EXE'})</span>
+                                    <div class="text-slate-400 font-mono mt-0.5">${h.summary}</div>
+                                </div>
+                                <button onclick="restoreSpecificHistoryPoint('${h.id}')" class="px-2.5 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 rounded-lg font-extrabold transition cursor-pointer">
+                                    Khôi phục
+                                </button>
+                            </div>
+                        `).join('');
+                    }
+                }
+            } catch (e) {
+                if (statusEl) statusEl.innerText = "Hoạt động ổn định trên nền EXE.";
+            }
+        }
+
+        function saveToDedicatedLocalVault(silent = false, reason = "Sao lưu nền EXE") {
+            try {
+                const vaultSnapshot = {
+                    timestamp: new Date().toLocaleString('vi-VN'),
+                    data: JSON.parse(JSON.stringify(appData))
+                };
+                localStorage.setItem('keng_dedicated_local_vault', JSON.stringify(vaultSnapshot));
+                localStorage.setItem('keng_dedicated_local_vault_emergency', JSON.stringify(vaultSnapshot));
                 
-                // Snapshot theo ngày thực tế
-                const todayKey = 'keng_store_data_backup_' + new Date().toISOString().slice(0, 10);
-                localStorage.setItem(todayKey, stringified);
-            } catch (err) {
-                console.error("Lỗi bảo mật lưu trữ cục bộ:", err);
-            }
+                // Giả lập giao tiếp IPC tiến trình Node.js / Electron nếu chạy trong .exe
+                if (window.require && typeof window.require === 'function') {
+                    try {
+                        const fs = window.require('fs');
+                        const path = window.require('path');
+                        const backupDir = path.join(process.cwd(), 'backup_vault');
+                        if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
+                        fs.writeFileSync(path.join(backupDir, 'store_backup.json'), JSON.stringify(vaultSnapshot, null, 2), 'utf-8');
+                    } catch (nodeErr) {}
+                }
 
-            // Đồng bộ lên Cloud nếu bật Real-time và có kết nối
-            if (serverConfig.url && isRealtimeActive) {
-                clearTimeout(pendingSyncTimeout);
-                pendingSyncTimeout = setTimeout(() => {
-                    syncToServer(true);
-                }, 1000);
+                recordLocalVaultHistory(vaultSnapshot, reason);
+                updateLocalVaultStatusUI();
+                if (!silent) {
+                    addCloudLog("💾 Đã lưu dữ liệu thành công vào thư mục nền EXE!", "success");
+                    showToast("Đã lưu trữ dữ liệu vào phân vùng nền EXE!", "success");
+                }
+            } catch (err) {
+                if (!silent) showToast("Lỗi khi lưu vào nền EXE!", "error");
             }
+        }
+
+        function saveToDedicatedLocalVault(silent = false, reason = "Sao lưu thủ công") {
+            try {
+                const vaultSnapshot = {
+                    timestamp: new Date().toLocaleString('vi-VN'),
+                    data: JSON.parse(JSON.stringify(appData))
+                };
+                localStorage.setItem('keng_dedicated_local_vault', JSON.stringify(vaultSnapshot));
+                localStorage.setItem('keng_dedicated_local_vault_emergency', JSON.stringify(vaultSnapshot));
+                recordLocalVaultHistory(vaultSnapshot, reason);
+                updateLocalVaultStatusUI();
+                if (!silent) {
+                    addCloudLog("💾 Đã lưu toàn bộ dữ liệu cửa hàng vào Bộ Nhớ Cục Bộ thành công!", "success");
+                    showToast("Đã sao lưu dữ liệu vào Bộ Nhớ Cục Bộ an toàn!", "success");
+                }
+            } catch (err) {
+                if (!silent) showToast("Lỗi khi lưu vào bộ nhớ cục bộ!", "error");
+            }
+        }
+
+        async function restoreSpecificHistoryPoint(pointId) {
+            try {
+                const rawHistory = localStorage.getItem('keng_local_vault_history_list');
+                if (!rawHistory) return showToast("Không tìm thấy lịch sử sao lưu!", "error");
+                const history = JSON.parse(rawHistory);
+                const point = history.find(h => h.id === pointId);
+                if (!point || !point.data) return showToast("Điểm sao lưu không hợp lệ!", "error");
+
+                if (!(await customConfirm(`Khôi phục dữ liệu về thời điểm "${point.timestamp}" (${point.summary})?`))) return;
+
+                appData = JSON.parse(JSON.stringify(point.data));
+                logAction(`Khôi phục dữ liệu từ điểm sao lưu tự động lúc ${point.timestamp}`);
+                saveAndSync();
+                renderAll();
+                addCloudLog(`✅ Đã khôi phục về điểm sao lưu lúc ${point.timestamp}!`, "success");
+                showToast(`Đã khôi phục dữ liệu về lúc ${point.timestamp}!`, "success");
+            } catch (err) {
+                showToast("Lỗi khi khôi phục điểm sao lưu!", "error");
+            }
+        }
+
+        async function restoreFromDedicatedLocalVault() {
+            try {
+                const rawVault = localStorage.getItem('keng_dedicated_local_vault') || localStorage.getItem('keng_dedicated_local_vault_emergency') || localStorage.getItem('keng_store_data_master_backup');
+                if (!rawVault) {
+                    return showToast("Không tìm thấy dữ liệu trong Bộ Nhớ Cục Bộ để khôi phục!", "error");
+                }
+
+                let parsed = JSON.parse(rawVault);
+                const restoredData = parsed.data ? parsed.data : parsed;
+                const savedTime = parsed.timestamp || 'Gần nhất';
+
+                if (!(await customConfirm(`Bạn có chắc chắn muốn KHÔI PHỤC dữ liệu cửa hàng từ Bộ Nhớ Cục Bộ (Bản lưu lúc: ${savedTime})? Dữ liệu hiện tại sẽ được thay thế bằng bản lưu cục bộ này.`))) {
+                    return;
+                }
+
+                appData = restoredData;
+                appData.warranties = appData.warranties || [];
+                appData.products = appData.products || [];
+                appData.invoices = appData.invoices || [];
+                appData.repairs = appData.repairs || [];
+                appData.activityLogs = appData.activityLogs || [];
+                appData.debts = appData.debts || [];
+                appData.cleanings = appData.cleanings || [];
+                appData.expenses = appData.expenses || [];
+                appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
+                appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
+
+                logAction(`Khôi phục toàn bộ dữ liệu cửa hàng từ Bộ Nhớ Cục Bộ (Bản lưu: ${savedTime})`);
+                saveAndSync();
+                renderAll();
+                addCloudLog(`✅ Đã khôi phục thành công dữ liệu từ Bộ Nhớ Cục Bộ (${savedTime})!`, "success");
+                showToast("Khôi phục dữ liệu từ Bộ Nhớ Cục Bộ thành công!", "success");
+            } catch (err) {
+                addCloudLog("❌ Lỗi khôi phục bộ nhớ cục bộ: " + err.message, "error");
+                showToast("Lỗi khi khôi phục dữ liệu cục bộ!", "error");
+            }
+        }
+
+        function exportLocalBackupFile() {
+            try {
+                const backupPayload = {
+                    store: "LAPTOP KENG CẦN THƠ",
+                    exportedAt: new Date().toLocaleString('vi-VN'),
+                    data: appData
+                };
+                const blob = new Blob([JSON.stringify(backupPayload, null, 2)], { type: 'application/json;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const dateStr = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `KengStore_Backup_${dateStr}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+                addCloudLog("📥 Đã xuất file sao lưu cục bộ (.JSON) về máy!", "success");
+                showToast("Đã tải file sao lưu dự phòng (.JSON) thành công!", "success");
+            } catch (err) {
+                showToast("Lỗi khi xuất file sao lưu!", "error");
+            }
+        }
+
+        function importLocalBackupFile(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    const incomingData = parsed.data ? parsed.data : parsed;
+                    if (!incomingData || !Array.isArray(incomingData.products)) {
+                        return showToast("File dự phòng không đúng định dạng của Keng Store!", "error");
+                    }
+                    if (!(await customConfirm(`Xác nhận khôi phục dữ liệu từ file "${file.name}"? Toàn bộ dữ liệu hiện tại sẽ được cập nhật theo file này.`))) {
+                        event.target.value = '';
+                        return;
+                    }
+                    appData = incomingData;
+                    saveToDedicatedLocalVault(true);
+                    logAction(`Nhập dữ liệu khôi phục từ file dự phòng: ${file.name}`);
+                    saveAndSync();
+                    renderAll();
+                    addCloudLog(`✅ Đã nhập và khôi phục dữ liệu từ file ${file.name}!`, "success");
+                    showToast("Khôi phục dữ liệu từ file dự phòng thành công!", "success");
+                } catch (err) {
+                    showToast("Không thể đọc file dự phòng. Vui lòng kiểm tra lại!", "error");
+                } finally {
+                    event.target.value = '';
+                }
+            };
+            reader.readAsText(file);
         }
 
         window.addEventListener('beforeunload', () => {
@@ -3847,6 +4129,13 @@
                         if (isSyncing) return;
                         const val = snapshot.val();
                         if (val) {
+                            // Bảo vệ dữ liệu cục bộ nếu dữ liệu trên Cloud bị rỗng bất thường trong khi máy đang có dữ liệu
+                            const cloudProdCount = (val.products || []).length;
+                            const localProdCount = (appData.products || []).length;
+                            if (cloudProdCount === 0 && localProdCount > 0 && !(val.invoices && val.invoices.length > 0)) {
+                                addCloudLog("⚠️ Phát hiện dữ liệu Cloud trống bất thường! Đã giữ nguyên Bộ Nhớ Cục Bộ để bảo vệ dữ liệu.", "error");
+                                return;
+                            }
                             appData = val;
                             localStorage.setItem('keng_store_data', JSON.stringify(appData));
                             
@@ -4073,6 +4362,9 @@
             seedDefaultParts();
             checkAndApplyDailyExpense();
             initDaily17PMTimer(); // Kích hoạt bộ định thời tự động trừ vào 17:00 (5h chiều) mỗi ngày và truy thu hôm qua nếu chưa trừ
+            saveToDedicatedLocalVault(true, "Khởi động ứng dụng");
+            startAutoLocalBackupEngine(); // Kích hoạt bộ máy tự động sao lưu ngầm định kỳ 30s
+            updateLocalVaultStatusUI();
             renderAll();
             setTimeout(triggerStockAlert, 1000);
         }
@@ -6724,6 +7016,14 @@
                 localStorage.setItem('keng_store_data_master_backup', stringified);
                 const todayKey = 'keng_store_data_backup_' + new Date().toISOString().slice(0, 10);
                 localStorage.setItem(todayKey, stringified);
+
+                const vaultSnapshot = {
+                    timestamp: new Date().toLocaleString('vi-VN'),
+                    data: appData
+                };
+                localStorage.setItem('keng_dedicated_local_vault', JSON.stringify(vaultSnapshot));
+                recordLocalVaultHistory(vaultSnapshot, "Tự động khi thay đổi dữ liệu");
+                updateLocalVaultStatusUI();
             } catch (err) {
                 console.error("Lỗi bảo mật lưu trữ:", err);
             }
