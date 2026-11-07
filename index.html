@@ -8798,7 +8798,7 @@
     <script>
         const KENG_FIREBASE_URL = "https://laptopkeng-ac879-default-rtdb.asia-southeast1.firebasedatabase.app/";
 
-        // 1. Tải danh sách laptop từ Firebase
+        // 1. Tải danh sách laptop từ Firebase và nhận đầy đủ chi tiết cấu hình CPU, GPU, RAM, SSD và màn hình
         function loadInventoryForMarketing() {
             const select = document.getElementById('nt-product-select');
             if (!select) return;
@@ -8818,13 +8818,26 @@
                         let item = data[key];
                         let opt = document.createElement('option');
                         opt.value = key;
-                        let tenMay = item.name || item.tenMay || 'Laptop';
-                        let cpu = item.cpu || '';
-                        let ram = item.ram || '';
-                        let ssd = item.ssd || '';
+
+                        // Hỗ trợ đọc linh hoạt cấu hình từ cả root item hoặc bên trong object laptopDetails
+                        let details = item.laptopDetails || {};
+                        let tenMay = item.name || item.tenMay || details.name || 'Laptop';
+                        let cpu = item.cpu || details.cpu || 'N/A';
+                        let gpu = item.gpu || details.gpu || 'N/A';
+                        let ram = item.ram || details.ram || 'N/A';
+                        let ssd = item.ssd || details.ssd || 'N/A';
+                        let screen = item.screen || details.screen || item.manHinh || 'N/A';
                         let gia = item.price || item.sellingPrice || item.giaBan || 'Liên hệ';
                         
-                        opt.textContent = `${tenMay} | CPU: ${cpu}, RAM ${ram}, SSD ${ssd} | Giá: ${gia}`;
+                        // Lưu chuẩn hóa lại vào object item để hàm viết bài đọc chính xác
+                        item.cpu = cpu;
+                        item.gpu = gpu;
+                        item.ram = ram;
+                        item.ssd = ssd;
+                        item.screen = screen;
+                        item.name = tenMay;
+
+                        opt.textContent = `${tenMay} | CPU: ${cpu} | GPU: ${gpu} | RAM: ${ram} | SSD: ${ssd} | Màn: ${screen} | Giá: ${gia}`;
                         select.appendChild(opt);
                     }
                 })
