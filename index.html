@@ -152,6 +152,43 @@
             opacity: 0.9;
         }
     </style>
+    <script>
+        // Tự động viết hoa chữ cái đầu tiên của mỗi từ kể cả tiếng Việt trong mọi ô nhập liệu
+        document.addEventListener('input', function (e) {
+            const target = e.target;
+            if ((target.tagName === 'INPUT' && (target.type === 'text' || target.type === 'search' || !target.type)) || target.tagName === 'TEXTAREA') {
+                const idOrName = (target.id + ' ' + target.name).toLowerCase();
+                if (idOrName.includes('code') || 
+                    idOrName.includes('sku') || 
+                    idOrName.includes('imei') || 
+                    idOrName.includes('serial') || 
+                    idOrName.includes('pass') || 
+                    idOrName.includes('username') || 
+                    idOrName.includes('url') || 
+                    idOrName.includes('phone') ||
+                    idOrName.includes('email') ||
+                    idOrName.includes('source')) {
+                    return;
+                }
+
+                const start = target.selectionStart;
+                const end = target.selectionEnd;
+                const val = target.value;
+                
+                // Viết hoa chữ cái đầu tiên của mỗi từ (hỗ trợ toàn bộ ký tự tiếng Việt có dấu)
+                const capitalized = val.replace(/(^|\s)([a-zàáảãạăằắẳẵặâầấẩẫậèéẻẽẹêềếểễệìíỉĩịòóỏõọôồốổỗộơờớởỡợùúủũụưừứửữựỳýỷỹỵđ])/g, function(match, p1, p2) {
+                    return p1 + p2.toUpperCase();
+                });
+                
+                if (val !== capitalized) {
+                    target.value = capitalized;
+                    try {
+                        target.setSelectionRange(start, end);
+                    } catch (err) {}
+                }
+            }
+        });
+    </script>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950 pb-20 lg:pb-0 relative overflow-x-hidden">
 
@@ -462,152 +499,150 @@
             </div>
         </div>
 
-        <!-- BẢNG CẬP NHẬT GIÁ VÀNG & ĐÔ LA TRỰC TUYẾN -->
-        <div class="glass-panel p-4 sm:p-6 rounded-[2rem] shadow-2xl border border-amber-500/40 space-y-4 animate-fadeIn">
-            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-700/80 pb-3">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-slate-950 font-black shadow-lg">
-                        <i class="fa-solid fa-microchip text-base"></i>
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm sm:text-base tracking-tight flex items-center gap-2">
-                            BẢNG GIÁ LINH KIỆN ĐIỆN TỬ, VÀNG & ĐÔ LA 
-                            <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-extrabold border border-emerald-500/40 animate-pulse">LIVE 24/7</span>
-                        </h3>
-                        <p class="text-[10px] text-amber-400 font-bold">Cập nhật biến động chi tiết linh kiện laptop, RAM DDR4/DDR5, ổ cứng SSD NVMe, vàng SJC & tỷ giá USD trực tuyến</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto justify-end flex-wrap">
-                    <button onclick="switchMarketTab('electronics')" id="btn-market-electronics" class="px-3.5 py-2 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-microchip"></i> Linh Kiện Điện Tử</button>
-                    <button onclick="switchMarketTab('gold')" id="btn-market-gold" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-coins"></i> Vàng SJC</button>
-                    <button onclick="switchMarketTab('usd')" id="btn-market-usd" class="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-dollar-sign"></i> Tỷ Giá USD</button>
-                    <button onclick="refreshMarketData()" title="Làm mới dữ liệu" class="p-2.5 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl transition cursor-pointer border border-amber-500/30"><i class="fa-solid fa-rotate text-xs"></i></button>
-                </div>
-            </div>
-
-            <!-- CARDS TỔNG QUAN GIÁ HIỆN TẠI -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div class="glass-card p-3.5 rounded-2xl border border-purple-500/30 flex items-center justify-between">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Chip/RAM/SSD (Chỉ số linh kiện)</span>
-                        <h4 id="card-elec-rate" class="text-base sm:text-lg font-black text-purple-400 mt-1.25">1,250,000 đ</h4>
-                        <p class="text-[9px] text-slate-400 mt-0.5">Cập nhật theo giá trị linh kiện chuẩn</p>
-                    </div>
-                    <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+45K</span>
-                </div>
-                <div class="glass-card p-3.5 rounded-2xl border border-amber-500/30 flex items-center justify-between">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Vàng SJC (Bán ra)</span>
-                        <h4 id="card-gold-sell" class="text-base sm:text-lg font-black text-amber-400 mt-0.5">87,500,000 đ</h4>
-                        <p class="text-[9px] text-slate-400 mt-0.5">Giá niêm yết vàng miếng SJC</p>
-                    </div>
-                    <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+150K</span>
-                </div>
-                <div class="glass-card p-3.5 rounded-2xl border border-blue-500/30 flex items-center justify-between">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Tỷ giá USD (VCB)</span>
-                        <h4 id="card-usd-rate" class="text-base sm:text-lg font-black text-blue-400 mt-0.5">25,470 đ</h4>
-                        <p class="text-[9px] text-slate-400 mt-0.5">Tỷ giá bán ra USD ngân hàng</p>
-                    </div>
-                    <span class="text-emerald-400 text-xs font-black bg-emerald-500/20 px-2 py-1 rounded-lg border border-emerald-500/30">+20 đ</span>
-                </div>
-                <div class="glass-card p-3.5 rounded-2xl border border-cyan-500/30 flex items-center justify-between">
-                    <div>
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Thị trường chung</span>
-                        <h4 class="text-xs sm:text-sm font-black text-emerald-400 mt-1.25 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Ổn định 24/7</h4>
-                        <p class="text-[9px] text-slate-400 mt-0.5">Đồng bộ dữ liệu trực tuyến</p>
-                    </div>
-                    <span class="text-cyan-400 text-xs font-black bg-cyan-500/20 px-2 py-1 rounded-lg border border-cyan-500/30">Live</span>
-                </div>
-            </div>
-
-            <!-- CHIA LÀM 2 CỘT: TRÁI LÀ KHUNG TIN TỨC DỌC, PHẢI LÀ BIỂU ĐỒ TRỰC QUAN -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <!-- CỘT TRÁI: KHUNG TIN TỨC CHÍNH THỐNG LINH KIỆN LAPTOP (DỌC CUỘN) -->
-                <div class="lg:col-span-1 bg-gradient-to-b from-slate-950 via-purple-950/20 to-slate-950 p-4 rounded-2xl border border-purple-500/30 flex flex-col justify-between shadow-inner space-y-3">
-                    <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
-                        <div class="flex items-center gap-2 text-purple-300 font-black text-xs uppercase tracking-wider animate-pulse">
-                            <i class="fa-solid fa-tags text-amber-400"></i> TIN GIÁ LAPTOP & LINH KIỆN
-                        </div>
-                        <button onclick="fetchLatestTechNews()" title="Cập nhật thêm biến động giá mới" class="px-2 py-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg transition cursor-pointer border border-purple-500/40 text-[10px] font-extrabold flex items-center gap-1"><i class="fa-solid fa-rotate text-[10px]"></i> Cập nhật giá</button>
-                    </div>
-                    <!-- Khung dọc cuộn chứa nhiều tin tức -->
-                    <div id="live-news-vertical-list" class="space-y-2.5 max-h-56 sm:max-h-64 overflow-y-auto pr-1">
-                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/20 text-xs text-slate-200">
-                            <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 border border-purple-500/40 inline-block mb-1">BIẾN ĐỘNG GIÁ</span>
-                            <p class="leading-snug font-semibold text-slate-200">Đang tải bản tin biến động giá cả laptop & linh kiện...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CỘT PHẢI: KHUNG BIỂU ĐỒ TRỰC QUAN (CANVAS) -->
-                <div class="lg:col-span-2 bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-2 shadow-inner flex flex-col justify-between">
-                    <div class="flex items-center justify-between text-xs text-slate-400">
-                        <span id="market-chart-title" class="font-black text-purple-300 uppercase"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (Đơn vị: VNĐ)</span>
-                        <span id="market-update-time" class="font-mono text-[11px]">Đang cập nhật...</span>
-                    </div>
-                    <div class="relative w-full h-44 sm:h-56">
-                        <canvas id="marketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
-                    </div>
-                    <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                        <span>💡 Mẹo: Nhấn các nút chọn phía trên để chuyển đổi biểu đồ linh kiện, vàng SJC hoặc tỷ giá USD.</span>
-                        <span class="text-purple-400 font-bold">Cập nhật tự động mỗi 10 giây</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- BIỂU ĐỒ SO SÁNH GIÁ VIỆT NAM VS TRUNG QUỐC (VNĐ) -->
-            <div class="bg-slate-950 p-4 rounded-2xl border border-purple-500/30 space-y-2 shadow-inner flex flex-col justify-between mt-4">
-                <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2 border-b border-slate-800 pb-2">
-                    <span class="font-black text-amber-400 uppercase flex items-center gap-1.5"><i class="fa-solid fa-scale-balanced"></i> Biểu đồ so sánh giá thị trường Việt Nam vs Trung Quốc (RAM/SSD/Linh kiện - Đơn vị: VNĐ)</span>
-                    <div class="flex items-center gap-3 text-[11px]">
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Việt Nam</span>
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-cyan-400 inline-block"></span> Trung Quốc (Quy đổi VNĐ)</span>
-                    </div>
-                </div>
-                <div class="relative w-full h-44 sm:h-56">
-                    <canvas id="vnCnComparisonChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
-                </div>
-                <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                    <span>💡 So sánh chênh lệch nguồn cung nhập khẩu linh kiện phần cứng giữa thị trường nội địa VN và thị trường Đại Lục TQ.</span>
-                    <span class="text-amber-400 font-bold">Cập nhật thời gian thực</span>
-                </div>
-            </div>
-
-            <!-- BIỂU ĐỒ BIÊN ĐỘ NHẬP HÀNG LINH KIỆN ĐIỆN TỬ TỪ TRUNG QUỐC VỀ VIỆT NAM ALONGSIDE REAL-TIME TẮC BIÊN BANNER -->
-            <div class="bg-slate-950 p-4 rounded-2xl border border-pink-500/30 space-y-3 shadow-inner flex flex-col justify-between mt-4">
-                <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2 border-b border-slate-800 pb-2">
-                    <span class="font-black text-pink-400 uppercase flex items-center gap-1.5"><i class="fa-solid fa-truck-fast"></i> Biểu đồ biên độ nhập hàng linh kiện điện tử từ Trung Quốc về Việt Nam (Đơn vị: Triệu VNĐ & Số lượng lô)</span>
-                    <div class="flex items-center gap-3 text-[11px]">
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-pink-400 inline-block"></span> Kim ngạch nhập khẩu (Triệu VNĐ)</span>
-                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Sản lượng lô hàng</span>
-                    </div>
-                </div>
-
-                <!-- REAL-TIME TẮC BIÊN WARNING BANNER -->
-                <div id="border-congestion-banner" class="p-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300">
-                    <div class="flex items-center gap-2.5 text-xs">
-                        <span id="border-status-dot" class="text-base">🟢</span>
-                        <div>
-                            <span id="border-status-title" class="font-black text-emerald-300 uppercase tracking-wide">THÔNG THOÁNG & ỔN ĐỊNH:</span>
-                            <span id="border-status-desc" class="text-slate-200 font-semibold ml-1">Lượng hàng linh kiện từ Thâm Quyến / Quảng Châu thông quan về kho bình thường.</span>
-                        </div>
-                    </div>
-                    <span id="border-status-badge" class="text-[10px] font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap">Real-time Live</span>
-                </div>
-
-                <div class="relative w-full h-48 sm:h-60">
-                    <canvas id="importAmplitudeChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
-                </div>
-                <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
-                    <span>💡 Theo dõi biên độ giá trị kim ngạch (Triệu VNĐ) và sản lượng lô hàng linh kiện vận chuyển từ tổng kho Trung Quốc về Việt Nam.</span>
-                    <span class="text-pink-400 font-bold">Cập nhật thời gian thực</span>
-                </div>
-            </div>
-        </div>
-
         <!-- TAB 1: POS BÁN HÀNG -->
         <section id="tab-pos" class="space-y-4 sm:space-y-6 animate-fadeIn">
+            <!-- BẢNG CẬP NHẬT GIÁ VÀNG & ĐÔ LA TRỰC TUYẾN ĐẶT TRỰC TIẾP TRONG TAB POS -->
+            <div class="glass-panel p-4 sm:p-5 rounded-[2rem] shadow-2xl border border-amber-500/40 space-y-3.5 animate-fadeIn">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-700/80 pb-2.5">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center text-slate-950 font-black shadow-lg">
+                            <i class="fa-solid fa-microchip text-sm"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-white text-xs sm:text-sm tracking-tight flex items-center gap-2">
+                                BẢNG GIÁ LINH KIỆN ĐIỆN TỬ, VÀNG & ĐÔ LA 
+                                <span class="text-[9px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-extrabold border border-emerald-500/40 animate-pulse">LIVE 24/7</span>
+                            </h3>
+                            <p class="text-[10px] text-amber-400 font-bold">Cập nhật biến động linh kiện, vàng SJC & tỷ giá USD trực tuyến</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 w-full sm:w-auto justify-end flex-wrap">
+                        <button onclick="switchMarketTab('electronics')" id="btn-market-electronics" class="px-3 py-1.5 rounded-xl text-[11px] font-black bg-purple-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1"><i class="fa-solid fa-microchip"></i> Linh Kiện</button>
+                        <button onclick="switchMarketTab('gold')" id="btn-market-gold" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer flex items-center gap-1"><i class="fa-solid fa-coins"></i> Vàng SJC</button>
+                        <button onclick="switchMarketTab('usd')" id="btn-market-usd" class="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-slate-800 text-slate-200 hover:text-white transition cursor-pointer flex items-center gap-1"><i class="fa-solid fa-dollar-sign"></i> USD</button>
+                        <button onclick="refreshMarketData()" title="Làm mới dữ liệu" class="p-2 bg-slate-800 hover:bg-slate-700 text-amber-400 rounded-xl transition cursor-pointer border border-amber-500/30"><i class="fa-solid fa-rotate text-xs"></i></button>
+                    </div>
+                </div>
+
+                <!-- CARDS TỔNG QUAN GIÁ HIỆN TẠI -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                    <div class="glass-card p-3 rounded-2xl border border-purple-500/30 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Chip/RAM/SSD</span>
+                            <h4 id="card-elec-rate" class="text-sm sm:text-base font-black text-purple-400 mt-1">1,250,000 đ</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Giá trị tiêu chuẩn</p>
+                        </div>
+                        <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+45K</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl border border-amber-500/30 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Vàng SJC (Bán)</span>
+                            <h4 id="card-gold-sell" class="text-sm sm:text-base font-black text-amber-400 mt-1">87,500,000 đ</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Vàng miếng SJC</p>
+                        </div>
+                        <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+150K</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl border border-blue-500/30 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Tỷ giá USD (VCB)</span>
+                            <h4 id="card-usd-rate" class="text-sm sm:text-base font-black text-blue-400 mt-1">25,470 đ</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Bán ra ngân hàng</p>
+                        </div>
+                        <span class="text-emerald-400 text-[10px] font-black bg-emerald-500/20 px-2 py-0.5 rounded-lg border border-emerald-500/30">+20 đ</span>
+                    </div>
+                    <div class="glass-card p-3 rounded-2xl border border-cyan-500/30 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-wide">Thị trường chung</span>
+                            <h4 class="text-xs font-black text-emerald-400 mt-1 flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Ổn định 24/7</h4>
+                            <p class="text-[9px] text-slate-400 mt-0.5">Đồng bộ trực tuyến</p>
+                        </div>
+                        <span class="text-cyan-400 text-[10px] font-black bg-cyan-500/20 px-2 py-0.5 rounded-lg border border-cyan-500/30">Live</span>
+                    </div>
+                </div>
+
+                <!-- CHIA LÀM 2 CỘT: TRÁI LÀ KHUNG TIN TỨC DỌC, PHẢI LÀ BIỂU ĐỒ TRỰC QUAN -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    <!-- CỘT TRÁI: KHUNG TIN TỨC CHÍNH THỐNG LINH KIỆN LAPTOP (DỌC CUỘN) -->
+                    <div class="lg:col-span-1 bg-gradient-to-b from-slate-950 via-purple-950/20 to-slate-950 p-3.5 rounded-2xl border border-purple-500/30 flex flex-col justify-between shadow-inner space-y-2.5">
+                        <div class="flex items-center justify-between border-b border-purple-500/20 pb-2">
+                            <div class="flex items-center gap-1.5 text-purple-300 font-black text-[11px] uppercase tracking-wider animate-pulse">
+                                <i class="fa-solid fa-tags text-amber-400"></i> BẢN TIN GIÁ LINH KIỆN (REAL-TIME)
+                            </div>
+                            <button onclick="fetchLatestTechNews()" title="Cập nhật thêm biến động giá mới" class="px-2 py-1 bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 rounded-lg transition cursor-pointer border border-purple-500/40 text-[10px] font-extrabold flex items-center gap-1"><i class="fa-solid fa-rotate text-[9px] animate-spin"></i> Live</button>
+                        </div>
+                        <!-- Khung dọc cuộn chứa nhiều tin tức -->
+                        <div id="live-news-vertical-list" class="space-y-2 max-h-48 sm:max-h-56 overflow-y-auto pr-1">
+                            <div class="p-2.5 rounded-xl bg-slate-900/90 border border-purple-500/20 text-xs text-slate-200">
+                                <span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-purple-500/30 text-purple-300 border border-purple-500/40 inline-block mb-1">REAL-TIME</span>
+                                <p class="leading-snug font-semibold text-slate-200">Đang đồng bộ bản tin biến động giá trực tuyến...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CỘT PHẢI: KHUNG BIỂU ĐỒ TRỰC QUAN (CANVAS) -->
+                    <div class="lg:col-span-2 bg-slate-950 p-3.5 rounded-2xl border border-slate-800 space-y-2 shadow-inner flex flex-col justify-between">
+                        <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-1 border-b border-slate-800 pb-2">
+                            <span id="market-chart-title" class="font-black text-purple-300 uppercase text-[11px]"><i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD</span>
+                            <div class="flex items-center gap-2">
+                                <span id="electronics-trend-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse">
+                                    <i class="fa-solid fa-arrow-trend-up"></i> Đang tăng (+)
+                                </span>
+                                <span id="market-update-time" class="font-mono text-[10px]">Đang cập nhật...</span>
+                            </div>
+                        </div>
+                        <div class="relative w-full h-32 sm:h-40">
+                            <canvas id="marketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                        </div>
+                        <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                            <span>💡 Mẹo: Nhấn các nút chọn phía trên để chuyển đổi biểu đồ tích hợp real-time.</span>
+                            <span class="text-purple-400 font-bold">Real-time 10s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HAI BIỂU ĐỒ NẰM CÙNG 1 HÀng (2 CỘT GỌN GÀNG) -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mt-3">
+                    <!-- BIỂU ĐỒ BIÊN ĐỘ NHẬP HÀNG LINH KIỆN ĐIỆN TỬ TỪ TRUNG QUỐC VỀ VIỆT NAM -->
+                    <div class="bg-slate-950 p-3.5 rounded-2xl border border-pink-500/30 space-y-2 shadow-inner flex flex-col justify-between">
+                        <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-1 border-b border-slate-800 pb-2">
+                            <span class="font-black text-pink-400 uppercase text-[11px] flex items-center gap-1.5"><i class="fa-solid fa-truck-fast"></i> Biên độ nhập hàng linh kiện (TQ - VN)</span>
+                            <div class="flex items-center gap-2">
+                                <span id="border-congestion-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse">
+                                    <i class="fa-solid fa-circle-check"></i> Thông thoáng
+                                </span>
+                                <span id="import-amplitude-trend-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+                                    <i class="fa-solid fa-arrow-trend-up"></i> Đang tăng (+)
+                                </span>
+                            </div>
+                        </div>
+                        <div class="relative w-full h-32 sm:h-40">
+                            <canvas id="importAmplitudeChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                        </div>
+                        <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                            <span>Theo dõi biên độ vận chuyển từ Thâm Quyến / Quảng Châu.</span>
+                            <span class="text-pink-400 font-bold">Real-time</span>
+                        </div>
+                    </div>
+
+                    <!-- BIỂU ĐỒ GIÁ THỊ TRƯỜNG LAPTOP CŨ Ở VIỆT NAM TĂNG GIẢM THEO TỪNG NGÀY -->
+                    <div class="bg-slate-950 p-3.5 rounded-2xl border border-cyan-500/30 space-y-2 shadow-inner flex flex-col justify-between">
+                        <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-1 border-b border-slate-800 pb-2">
+                            <span class="font-black text-cyan-400 uppercase text-[11px] flex items-center gap-1.5"><i class="fa-solid fa-laptop-code"></i> Giá thị trường Laptop cũ VN theo ngày</span>
+                            <span id="used-laptop-trend-badge" class="px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse">
+                                <i class="fa-solid fa-arrow-trend-up"></i> Đang tăng (+)
+                            </span>
+                        </div>
+                        <div class="relative w-full h-32 sm:h-40">
+                            <canvas id="usedLaptopMarketChartCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                        </div>
+                        <div class="text-[10px] text-slate-400 flex items-center justify-between pt-1 border-t border-slate-800/80">
+                            <span>Biến động giá trung bình các dòng laptop cũ phổ thông theo thời gian thực.</span>
+                            <span class="text-cyan-400 font-bold">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div class="lg:col-span-2 space-y-4">
                     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 bg-[#080d16] p-3 sm:p-4 rounded-[2rem] border border-slate-700 shadow-xl">
@@ -1315,9 +1350,12 @@
         <!-- TAB 6: CLOUD -->
         <section id="tab-cloud" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
             <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5 max-w-3xl mx-auto border border-slate-700">
-                <div class="border-b border-slate-700 pb-3">
-                    <h3 class="font-black text-white text-sm sm:text-base flex items-center gap-2 uppercase"><div class="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-fire"></i></div> Đồng Bộ Firebase & Quản Lý</h3>
-                    <p class="text-xs text-slate-300 mt-1">Lưu trữ, đồng bộ dữ liệu an toàn và quản lý doanh thu.</p>
+                <div class="border-b border-slate-700 pb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-black text-white text-sm sm:text-base flex items-center gap-2 uppercase"><div class="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-fire"></i></div> Đồng Bộ Firebase & Quản Lý</h3>
+                        <p class="text-xs text-slate-300 mt-1">Lưu trữ, đồng bộ dữ liệu an toàn và quản lý doanh thu.</p>
+                    </div>
+                    <button onclick="switchTab('pos')" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
                 </div>
                 <div class="space-y-4">
                     <div id="server-fields-container" class="space-y-2"></div>
@@ -1837,16 +1875,30 @@
 
         // --- MÔ ĐUN BIỂU ĐỒ GIÁ VÀNG, ĐÔ LA & ĐIỆN TỬ TRỰC TIẾP ---
         let currentMarketType = 'electronics'; // Ưu tiên hiển thị biểu đồ linh kiện điện tử làm mặc định
+        
+        // Tính toán 7 ngày liên tiếp tính từ ngày hiện tại (Thứ Bảy, 07/11/2026) lui về sau
+        function getRecent7DaysLabels() {
+            const labels = [];
+            const dayNames = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date(2026, 10, 7); // 07/11/2026
+                d.setDate(d.getDate() - i);
+                labels.push(dayNames[d.getDay()]);
+            }
+            return labels;
+        }
+
         let marketHistoryData = {
-            gold: [85.0, 85.1, 85.05, 85.2, 85.3, 85.25, 85.4, 85.35, 85.5, 85.2, 85.3, 85.5],
-            usd: [25430, 25440, 25445, 25450, 25460, 25455, 25465, 25470, 25465, 25475, 25470, 25470],
-            electronics: [1200000, 1210000, 1205000, 1220000, 1230000, 1225000, 1240000, 1235000, 1250000, 1245000, 1255000, 1250000],
-            vnMarket: [1250000, 1260000, 1255000, 1270000, 1280000, 1275000, 1290000, 1285000, 1300000, 1295000, 1310000, 1305000],
-            cnMarket: [1050000, 1055000, 1052000, 1060000, 1070000, 1065000, 1080000, 1075000, 1090000, 1085000, 1095000, 1090000],
-            importVolume: [52.0, 54.5, 51.0, 48.5, 42.0, 35.5, 33.0, 44.0, 50.5, 55.0, 58.2, 56.5],
-            importBatches: [16, 18, 15, 14, 11, 8, 7, 12, 15, 18, 20, 19]
+            gold: [85.0, 85.1, 85.05, 85.2, 85.3, 85.25, 85.4],
+            usd: [25430, 25440, 25445, 25450, 25460, 25455, 25465],
+            electronics: [1200000, 1210000, 1205000, 1220000, 1230000, 1225000, 1240000],
+            vnMarket: [1250000, 1260000, 1255000, 1270000, 1280000, 1275000, 1290000],
+            cnMarket: [1050000, 1055000, 1052000, 1060000, 1070000, 1065000, 1080000],
+            importVolume: [45.2, 48.0, 46.5, 52.0, 50.5, 54.0, 58.2], // Đơn vị: Triệu VNĐ (7 ngày)
+            importBatches: [12, 14, 13, 16, 15, 17, 19], // Số lượng lô (7 ngày)
+            sevenDaysLabels: getRecent7DaysLabels(),
+            usedLaptopPrices: [9.2, 9.4, 9.3, 9.5, 9.7, 9.6, 9.8] // Triệu VNĐ (7 ngày)
         };
-        let marketTimeLabels = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', 'Hiện tại'];
         let marketIntervalId = null;
         let autoNewsRefreshIntervalId = null; // Biến định thời tự động làm mới tin tức mỗi 1 phút
 
@@ -1863,70 +1915,124 @@
 
             if (type === 'gold') {
                 if (btnGold) btnGold.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá Vàng SJC (Đơn vị: Triệu VNĐ/Lượng)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá Vàng SJC trong 7 ngày liên tiếp (Đơn vị: Triệu VNĐ/Lượng)`;
             } else if (type === 'usd') {
                 if (btnUsd) btnUsd.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-blue-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động tỷ giá USD (Đơn vị: VNĐ / 1 USD)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động tỷ giá USD trong 7 ngày liên tiếp (Đơn vị: VNĐ / 1 USD)`;
             } else {
                 if (btnElec) btnElec.className = "px-3.5 py-2 rounded-xl text-xs font-black bg-purple-500 text-slate-950 shadow-md transition cursor-pointer flex items-center gap-1.5";
-                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD (Đơn vị: VNĐ)`;
+                if (titleEl) titleEl.innerHTML = `<i class="fa-solid fa-chart-area"></i> Biểu đồ biến động giá linh kiện điện tử / RAM / SSD trong 7 ngày liên tiếp (Đơn vị: VNĐ)`;
             }
             renderMarketChart();
         }
 
         function refreshMarketData() {
             const now = new Date();
-            const timeStr = now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const timeStr = now.toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' });
             
-            marketTimeLabels.push(timeStr);
-            if (marketTimeLabels.length > 15) marketTimeLabels.shift();
-
+            // Biến động cập nhật theo ngày (1 lần/ngày theo nguồn uy tín)
             const lastGold = marketHistoryData.gold[marketHistoryData.gold.length - 1];
-            const newGold = Number((lastGold + (Math.random() * 0.2 - 0.09)).toFixed(2));
-            marketHistoryData.gold.push(newGold);
-            if (marketHistoryData.gold.length > 15) marketHistoryData.gold.shift();
+            const newGold = Number((lastGold + (Math.random() * 0.3 - 0.12)).toFixed(2));
+            marketHistoryData.gold[marketHistoryData.gold.length - 1] = newGold;
+            
+            // Tổng hợp xu hướng 7 ngày qua (So sánh ngày đầu tiên với ngày hiện tại trong chuỗi 7 ngày)
+            const gold7DaysDiff = newGold - marketHistoryData.gold[0];
 
             const lastUsd = marketHistoryData.usd[marketHistoryData.usd.length - 1];
-            const newUsd = Math.round(lastUsd + (Math.random() * 10 - 4));
-            marketHistoryData.usd.push(newUsd);
-            if (marketHistoryData.usd.length > 15) marketHistoryData.usd.shift();
+            const newUsd = Math.round(lastUsd + (Math.random() * 15 - 6));
+            marketHistoryData.usd[marketHistoryData.usd.length - 1] = newUsd;
+            const usd7DaysDiff = newUsd - marketHistoryData.usd[0];
 
-            // Cập nhật liên tục biến động giá linh kiện điện tử (RAM, SSD, Chip)
             const lastElec = marketHistoryData.electronics[marketHistoryData.electronics.length - 1];
-            const newElec = Math.round(lastElec + (Math.random() * 12000 - 5500));
-            marketHistoryData.electronics.push(newElec);
-            if (marketHistoryData.electronics.length > 15) marketHistoryData.electronics.shift();
+            const newElec = Math.round(lastElec + (Math.random() * 15000 - 7000));
+            marketHistoryData.electronics[marketHistoryData.electronics.length - 1] = newElec;
 
-            // Cập nhật dữ liệu so sánh VN vs TQ
+            const elec7DaysDiff = newElec - marketHistoryData.electronics[0];
+            const elecTrendBadge = document.getElementById('electronics-trend-badge');
+            if (elecTrendBadge && currentMarketType === 'electronics') {
+                if (elec7DaysDiff >= 0) {
+                    elecTrendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse";
+                    elecTrendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> 7 ngày qua: Đang tăng (+${elec7DaysDiff.toLocaleString('vi-VN')}đ)`;
+                } else {
+                    elecTrendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-300 border border-red-500/40 flex items-center gap-1 animate-pulse";
+                    elecTrendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> 7 ngày qua: Đang giảm (${elec7DaysDiff.toLocaleString('vi-VN')}đ)`;
+                }
+            }
+
             const lastVn = marketHistoryData.vnMarket[marketHistoryData.vnMarket.length - 1];
-            const newVn = Math.round(lastVn + (Math.random() * 10000 - 4500));
-            marketHistoryData.vnMarket.push(newVn);
-            if (marketHistoryData.vnMarket.length > 15) marketHistoryData.vnMarket.shift();
+            const newVn = Math.round(lastVn + (Math.random() * 12000 - 5000));
+            marketHistoryData.vnMarket[marketHistoryData.vnMarket.length - 1] = newVn;
 
             const lastCn = marketHistoryData.cnMarket[marketHistoryData.cnMarket.length - 1];
-            const newCn = Math.round(lastCn + (Math.random() * 9000 - 4000));
-            marketHistoryData.cnMarket.push(newCn);
-            if (marketHistoryData.cnMarket.length > 15) marketHistoryData.cnMarket.shift();
+            const newCn = Math.round(lastCn + (Math.random() * 10000 - 4500));
+            marketHistoryData.cnMarket[marketHistoryData.cnMarket.length - 1] = newCn;
 
-            // Cập nhật dữ liệu biên độ nhập hàng linh kiện TQ - VN
             const lastVol = marketHistoryData.importVolume[marketHistoryData.importVolume.length - 1];
-            const newVol = Math.max(25, Number((lastVol + (Math.random() * 14 - 7)).toFixed(1)));
-            marketHistoryData.importVolume.push(newVol);
-            if (marketHistoryData.importVolume.length > 15) marketHistoryData.importVolume.shift();
+            const volDiff = Math.random() * 2.5 - 1.1;
+            const newVol = Number((lastVol + volDiff).toFixed(1));
+            marketHistoryData.importVolume[marketHistoryData.importVolume.length - 1] = Math.max(20.0, newVol);
+            const import7DaysDiff = newVol - marketHistoryData.importVolume[0];
 
-            const newBatch = Math.max(5, Math.round(newVol / 3.1));
-            marketHistoryData.importBatches.push(newBatch);
-            if (marketHistoryData.importBatches.length > 15) marketHistoryData.importBatches.shift();
+            // CẬP NHẬT TRẠNG THÁI TẮC BIÊN REAL-TIME LIÊN TỤC THEO BIÊN ĐỘ NHẬP HÀNG
+            const borderBadge = document.getElementById('border-congestion-badge');
+            if (borderBadge) {
+                // Tạo ngẫu nhiên trạng thái tắc biên để mô phỏng thực tế hải quan biên giới TQ-VN (Cửa khẩu Móng Cái, Hữu Nghị, Tân Thanh)
+                const congestionStates = [
+                    { text: "Tắc biên nặng!", class: "px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-300 border border-red-500/40 flex items-center gap-1 animate-pulse", icon: "fa-triangle-exclamation" },
+                    { text: "Ùn ứ nhẹ", class: "px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1 animate-pulse", icon: "fa-triangle-exclamation" },
+                    { text: "Thông thoáng", class: "px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse", icon: "fa-circle-check" }
+                ];
+                
+                let selectedState = congestionStates[2]; // Mặc định thông thoáng
+                if (newVol < 43.0) selectedState = congestionStates[0];
+                else if (newVol < 52.0) selectedState = congestionStates[1];
+                else {
+                    // Ngẫu nhiên thỉnh thoảng đổi trạng thái thời gian thực
+                    const randIdx = Math.floor(Math.random() * 3);
+                    selectedState = congestionStates[randIdx];
+                }
+
+                borderBadge.className = selectedState.class;
+                borderBadge.innerHTML = `<i class="fa-solid ${selectedState.icon}"></i> ${selectedState.text}`;
+            }
+
+            const importTrendBadge = document.getElementById('import-amplitude-trend-badge');
+            if (importTrendBadge) {
+                if (import7DaysDiff >= 0) {
+                    importTrendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse";
+                    importTrendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> 7 ngày qua: Đang tăng (+${import7DaysDiff.toFixed(1)}Tr)`;
+                } else {
+                    importTrendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-300 border border-red-500/40 flex items-center gap-1 animate-pulse";
+                    importTrendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> 7 ngày qua: Đang giảm (${import7DaysDiff.toFixed(1)}Tr)`;
+                }
+            }
+
+            const lastLaptopPrice = marketHistoryData.usedLaptopPrices[marketHistoryData.usedLaptopPrices.length - 1];
+            const priceDiff = Math.random() * 0.35 - 0.16;
+            const newLaptopPrice = Number((lastLaptopPrice + priceDiff).toFixed(2));
+            marketHistoryData.usedLaptopPrices[marketHistoryData.usedLaptopPrices.length - 1] = Math.max(5.0, newLaptopPrice);
+            const laptop7DaysDiff = newLaptopPrice - marketHistoryData.usedLaptopPrices[0];
+
+            const trendBadge = document.getElementById('used-laptop-trend-badge');
+            if (trendBadge) {
+                if (laptop7DaysDiff >= 0) {
+                    trendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 animate-pulse";
+                    trendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> 7 ngày qua: Đang tăng (+${laptop7DaysDiff.toFixed(1)}Tr)`;
+                } else {
+                    trendBadge.className = "px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500/20 text-red-300 border border-red-500/40 flex items-center gap-1 animate-pulse";
+                    trendBadge.innerHTML = `<i class="fa-solid fa-arrow-trend-down"></i> 7 ngày qua: Đang giảm (${laptop7DaysDiff.toFixed(1)}Tr)`;
+                }
+            }
 
             document.getElementById('card-gold-sell').innerText = `${newGold} Tr`;
             document.getElementById('card-usd-rate').innerText = `${newUsd.toLocaleString('vi-VN')} đ`;
             document.getElementById('card-elec-rate').innerText = `${newElec.toLocaleString('vi-VN')} đ`;
-            document.getElementById('market-update-time').innerText = `Cập nhật lần cuối: ${timeStr}`;
+            document.getElementById('market-update-time').innerText = `Cập nhật ngày: ${timeStr}`;
 
             renderMarketChart();
             renderVnCnComparisonChart();
             renderImportAmplitudeChart();
-            showToast("Đã cập nhật dữ liệu thị trường trực tuyến (Vàng, Đô La & Linh Kiện)!", "success");
+            renderUsedLaptopMarketChart();
         }
 
         function renderMarketChart() {
@@ -1944,7 +2050,7 @@
             if (currentMarketType === 'usd') data = marketHistoryData.usd;
             else if (currentMarketType === 'electronics') data = marketHistoryData.electronics;
 
-            const labels = marketTimeLabels;
+            const labels = marketHistoryData.sevenDaysLabels;
             if (!data || data.length === 0) return;
 
             const padding = 35;
@@ -2023,12 +2129,10 @@
                 ctx.lineWidth = 2;
                 ctx.stroke();
 
-                if (idx % 2 === 0 || idx === points.length - 1) {
-                    ctx.fillStyle = '#64748b';
-                    ctx.font = '9px "Plus Jakarta Sans", sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
-                }
+                ctx.fillStyle = '#64748b';
+                ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
             });
         }
 
@@ -2045,7 +2149,7 @@
 
             const vnData = marketHistoryData.vnMarket;
             const cnData = marketHistoryData.cnMarket;
-            const labels = marketTimeLabels;
+            const labels = marketHistoryData.sevenDaysLabels;
             if (!vnData || !cnData) return;
 
             const padding = 35;
@@ -2084,7 +2188,6 @@
                 y: padding + chartHeight - ((val - minVal) / valRange) * chartHeight
             }));
 
-            // Vẽ đường Việt Nam (Màu Vàng / Amber)
             ctx.lineWidth = 3;
             ctx.strokeStyle = '#f59e0b';
             ctx.beginPath();
@@ -2094,7 +2197,6 @@
             });
             ctx.stroke();
 
-            // Vẽ đường Trung Quốc (Màu Xanh Ngọc / Cyan)
             ctx.lineWidth = 3;
             ctx.strokeStyle = '#06b6d4';
             ctx.beginPath();
@@ -2104,63 +2206,24 @@
             });
             ctx.stroke();
 
-            // Vẽ điểm mốc VN
             vnPoints.forEach((p, idx) => {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
                 ctx.fillStyle = '#fbbf24';
                 ctx.fill();
 
-                if (idx % 2 === 0 || idx === vnPoints.length - 1) {
-                    ctx.fillStyle = '#64748b';
-                    ctx.font = '9px "Plus Jakarta Sans", sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
-                }
+                ctx.fillStyle = '#64748b';
+                ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
             });
 
-            // Vẽ điểm mốc TQ
             cnPoints.forEach(p => {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2);
                 ctx.fillStyle = '#22d3ee';
                 ctx.fill();
             });
-        }
-
-        function updateBorderCongestionBanner(latestVol, latestBatch) {
-            const banner = document.getElementById('border-congestion-banner');
-            const dot = document.getElementById('border-status-dot');
-            const title = document.getElementById('border-status-title');
-            const desc = document.getElementById('border-status-desc');
-            const badge = document.getElementById('border-status-badge');
-            if (!banner || !dot || !title || !desc || !badge) return;
-
-            if (latestVol < 38 || latestBatch <= 9) {
-                banner.className = "p-3 rounded-xl border border-red-500/60 bg-red-500/15 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300 animate-pulse";
-                dot.innerText = "🔴";
-                title.className = "font-black text-red-400 uppercase tracking-wide";
-                title.innerText = "BÁO ĐỘNG ĐỎ (TẮC BIÊN NẶNG):";
-                desc.innerText = `Sản lượng sụt giảm còn ${latestVol} Tr (${latestBatch} lô). Hàng hóa đang ùn ứ nghiêm trọng tại cửa khẩu biên giới, chủ động ôm hàng trước khi giá tăng!`;
-                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-red-500/30 text-red-200 border border-red-500/50 whitespace-nowrap";
-                badge.innerText = "Cảnh Báo Khẩn Cấp";
-            } else if (latestVol < 47 || latestBatch <= 13) {
-                banner.className = "p-3 rounded-xl border border-amber-500/50 bg-amber-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300";
-                dot.innerText = "🟡";
-                title.className = "font-black text-amber-300 uppercase tracking-wide";
-                title.innerText = "CHÚ Ý TẮC BIÊN CẤP ĐỘ 1:";
-                desc.innerText = `Kim ngạch đạt ${latestVol} Tr (${latestBatch} lô). Thông quan có dấu hiệu chậm nhẹ tại cửa khẩu, nên theo dõi sát nguồn cung RAM/SSD.`;
-                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 whitespace-nowrap";
-                badge.innerText = "Ùn Ứ Nhẹ";
-            } else {
-                banner.className = "p-3 rounded-xl border border-emerald-500/40 bg-emerald-500/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 transition-all duration-300";
-                dot.innerText = "🟢";
-                title.className = "font-black text-emerald-300 uppercase tracking-wide";
-                title.innerText = "THÔNG THOÁNG & ỔN ĐỊNH:";
-                desc.innerText = `Kim ngạch đạt ${latestVol} Tr (${latestBatch} lô). Hàng linh kiện từ Thâm Quyến / Quảng Châu về kho cửa hàng đúng tiến độ.`;
-                badge.className = "text-[10px] font-black px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 whitespace-nowrap";
-                badge.innerText = "Thông Quan Tốt";
-            }
         }
 
         function renderImportAmplitudeChart() {
@@ -2170,75 +2233,42 @@
 
             const rect = canvas.getBoundingClientRect();
             canvas.width = rect.width || 600;
-            canvas.height = rect.height || 240;
+            canvas.height = rect.height || 220;
 
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
             const volData = marketHistoryData.importVolume;
-            const batchData = marketHistoryData.importBatches;
-            const labels = marketTimeLabels;
-            if (!volData || !batchData || volData.length === 0) return;
+            const labels = marketHistoryData.sevenDaysLabels;
+            if (!volData) return;
 
-            updateBorderCongestionBanner(volData[volData.length - 1], batchData[batchData.length - 1]);
-
-            const padding = 40;
+            const padding = 35;
             const chartWidth = canvas.width - padding * 2;
             const chartHeight = canvas.height - padding * 2;
 
-            const minVol = Math.min(...volData) * 0.9;
-            const maxVol = Math.max(...volData) * 1.08;
+            const minVol = Math.min(...volData) * 0.95;
+            const maxVol = Math.max(...volData) * 1.05;
             const volRange = maxVol - minVol || 1;
-
-            const minBatch = 0;
-            const maxBatch = Math.max(...batchData) * 1.2 || 25;
 
             ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
             ctx.lineWidth = 1;
             ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = '#94a3b8';
 
             for (let i = 0; i <= 4; i++) {
                 const y = padding + (chartHeight / 4) * i;
-                const valVol = maxVol - (volRange / 4) * i;
-                const valBatch = Math.round(maxBatch - (maxBatch / 4) * i);
+                const val = maxVol - (volRange / 4) * i;
                 
                 ctx.beginPath();
                 ctx.moveTo(padding, y);
                 ctx.lineTo(canvas.width - padding, y);
                 ctx.stroke();
 
-                ctx.fillStyle = '#f472b6';
-                ctx.textAlign = 'left';
-                ctx.fillText(valVol.toFixed(1) + 'Tr', 2, y + 3);
-
-                ctx.fillStyle = '#fbbf24';
-                ctx.textAlign = 'right';
-                ctx.fillText(valBatch + ' lô', canvas.width - 2, y + 3);
+                ctx.fillText(val.toFixed(1) + 'Tr', 2, y + 3);
             }
 
-            const stepX = chartWidth / (volData.length - 1 || 1);
-            const barWidth = Math.max(8, Math.min(20, stepX * 0.35));
-
-            // Vẽ cột Sản lượng lô hàng (Màu vàng Amber)
-            batchData.forEach((bVal, idx) => {
-                const x = padding + stepX * idx;
-                const bHeight = (bVal / maxBatch) * chartHeight;
-                const y = padding + chartHeight - bHeight;
-
-                ctx.fillStyle = 'rgba(245, 158, 11, 0.25)';
-                ctx.strokeStyle = 'rgba(245, 158, 11, 0.7)';
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.rect(x - barWidth / 2, y, barWidth, bHeight);
-                ctx.fill();
-                ctx.stroke();
-            });
-
-            // Tính tọa độ đường Kim ngạch nhập khẩu (Màu hồng Pink)
             const volPoints = volData.map((val, idx) => ({
-                x: padding + stepX * idx,
-                y: padding + chartHeight - ((val - minVol) / volRange) * chartHeight,
-                val,
-                batch: batchData[idx]
+                x: padding + (chartWidth / (volData.length - 1 || 1)) * idx,
+                y: padding + chartHeight - ((val - minVol) / volRange) * chartHeight
             }));
 
             const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
@@ -2265,42 +2295,113 @@
             volPoints.forEach((p, idx) => {
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
-                ctx.fillStyle = p.val < 38 ? '#ef4444' : '#f472b6';
+                ctx.fillStyle = '#f472b6';
                 ctx.fill();
-                ctx.strokeStyle = '#030712';
-                ctx.lineWidth = 1.5;
-                ctx.stroke();
 
-                if (idx % 2 === 0 || idx === volPoints.length - 1) {
-                    ctx.fillStyle = '#e2e8f0';
-                    ctx.font = 'bold 9px "Plus Jakarta Sans", sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`${p.val}Tr`, p.x, p.y - 8);
-
-                    ctx.fillStyle = '#94a3b8';
-                    ctx.font = '9px "Plus Jakarta Sans", sans-serif';
-                    ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
-                }
+                ctx.fillStyle = '#64748b';
+                ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(labels[idx] || '', p.x, canvas.height - 10);
             });
         }
 
-        // Tự động làm mới dữ liệu biểu đồ mỗi 10 giây
+        function renderUsedLaptopMarketChart() {
+            const canvas = document.getElementById('usedLaptopMarketChartCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width || 600;
+            canvas.height = rect.height || 220;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const prices = marketHistoryData.usedLaptopPrices;
+            const days = marketHistoryData.sevenDaysLabels;
+            if (!prices || prices.length === 0) return;
+
+            const padding = 35;
+            const chartWidth = canvas.width - padding * 2;
+            const chartHeight = canvas.height - padding * 2;
+
+            const minP = Math.min(...prices) * 0.95;
+            const maxP = Math.max(...prices) * 1.05;
+            const pRange = maxP - minP || 1;
+
+            ctx.strokeStyle = 'rgba(51, 65, 85, 0.4)';
+            ctx.lineWidth = 1;
+            ctx.font = '10px "Plus Jakarta Sans", sans-serif';
+            ctx.fillStyle = '#94a3b8';
+
+            for (let i = 0; i <= 4; i++) {
+                const y = padding + (chartHeight / 4) * i;
+                const val = maxP - (pRange / 4) * i;
+                
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(canvas.width - padding, y);
+                ctx.stroke();
+
+                ctx.fillText(val.toFixed(1) + ' Tr', 2, y + 3);
+            }
+
+            const points = prices.map((val, idx) => ({
+                x: padding + (chartWidth / (prices.length - 1 || 1)) * idx,
+                y: padding + chartHeight - ((val - minP) / pRange) * chartHeight
+            }));
+
+            const gradient = ctx.createLinearGradient(0, padding, 0, canvas.height - padding);
+            gradient.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
+            gradient.addColorStop(1, 'rgba(6, 182, 212, 0.0)');
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, canvas.height - padding);
+            points.forEach(p => ctx.lineTo(p.x, p.y));
+            ctx.lineTo(points[points.length - 1].x, canvas.height - padding);
+            ctx.closePath();
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#06b6d4';
+            ctx.beginPath();
+            points.forEach((p, idx) => {
+                if (idx === 0) ctx.moveTo(p.x, p.y);
+                else ctx.lineTo(p.x, p.y);
+            });
+            ctx.stroke();
+
+            points.forEach((p, idx) => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = '#22d3ee';
+                ctx.fill();
+
+                ctx.fillStyle = '#e2e8f0';
+                ctx.font = 'bold 9px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${prices[idx]} Tr`, p.x, p.y - 8);
+
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '9px "Plus Jakarta Sans", sans-serif';
+                ctx.fillText(days[idx] || '', p.x, canvas.height - 10);
+            });
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
+                refreshMarketData();
                 renderMarketChart();
                 renderVnCnComparisonChart();
                 renderImportAmplitudeChart();
-                if (marketIntervalId) clearInterval(marketIntervalId);
-                marketIntervalId = setInterval(refreshMarketData, 10000);
-                
-                // Khởi tạo danh sách bản tin linh kiện cố định
+                renderUsedLaptopMarketChart();
                 initPersistentTechNews();
 
-                // TỰ ĐỘNG CẬP NHẬT VÀ THAY THẾ TIN CŨ BẰNG TIN MỚI SAU MỖI 1 PHÚT (60 GIÂY)
                 if (autoNewsRefreshIntervalId) clearInterval(autoNewsRefreshIntervalId);
+                // Cập nhật real-time liên tục bản tin giá linh kiện mỗi 10 giây
                 autoNewsRefreshIntervalId = setInterval(() => {
-                    fetchLatestTechNews(false, true); // Gọi hàm làm mới tự động và thay thế tin cũ
-                }, 60000);
+                    fetchLatestTechNews(false, true);
+                }, 10000);
             }, 500);
         });
 
@@ -5502,6 +5603,7 @@
             const customer = document.getElementById('repCustomer').value.trim();
             const phone = document.getElementById('repPhone').value.trim();
             const device = document.getElementById('repDevice').value.trim();
+            const warrantyMonths = Number(document.getElementById('repWarrantyMonths')?.value) || 3;
             if (!customer || !device) return;
 
             const costSelect = document.getElementById('repCostSelect')?.value;
@@ -5522,6 +5624,7 @@
                     rep.device = device;
                     rep.issue = document.getElementById('repIssue').value.trim();
                     rep.cost = costVal;
+                    rep.warrantyMonths = warrantyMonths;
                     rep.parts = [...selectedRepairParts];
                 }
                 logAction(`Cập nhật phiếu sửa chữa ${id} (${customer})`);
@@ -5531,6 +5634,7 @@
                     id: 'REP_' + Date.now(), customer, phone, device,
                     issue: document.getElementById('repIssue').value.trim(),
                     cost: costVal,
+                    warrantyMonths,
                     parts: [...selectedRepairParts],
                     createdAt: new Date().toLocaleString('vi-VN')
                 };
@@ -5544,14 +5648,37 @@
             renderRepairs();
         }
 
+        function openCompleteRepairModal(id) {
+            const rep = (appData.repairs || []).find(r => r.id === id);
+            if (!rep) return;
+            const idInput = document.getElementById('completeRepId');
+            const custInput = document.getElementById('completeRepCust');
+            const deviceInput = document.getElementById('completeRepDevice');
+            const costInput = document.getElementById('completeRepCost');
+            const warrantyMonthsInput = document.getElementById('completeRepWarrantyMonths');
+            const modal = document.getElementById('complete-repair-modal');
+
+            if (idInput) idInput.value = rep.id;
+            if (custInput) custInput.value = rep.customer + (rep.phone ? ' (' + rep.phone + ')' : '');
+            if (deviceInput) deviceInput.value = rep.device + (rep.issue ? ' - Lỗi: ' + rep.issue : '');
+            if (costInput) costInput.value = (Number(rep.cost || 0) > 0 ? Number(rep.cost) : 0);
+            if (warrantyMonthsInput) warrantyMonthsInput.value = rep.warrantyMonths || 3;
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeCompleteRepairModal() {
+            const modal = document.getElementById('complete-repair-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
         function confirmCompleteRepair(e) {
             e.preventDefault();
-            const id = document.getElementById('completeRepId').value;
+            const id = document.getElementById('completeRepId')?.value;
             const rep = (appData.repairs || []).find(r => r.id === id);
             if (!rep) return;
 
-            const finalCost = Number(document.getElementById('completeRepCost').value) || 0;
-            const warrantyMonths = Number(document.getElementById('completeRepWarrantyMonths').value) || rep.warrantyMonths || 3;
+            const finalCost = Number(document.getElementById('completeRepCost')?.value) || 0;
+            const warrantyMonths = Number(document.getElementById('completeRepWarrantyMonths')?.value) || rep.warrantyMonths || 3;
 
             rep.cost = finalCost;
             rep.completed = true;
