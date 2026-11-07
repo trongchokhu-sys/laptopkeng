@@ -1376,34 +1376,34 @@
                                 </div>
                                 <div>
                                     <h4 class="font-black text-emerald-400 text-xs uppercase tracking-wide flex items-center gap-2">
-                                        Sao Lưu Tiến Trình Nền EXE Thực Tế (Auto-Backup 24/7)
+                                        Sao Lưu Tệp Cục Bộ & Thư Mục C:\laptopkeng\Recovery
                                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                                     </h4>
-                                    <p id="local-vault-status" class="text-[10px] text-slate-400 font-mono">Đang kiểm tra thư mục tệp EXE...</p>
+                                    <p id="local-vault-status" class="text-[10px] text-slate-400 font-mono">Đang sẵn sàng lưu trữ tệp dự phòng...</p>
                                 </div>
                             </div>
                             <span class="text-[9px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> EXE DAEMON ACTIVE
+                                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> EXE & BROWSER VAULT
                             </span>
                         </div>
 
                         <p class="text-[11px] text-slate-300 leading-relaxed">
-                            Hệ thống <strong>tự động ghi file thực tế vào thư mục gốc của ứng dụng máy tính (.exe / Electron `backup_vault/store_backup.json`)</strong> mỗi 30 giây hoặc sau mỗi thao tác thay đổi dữ liệu, bảo vệ an toàn tuyệt đối cho cửa hàng ngay cả khi mất mạng hoàn toàn.
+                            💡 <strong>Lưu ý cho sếp:</strong> Do trình duyệt web bảo mật không cho phép ghi file thẳng vào ổ cứng mà không hỏi, hệ thống sẽ <strong>tự động tải tệp `.json` về thư mục Downloads</strong> của sếp đồng thời lưu vào bộ nhớ trình duyệt. Khi chạy ứng dụng trên file `.exe` (Electron), tệp sẽ được ghi thẳng vào <strong>`C:\laptopkeng\Recovery\store_backup.json`</strong>.
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                             <button onclick="saveToDedicatedLocalVault(false)" class="py-3.5 px-4 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-md">
-                                <i class="fa-solid fa-floppy-disk"></i> Lưu Thật Vào Tệp EXE Ngay
+                                <i class="fa-solid fa-floppy-disk"></i> Lưu & Tải Tệp Sao Lưu Ngay
                             </button>
                             <button onclick="restoreFromDedicatedLocalVault()" class="py-3.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-500/20">
-                                <i class="fa-solid fa-clock-rotate-left"></i> Khôi Phục Từ Tệp EXE
+                                <i class="fa-solid fa-clock-rotate-left"></i> Khôi Phục Từ Tệp Đã Lưu
                             </button>
                         </div>
 
                         <!-- DANH SÁCH CÁC ĐIỂM KHÔI PHỤC TỰ ĐỘNG GẦN ĐÂY -->
                         <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
                             <div class="flex items-center justify-between text-[10px] font-extrabold text-amber-400 uppercase">
-                                <span><i class="fa-solid fa-history"></i> Điểm sao lưu nền EXE gần đây (Tối đa 5 bản):</span>
+                                <span><i class="fa-solid fa-history"></i> Điểm sao lưu gần đây (Tối đa 5 bản):</span>
                                 <span id="auto-backup-counter" class="text-emerald-400 font-mono">Tiến trình: 30s</span>
                             </div>
                             <div id="local-vault-history-list" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></div>
@@ -4150,14 +4150,103 @@
                 };
                 localStorage.setItem('keng_dedicated_local_vault', JSON.stringify(vaultSnapshot));
                 localStorage.setItem('keng_dedicated_local_vault_emergency', JSON.stringify(vaultSnapshot));
+                
+                // Ghi tệp thực tế xuống thư mục C:\laptopkeng\Recovery nếu chạy trên môi trường Node.js / Electron (.exe)
+                if (window.require && typeof window.require === 'function') {
+                    try {
+                        const fs = window.require('fs');
+                        const path = window.require('path');
+                        const backupDir = 'C:\\laptopkeng\\Recovery';
+                        if (!fs.existsSync(backupDir)) {
+                            fs.mkdirSync(backupDir, { recursive: true });
+                        }
+                        const filePath = path.join(backupDir, 'store_backup.json');
+                        fs.writeFileSync(filePath, JSON.stringify(vaultSnapshot, null, 2), 'utf-8');
+                    } catch (nodeErr) {
+                        console.warn("Lỗi ghi tệp hệ thống:", nodeErr);
+                    }
+                }
+
+                // Tự động kích hoạt tải tệp xuống máy tính để sếp có thể cất ngay vào thư mục C:\laptopkeng\Recovery
+                if (!silent) {
+                    const blob = new Blob([JSON.stringify(vaultSnapshot, null, 2)], { type: 'application/json;charset=utf-8' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `store_backup.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    setTimeout(() => URL.revokeObjectURL(url), 1000);
+                }
+
                 recordLocalVaultHistory(vaultSnapshot, reason);
                 updateLocalVaultStatusUI();
                 if (!silent) {
-                    addCloudLog("💾 Đã lưu toàn bộ dữ liệu cửa hàng vào Bộ Nhớ Cục Bộ thành công!", "success");
-                    showToast("Đã sao lưu dữ liệu vào Bộ Nhớ Cục Bộ an toàn!", "success");
+                    addCloudLog("💾 Đã lưu và tải file sao lưu về máy thành công!", "success");
+                    showToast("Đã lưu và tải file `.json` về máy! Sếp hãy chuyển file này vào thư mục C:\\laptopkeng\\Recovery nhé.", "success");
                 }
             } catch (err) {
-                if (!silent) showToast("Lỗi khi lưu vào bộ nhớ cục bộ!", "error");
+                if (!silent) showToast("Lỗi khi lưu tệp sao lưu!", "error");
+            }
+        }
+
+        async function restoreFromDedicatedLocalVault() {
+            try {
+                let loadedVaultData = null;
+
+                // 1. Đọc từ tệp C:\laptopkeng\Recovery nếu chạy trên .exe
+                if (window.require && typeof window.require === 'function') {
+                    try {
+                        const fs = window.require('fs');
+                        const path = window.require('path');
+                        const filePath = path.join('C:\\laptopkeng\\Recovery', 'store_backup.json');
+                        if (fs.existsSync(filePath)) {
+                            const fileContent = fs.readFileSync(filePath, 'utf-8');
+                            const parsedFile = JSON.parse(fileContent);
+                            if (parsedFile && (parsedFile.data || parsedFile.products)) {
+                                loadedVaultData = parsedFile;
+                            }
+                        }
+                    } catch (nodeErr) {}
+                }
+
+                // 2. Nếu không tìm thấy, lấy từ bộ nhớ cục bộ trình duyệt
+                if (!loadedVaultData) {
+                    const rawVault = localStorage.getItem('keng_dedicated_local_vault') || localStorage.getItem('keng_dedicated_local_vault_emergency');
+                    if (rawVault) loadedVaultData = JSON.parse(rawVault);
+                }
+
+                if (!loadedVaultData) {
+                    return showToast("Không tìm thấy tệp sao lưu để khôi phục! Vui lòng dùng nút 'Nạp Tệp Sao Lưu' để chọn file store_backup.json.", "error");
+                }
+
+                const restoredData = loadedVaultData.data ? loadedVaultData.data : loadedVaultData;
+                const savedTime = loadedVaultData.timestamp || 'Gần nhất';
+
+                if (!(await customConfirm(`Bạn có chắc chắn muốn KHÔI PHỤC dữ liệu cửa hàng (Bản lưu: ${savedTime})?`))) {
+                    return;
+                }
+
+                appData = restoredData;
+                appData.warranties = appData.warranties || [];
+                appData.products = appData.products || [];
+                appData.invoices = appData.invoices || [];
+                appData.repairs = appData.repairs || [];
+                appData.activityLogs = appData.activityLogs || [];
+                appData.debts = appData.debts || [];
+                appData.cleanings = appData.cleanings || [];
+                appData.expenses = appData.expenses || [];
+                appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
+                appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
+
+                logAction(`Khôi phục toàn bộ dữ liệu cửa hàng từ bản sao lưu (${savedTime})`);
+                saveAndSync();
+                renderAll();
+                addCloudLog(`✅ Đã khôi phục thành công dữ liệu (${savedTime})!`, "success");
+                showToast("Khôi phục dữ liệu thành công!", "success");
+            } catch (err) {
+                showToast("Lỗi khi khôi phục dữ liệu!", "error");
             }
         }
 
