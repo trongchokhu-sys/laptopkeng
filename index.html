@@ -221,9 +221,9 @@
                 LAPTOP KENG
             </div>
         </div>
-        <!-- Lời thoại vẫy khách -->
-        <div class="hidden sm:block glass-panel px-3 py-2 rounded-xl border border-amber-500/40 text-[11px] font-extrabold text-amber-300 shadow-xl group-hover:scale-105 transition-all">
-            👋 Chúc Quý Khách Phát Tài!
+        <!-- Lời thoại vẫy khách làm to ra -->
+        <div class="hidden sm:block glass-panel px-4 py-3 rounded-2xl border-2 border-amber-500/60 text-sm sm:text-base font-black text-amber-300 shadow-[0_10px_35px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-all tracking-wide">
+            💪 Có Nàm Thì Mới Có Ăn!
         </div>
     </div>
 
@@ -256,9 +256,9 @@
                 LAPTOP KENG
             </div>
         </div>
-        <!-- Lời thoại vẫy khách (hướng vào trong) -->
-        <div class="hidden sm:block glass-panel px-3 py-2 rounded-xl border border-amber-500/40 text-[11px] font-extrabold text-amber-300 shadow-xl group-hover:scale-105 transition-all">
-            👋 Chúc Quý Khách Phát Tài!
+        <!-- Lời thoại vẫy khách làm to ra (hướng vào trong) -->
+        <div class="hidden sm:block glass-panel px-4 py-3 rounded-2xl border-2 border-amber-500/60 text-sm sm:text-base font-black text-amber-300 shadow-[0_10px_35px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-all tracking-wide">
+            💪 Có Nàm Thì Mới Có Ăn!
         </div>
     </div>
 
@@ -355,6 +355,12 @@
 
     <!-- HEADER / NAVIGATION -->
     <header class="glass-panel border-b border-slate-800/80 sticky top-0 z-40 shadow-2xl w-full">
+        <!-- NƠI ĐẶT TÁC GIẢ TRỌNG NGUYỄN Ở TRÊN CÙNG Ở GIỮA ỨNG DỤNG -->
+        <div class="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 hidden sm:block">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/25 via-purple-500/25 to-pink-500/25 border-2 border-amber-400 text-sm sm:text-base font-black text-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] animate-bounce tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif; text-rendering: optimizeLegibility;">
+                <i class="fa-solid fa-crown text-amber-300 text-sm"></i> Tác giả: <span class="text-white font-extrabold tracking-wider bg-gradient-to-r from-amber-200 via-pink-300 to-yellow-300 bg-clip-text text-transparent italic">Trọng Nguyễn</span>
+            </span>
+        </div>
         <div class="max-w-[1600px] w-full mx-auto px-3 sm:px-6 lg:px-8">
             <div class="flex flex-wrap items-center justify-between min-h-[4rem] sm:min-h-[5rem] py-2 sm:py-3 gap-3">
                 <div class="flex items-center gap-3">
@@ -370,7 +376,12 @@
                                 <i class="fa-solid fa-crown text-[10px] text-slate-950"></i> VIP PRO MAX
                             </span>
                         </h1>
-                        <p class="text-[10px] sm:text-xs text-slate-200 font-bold truncate mt-0.5">Bán Lẻ - Sửa Chữa - Bảo Hành • Tác giả: <span class="text-amber-400 font-black">Trọng Nguyễn</span></p>
+                        <!-- SLOGAN BÊN TRÁI -->
+                        <div class="flex flex-wrap items-center gap-2 mt-1 w-full">
+                            <span class="text-xs sm:text-sm font-extrabold uppercase tracking-wider bg-gradient-to-r from-yellow-300 via-amber-400 via-pink-400 to-rose-400 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(245,158,11,0.8)] animate-pulse">
+                                ✨ Chất Lượng Tạo Nên Thương Hiệu ✨
+                            </span>
+                        </div>
                     </div>
                 </div>
                 
@@ -845,6 +856,16 @@
                         <label class="block text-xs font-bold text-slate-200 uppercase">Tên Sản Phẩm</label>
                         <input type="text" id="editProdName" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
                     </div>
+                    <!-- THÊM TÙY CHỌN ĐỔI DANH MỤC TRONG MODAL SỬA SẢN PHẨM -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Danh Mục Sản Phẩm</label>
+                        <select id="editProdCategory" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
+                            <option value="Laptop">Laptop Chuyên Dụng</option>
+                            <option value="Linh kiện">Linh Kiện & Phụ Kiện</option>
+                            <option value="Sạc Laptop">Sạc Laptop</option>
+                            <option value="Khác">Thiết Bị Khác</option>
+                        </select>
+                    </div>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="space-y-1">
                             <label class="block text-xs font-bold text-slate-200 uppercase">Giá Nhập</label>
@@ -944,6 +965,13 @@
             <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-700 pb-3">
                     <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-boxes-stacked"></i></div> Kho Hàng</h3>
+                    
+                    <!-- THANH TÌM KIẾM SẢN PHẨM TRONG KHO -->
+                    <div class="relative w-full sm:w-72">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-xs"></i>
+                        <input type="text" id="inventorySearchInput" oninput="renderProducts()" placeholder="Tìm tên, mã SKU, seri sản phẩm..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl pl-11 pr-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-400 transition">
+                    </div>
+
                     <div class="flex flex-wrap items-center gap-1 bg-slate-900 p-1.5 rounded-2xl border border-slate-700 text-xs w-full sm:w-auto justify-center">
                         <button id="inv-cat-all" onclick="setInvCategory('all')" class="flex-1 sm:flex-none px-3.5 py-2 rounded-xl font-bold bg-amber-500 text-slate-950 transition cursor-pointer">Tất Cả</button>
                         <button id="inv-cat-laptop" onclick="setInvCategory('Laptop')" class="flex-1 sm:flex-none px-3.5 py-2 rounded-xl font-semibold text-slate-300 hover:text-white transition cursor-pointer">Laptop</button>
@@ -1037,11 +1065,20 @@
                         <label class="block text-xs font-bold text-slate-200 uppercase">Thiết Bị</label>
                         <input type="text" id="completeRepDevice" readonly class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-white text-xs font-bold cursor-not-allowed">
                     </div>
-                    <div class="space-y-1">
+                    
+                    <!-- THÊM TÙY CHỌN HỖ TRỢ BẢO HÀNH MIỄN PHÍ (0Đ) -->
+                    <div class="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-2xl flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <input type="checkbox" id="completeRepWarrantySupport" onchange="toggleWarrantySupportCost(this.checked)" class="rounded text-cyan-500 focus:ring-cyan-400 w-4 h-4 cursor-pointer">
+                            <label for="completeRepWarrantySupport" class="text-xs font-extrabold text-cyan-300 uppercase cursor-pointer">🛡️ Hỗ trợ bảo hành (Không lấy tiền / 0đ)</label>
+                        </div>
+                    </div>
+
+                    <div id="complete-repair-cost-container" class="space-y-1">
                         <label class="block text-xs font-bold text-amber-400 uppercase">Giá Tiền Sửa Chữa Thực Tế (VNĐ) <span class="text-red-400">*</span></label>
                         <input type="number" id="completeRepCost" required min="0" class="w-full bg-slate-900 border border-amber-500/50 rounded-2xl px-4 py-3.5 text-white text-xs font-black text-amber-400 focus:outline-none focus:border-amber-400 transition" placeholder="Nhập số tiền sửa chữa...">
                     </div>
-                    <div class="space-y-1">
+                    <div id="complete-warranty-duration-container" class="space-y-1">
                         <label class="block text-xs font-bold text-slate-200 uppercase">Thời Gian Bảo Hành Sửa Chữa</label>
                         <select id="completeRepWarrantyMonths" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
                             <option value="1">1 Tháng</option>
@@ -5144,9 +5181,18 @@
             const list = document.getElementById('product-list');
             if (!list) return;
             
-            const products = (appData.products || []).filter(p => currentInvCategory === 'all' || p.category === currentInvCategory);
+            const searchKey = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase().trim();
+            const products = (appData.products || []).filter(p => {
+                const matchCat = currentInvCategory === 'all' || p.category === currentInvCategory;
+                const matchSearch = (p.name || '').toLowerCase().includes(searchKey) ||
+                                    (p.code || '').toLowerCase().includes(searchKey) ||
+                                    (p.laptopDetails?.serial || '').toLowerCase().includes(searchKey) ||
+                                    (p.laptopDetails?.cpu || '').toLowerCase().includes(searchKey) ||
+                                    (p.chargerDetails?.wattage || '').toLowerCase().includes(searchKey);
+                return matchCat && matchSearch;
+            });
 
-            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Chưa có sản phẩm trong kho.</div>`;
+            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm phù hợp trong kho.</div>`;
             
             const isAdmin = currentUser?.role === 'admin';
             list.innerHTML = products.map(p => {
@@ -5194,6 +5240,8 @@
             if (!prod) return;
             document.getElementById('editProdId').value = prod.id;
             document.getElementById('editProdName').value = prod.name;
+            const catSelect = document.getElementById('editProdCategory');
+            if (catSelect) catSelect.value = prod.category || 'Laptop';
             document.getElementById('editProdCost').value = prod.costPrice || 0;
             document.getElementById('editProdPrice').value = prod.price || 0;
             document.getElementById('editProdQty').value = prod.qty || 0;
@@ -5209,6 +5257,8 @@
             if (prodIndex !== -1) {
                 const qty = Number(document.getElementById('editProdQty').value) || 0;
                 appData.products[prodIndex].name = document.getElementById('editProdName').value.trim();
+                const catSelect = document.getElementById('editProdCategory');
+                if (catSelect) appData.products[prodIndex].category = catSelect.value;
                 appData.products[prodIndex].costPrice = Number(document.getElementById('editProdCost').value) || 0;
                 appData.products[prodIndex].price = Number(document.getElementById('editProdPrice').value) || 0;
                 appData.products[prodIndex].qty = Math.max(0, qty);
@@ -6186,14 +6236,122 @@
             const deviceInput = document.getElementById('completeRepDevice');
             const costInput = document.getElementById('completeRepCost');
             const warrantyMonthsInput = document.getElementById('completeRepWarrantyMonths');
+            const warrantySupportCheckbox = document.getElementById('completeRepWarrantySupport');
             const modal = document.getElementById('complete-repair-modal');
 
             if (idInput) idInput.value = rep.id;
             if (custInput) custInput.value = rep.customer + (rep.phone ? ' (' + rep.phone + ')' : '');
             if (deviceInput) deviceInput.value = rep.device + (rep.issue ? ' - Lỗi: ' + rep.issue : '');
-            if (costInput) costInput.value = (Number(rep.cost || 0) > 0 ? Number(rep.cost) : 0);
+            if (costInput) {
+                costInput.value = (Number(rep.cost || 0) > 0 ? Number(rep.cost) : 0);
+            }
             if (warrantyMonthsInput) warrantyMonthsInput.value = rep.warrantyMonths || 3;
+            if (warrantySupportCheckbox) {
+                warrantySupportCheckbox.checked = false;
+                toggleWarrantySupportCost(false);
+            }
             if (modal) modal.classList.remove('hidden');
+        }
+
+        function toggleWarrantySupportCost(isChecked) {
+            const costContainer = document.getElementById('complete-repair-cost-container');
+            const costInput = document.getElementById('completeRepCost');
+            const durationContainer = document.getElementById('complete-warranty-duration-container');
+            
+            if (isChecked) {
+                if (costInput) {
+                    costInput.value = 0;
+                    costInput.removeAttribute('required');
+                }
+                if (costContainer) costContainer.classList.add('hidden');
+                if (durationContainer) durationContainer.classList.add('hidden');
+            } else {
+                if (costInput) {
+                    costInput.setAttribute('required', 'required');
+                }
+                if (costContainer) costContainer.classList.remove('hidden');
+                if (durationContainer) durationContainer.classList.remove('hidden');
+            }
+        }
+
+        function confirmCompleteRepair(e) {
+            e.preventDefault();
+            const id = document.getElementById('completeRepId')?.value;
+            const rep = (appData.repairs || []).find(r => r.id === id);
+            if (!rep) return;
+
+            const isWarrantySupport = document.getElementById('completeRepWarrantySupport')?.checked || false;
+            const finalCost = isWarrantySupport ? 0 : (Number(document.getElementById('completeRepCost')?.value) || 0);
+            const warrantyMonths = Number(document.getElementById('completeRepWarrantyMonths')?.value) || rep.warrantyMonths || 3;
+
+            rep.cost = finalCost;
+            rep.completed = true;
+            rep.warrantyMonths = warrantyMonths;
+            if (isWarrantySupport) rep.isWarrantySupport = true;
+
+            let usedPartsSummary = '';
+            let totalPartsCost = 0;
+            let partsList = rep.parts || (rep.partId ? [{ id: rep.partId, qty: 1 }] : []);
+
+            partsList.forEach(item => {
+                const partProd = (appData.products || []).find(p => p.id === item.id);
+                if (partProd) {
+                    const deductQty = Number(item.qty || 1);
+                    // Nếu là hỗ trợ bảo hành miễn phí, có thể không trừ kho linh kiện hoặc trừ tùy ý, ở đây ta giữ nguyên linh kiện bảo hành
+                    totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
+                    usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
+                }
+            });
+
+            const profit = finalCost - totalPartsCost;
+            let thienCut = 0;
+            if (profit > 0 && !isWarrantySupport) {
+                if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
+                thienCut = Math.round(profit * 0.3);
+                appData.thienFunds.balance = (appData.thienFunds.balance || 0) + thienCut;
+                appData.thienFunds.transactions.push({
+                    desc: `Trích 30% Sửa chữa: ${rep.device}`,
+                    amount: thienCut,
+                    date: new Date().toLocaleString('vi-VN')
+                });
+            }
+
+            if (!appData.invoices) appData.invoices = [];
+            const newInv = {
+                id: 'INV_REP_' + Date.now(),
+                customerName: rep.customer,
+                customerPhone: rep.phone || '',
+                items: [{ name: `Sửa chữa thiết bị (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ' : 'Tính phí'}): ${rep.device} (Lỗi: ${rep.issue})${usedPartsSummary ? ' - Linh kiện:' + usedPartsSummary : ''}`, price: finalCost, qty: 1, costPrice: totalPartsCost }],
+                total: finalCost,
+                createdAt: new Date().toLocaleString('vi-VN')
+            };
+            appData.invoices.unshift(newInv);
+
+            const expiryDate = new Date(); 
+            expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
+            if (!appData.warranties) appData.warranties = [];
+            appData.warranties.unshift({
+                id: 'WAR_REP_' + Date.now(),
+                customer: rep.customer,
+                phone: rep.phone || '',
+                product: `Sửa chữa ${isWarrantySupport ? '(Bảo hành miễn phí)' : ''}: ${rep.device}${usedPartsSummary}`,
+                repairId: rep.id,
+                invoiceId: newInv.id,
+                parts: partsList,
+                price: finalCost,
+                thienCut: thienCut,
+                imei: 'REP #' + rep.id.slice(-6),
+                warrantyMonths,
+                expiryDate: expiryDate.toLocaleDateString('vi-VN'),
+                createdAt: new Date().toLocaleDateString('vi-VN')
+            });
+
+            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ' : finalCost.toLocaleString('vi-VN') + 'đ'})`);
+            closeCompleteRepairModal();
+            saveAndSync();
+            renderAll();
+            printRepairTicket(rep.id);
+            showToast(isWarrantySupport ? "Đã hoàn tất hỗ trợ bảo hành 0đ thành công!" : "Đã hoàn tất thanh toán sửa chữa!", "success");
         }
 
         function closeCompleteRepairModal() {
