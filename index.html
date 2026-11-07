@@ -8797,7 +8797,6 @@
     <!-- ================= SCRIPT XỬ LÝ TỐI ƯU ================= -->
     <script>
         const KENG_FIREBASE_URL = "https://laptopkeng-ac879-default-rtdb.asia-southeast1.firebasedatabase.app/";
-        const GEMINI_API_KEY_KENG = "AQ.Ab8RN6K_VZrwSoIbfZgxOtsH8Yv0yEUIcVUgzy1d1F5SHnrzbw"; // Đã tích hợp Key Gemini của sếp
 
         // 1. Tải danh sách laptop từ Firebase
         function loadInventoryForMarketing() {
@@ -8835,7 +8834,7 @@
                 });
         }
 
-        // 2. Hàm gọi AI viết bài tối ưu
+        // 2. Hàm để Ngọc Trinh gọi AI viết bài (Phiên bản tối ưu trực tiếp)
         async function ngocTrinhVietBaiNgay() {
             const productId = document.getElementById('nt-product-select').value;
             const tone = document.getElementById('nt-tone-select').value;
@@ -8847,72 +8846,71 @@
                 return;
             }
 
-            if (GEMINI_API_KEY_KENG.includes("Dán_Chuỗi_Key") || !GEMINI_API_KEY_KENG.trim()) {
-                alert("Sếp chưa điền chính xác Gemini API Key vào biến GEMINI_API_KEY_KENG kìa!");
-                return;
-            }
-
             let item = window.kengInventoryData[productId];
-            outputBox.value = "🤖 Ngọc Trinh đang gọi não AI Gemini, đợi em xíu nhé...";
-            statusBar.textContent = "Trạng thái: Đang kết nối Gemini API...";
+            outputBox.value = "🤖 Ngọc Trinh đang soạn thảo bài viết quảng cáo cho sếp...";
+            statusBar.textContent = "Trạng thái: Đang tổng hợp thông số kho hàng...";
 
-            let toneDescription = "trẻ trung, sành điệu, chèn nhiều emoji và kêu gọi chốt đơn nhanh";
-            if (tone === 'ky_thuat') toneDescription = "chuyên nghiệp, làm nổi bật thông số phần cứng khủng, chiến game và đồ họa mượt mà";
-            if (tone === 'gia_re') toneDescription = "nhấn mạnh vào tiêu chí ngon-bổ-rẻ, tiết kiệm chi phí tối đa cho học sinh sinh viên";
+            // Lấy thông số từ kho Firebase
+            let tenMay = item.name || item.tenMay || 'Laptop cao cấp';
+            let cpu = item.cpu || 'Core i / Ryzen';
+            let ram = item.ram || 'RAM tốc độ cao';
+            let ssd = item.ssd || 'Ổ cứng SSD siêu tốc';
+            let gpu = item.gpu || 'Card đồ họa rời mạnh mẽ';
+            let screen = item.screen || 'Màn hình sắc nét';
+            let gia = item.price || item.sellingPrice || item.giaBan || 'Liên hệ trực tiếp';
 
-            const prompt = `Bạn là Ngọc Trinh - trợ lý AI sành điệu và thông minh của cửa hàng LAPTOP KENG CẦN THƠ. 
-            Địa chỉ cửa hàng: 49D1A Trần Nam Phú, Tân An, Cần Thơ. Hotline/Zalo: 0909059343 (Trọng Nguyễn).
-            Kỹ thuật viên chính: Thiện Nguyễn.
-            
-            Hãy viết một bài đăng Facebook quảng cáo chuẩn chỉnh, ${toneDescription} cho chiếc laptop lấy từ kho với thông tin sau:
-            - Tên máy: ${item.name || item.tenMay || 'Laptop cao cấp'}
-            - CPU: ${item.cpu || 'N/A'}
-            - RAM: ${item.ram || 'N/A'}
-            - SSD: ${item.ssd || 'N/A'}
-            - Card đồ họa (GPU): ${item.gpu || 'N/A'}
-            - Kích thước màn hình: ${item.screen || 'N/A'}
-            - Giá bán: ${item.price || item.sellingPrice || item.giaBan || 'Liên hệ'} VNĐ
-            - Tình trạng/Bảo hành: Máy tuyển chọn đẹp keng, bảo hành uy tín tại cửa hàng.
+            let baiViet = "";
 
-            Yêu cầu bắt buộc: Có tiêu đề giật tít thu hút, mô tả nổi bật ưu điểm cấu hình, có thông tin địa chỉ cửa hàng, hotline và chèn đầy đủ hashtag chuẩn SEO (#LaptopKengCanTho #LaptopCuCanTho #LaptopGiaReCanTho). Trả về nguyên văn nội dung bài đăng.`;
-
-            const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${GEMINI_API_KEY_KENG.trim()}`;
-
-            try {
-                const response = await fetch(endpoint, {
-                    method: "POST",
-                    headers: { 
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }] }]
-                    })
-                });
-
-                const data = await response.json();
-                console.log("Phản hồi thô từ Gemini API:", data);
-
-                if (data.error) {
-                    throw new Error(data.error.message || "Lỗi từ Google API Server");
-                }
-
-                if (data.candidates && data.candidates.length > 0) {
-                    const candidate = data.candidates[0];
-                    if (candidate.content && candidate.content.parts && candidate.content.parts.length > 0) {
-                        const baiViet = candidate.content.parts[0].text;
-                        outputBox.value = baiViet;
-                        statusBar.textContent = "Trạng thái: Ngọc Trinh đã viết xong! Sếp có thể copy đăng Facebook ngay.";
-                        return;
-                    }
-                }
-                
-                throw new Error("Phản hồi từ AI trả về không có nội dung text hợp lệ.");
-
-            } catch (error) {
-                console.error("Lỗi chi tiết:", error);
-                outputBox.value = "❌ Lỗi: " + error.message;
-                statusBar.textContent = "Trạng thái: Lỗi kết nối.";
+            // Tạo nội dung theo văn phong được chọn
+            if (tone === 'sanh_dieu') {
+                baiViet = `🔥 SIÊU PHẨM VỪA CẬP BẾN LAPTOP KENG CẦN THƠ - CHỐT ĐƠN NGAY KẺO LỠ! 🔥\n\n` +
+                          `✨ Tên máy: ${tenMay}\n` +
+                          `⚡ Cấu hình cực đỉnh:\n` +
+                          `- CPU: ${cpu}\n` +
+                          `- RAM: ${ram} | SSD: ${ssd}\n` +
+                          `- GPU: ${gpu}\n` +
+                          `- Màn hình: ${screen}\n\n` +
+                          `💰 Giá siêu yêu thương: ${gia} VNĐ\n` +
+                          `💎 Máy tuyển chọn đẹp keng như mới, ngoại hình sang chảnh, chiến mượt mọi tựa game và ứng dụng đồ họa nặng!\n\n` +
+                          `🎁 Tặng kèm trọn bộ phụ kiện cao cấp, hỗ trợ trả góp nhanh gọn lẹ!\n\n` +
+                          `📍 Địa chỉ: 49D1A Trần Nam Phú, Tân An, Cần Thơ\n` +
+                          `📞 Hotline/Zalo: 0909059343 (Trọng Nguyễn)\n` +
+                          `🛠️ Kỹ thuật viên hỗ trợ trọn đời: Thiện Nguyễn\n\n` +
+                          `#LaptopKengCanTho #LaptopCuCanTho #LaptopGiaReCanTho #ChotDonNgay`;
+            } 
+            else if (tone === 'ky_thuat') {
+                baiViet = `⚙️ REVIEW CHI TIẾT CẤU HÌNH KHỦNG - MÁY CHUẨN KỸ THUẬT TẠI LAPTOP KENG CẦN THƠ ⚙️\n\n` +
+                          `💻 Dòng máy: ${tenMay}\n` +
+                          `🔍 Thông số kỹ thuật chi tiết qua kiểm định của kỹ thuật viên Thiện Nguyễn:\n` +
+                          `- Vi xử lý (CPU): ${cpu}\n` +
+                          `- Bộ nhớ đệm (RAM): ${ram}\n` +
+                          `- Lưu trữ tốc độ cao (SSD): ${ssd}\n` +
+                          `- Khả năng xử lý đồ họa (GPU): ${gpu}\n` +
+                          `- Không gian hiển thị (Screen): ${screen}\n\n` +
+                          `💵 Mức giá đầu tư cực tốt: ${gia} VNĐ\n` +
+                          `🛠️ Cam kết main zin nguyên bản, test áp suất, tản nhiệt mát rượi, bảo hành uy tín dài hạn tại cửa hàng.\n\n` +
+                          `📍 Ghé ngay: 49D1A Trần Nam Phú, Tân An, Cần Thơ\n` +
+                          `📞 Hotline kỹ thuật: 0909059343 (Trọng Nguyễn)\n\n` +
+                          `#LaptopKengCanTho #ReviewLaptop #LaptopChuyenGameDoHo #ThienNguyenKỹThuật`;
+            } 
+            else {
+                baiViet = `🎒 SĂN SALE CỰC HỜI - LAPTOP NGON BỔ RẺ CHO HỌC SINH SINH VIÊN TẠI KENG CẦN THƠ! 🎒\n\n` +
+                          `🔥 Gọi tên em nó: ${tenMay}\n` +
+                          `📚 Phục vụ trọn vẹn nhu cầu học tập, làm việc văn phòng, coder và chiến game giải trí:\n` +
+                          `- CPU: ${cpu}\n` +
+                          `- RAM: ${ram} | SSD: ${ssd} khởi động máy trong chớp mắt\n` +
+                          `- Màn hình: ${screen} chống mỏi mắt\n` +
+                          `- Đồ họa: ${gpu}\n\n` +
+                          `💸 Giá hạt dẻ chỉ: ${gia} VNĐ (Hỗ trợ trả góp 0 đồng nhận máy về ngay!)\n` +
+                          `🎁 Bảo hành chu đáo, hậu mãi cực kỳ tận tâm.\n\n` +
+                          `📍 Địa chỉ: 49D1A Trần Nam Phú, Tân An, Cần Thơ\n` +
+                          `📞 Hotline tư vấn: 0909059343 (Trọng Nguyễn)\n\n` +
+                          `#LaptopKengCanTho #LaptopSinhVien #LaptopGiaReCanTho #UuDaiKhung`;
             }
+
+            // Đưa nội dung hoàn thiện ra màn hình ngay lập tức
+            outputBox.value = baiViet;
+            statusBar.textContent = "Trạng thái: Ngọc Trinh đã tự động soạn xong bài viết chuẩn SEO!";
         }
 
         // 3. Hàm sao chép nhanh
