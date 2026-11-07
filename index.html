@@ -356,9 +356,12 @@
     <!-- HEADER / NAVIGATION -->
     <header class="glass-panel border-b border-slate-800/80 sticky top-0 z-40 shadow-2xl w-full">
         <!-- NƠI ĐẶT TÁC GIẢ TRỌNG NGUYỄN Ở GÓC TRÊN CÙNG BÊN PHẢI ỨNG DỤNG -->
-        <div class="absolute top-2.5 right-4 z-50 hidden sm:block">
+        <div class="absolute top-2.5 right-4 z-50 hidden sm:flex flex-col items-end">
             <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/25 via-purple-500/25 to-pink-500/25 border-2 border-amber-400 text-sm sm:text-base font-black text-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] animate-bounce tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif; text-rendering: optimizeLegibility;">
                 <i class="fa-solid fa-crown text-amber-300 text-sm"></i> Tác giả: <span class="text-white font-extrabold tracking-wider bg-gradient-to-r from-amber-200 via-pink-300 to-yellow-300 bg-clip-text text-transparent italic">Trọng Nguyễn</span>
+            </span>
+            <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 mt-1 drop-shadow-[0_0_10px_rgba(16,185,129,0.7)] animate-pulse">
+                Automatic
             </span>
         </div>
         <div class="max-w-[1600px] w-full mx-auto px-3 sm:px-6 lg:px-8">
@@ -396,7 +399,10 @@
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
                     <button id="nav-expenses" onclick="switchTab('expenses')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-money-bill-transfer text-red-400"></i> Chi Phí</button>
+                    <button id="nav-kinh-chieu-yeu" onclick="switchTab('kinh-chieu-yeu')" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-300 hover:bg-amber-500/20 bg-amber-500/10 border border-amber-500/30 transition cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-magnifying-glass text-amber-400"></i> Kính Chiếu Yêu</button>
                     <button onclick="openCaroModal()" title="Cờ Caro 2 Người" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-cyan-300 hover:bg-cyan-500/20 bg-gradient-to-r from-cyan-600/30 to-cyan-500/10 border border-cyan-500/40 transition cursor-pointer shadow-lg shadow-cyan-500/10"><i class="fa-solid fa-chess-board text-cyan-400"></i> Cờ Caro</button>
+                    <button id="nav-cloud" onclick="switchTab('cloud')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-fire text-amber-400"></i> Cloud</button>
+                    <button id="nav-logs" onclick="switchTab('logs')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-clipboard-list text-purple-400"></i> Nhật Ký</button>
                     <button id="nav-users" onclick="switchTab('users')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-users-gear text-cyan-400"></i> Nhân Viên</button>
                     <div class="h-4 w-[1px] bg-slate-700 mx-1"></div>
                     <button onclick="openLivestreamModal()" title="Bán hàng Livestream Facebook & TikTok tự động" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 text-white transition cursor-pointer shadow-lg shadow-pink-500/20 border border-pink-400/40">
@@ -438,6 +444,7 @@
                 <button onclick="switchTab('debts'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-file-invoice-dollar text-base text-pink-400"></i> Quản Lý Công Nợ</button>
                 <button onclick="switchTab('thien'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-hand-holding-dollar text-base text-yellow-400"></i> Tiền Của Thiện</button>
                 <button onclick="switchTab('expenses'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-money-bill-transfer text-base text-red-400"></i> Quản Lý Chi Phí</button>
+                <button onclick="switchTab('kinh-chieu-yeu'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-300 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-amber-400"></i> Kính Chiếu Yêu</button>
                 <button onclick="openCaroModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-cyan-300 bg-slate-900 border border-cyan-500/40 shadow-md"><i class="fa-solid fa-chess-board text-base text-cyan-400"></i> Cờ Caro 2 Người</button>
                 <button onclick="openLivestreamModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-pink-300 bg-slate-900 border border-pink-500/40 shadow-md"><i class="fa-solid fa-video text-base text-pink-400"></i> Livestream Chốt Đơn</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
@@ -460,6 +467,7 @@
         <button onclick="switchTab('repairs')" id="mob-bot-repairs" class="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-400 flex-1 transition"><i class="fa-solid fa-wrench text-xs"></i><span class="text-[8px] font-bold">Sửa</span></button>
         <button onclick="switchTab('cleaning')" id="mob-bot-cleaning" class="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-400 flex-1 transition"><i class="fa-solid fa-pump-soap text-xs"></i><span class="text-[8px] font-bold">Vệ Sinh</span></button>
         <button onclick="switchTab('warranties')" id="mob-bot-warranties" class="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-400 flex-1 transition"><i class="fa-solid fa-shield-halved text-xs"></i><span class="text-[8px] font-bold">Bảo Hành</span></button>
+        <button onclick="switchTab('kinh-chieu-yeu')" id="mob-bot-kinh-chieu-yeu" class="flex flex-col items-center gap-1 p-1.5 rounded-xl text-slate-400 flex-1 transition"><i class="fa-solid fa-magnifying-glass text-xs"></i><span class="text-[8px] font-bold">Soi Giá</span></button>
         <button onclick="openCaroModal()" class="flex flex-col items-center gap-1 p-1.5 rounded-xl text-cyan-400 flex-1 transition"><i class="fa-solid fa-chess-board text-xs"></i><span class="text-[8px] font-bold">Caro</span></button>
     </div>
 
@@ -1420,75 +1428,126 @@
                         </p>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            <button onclick="saveToDedicatedLocalVault(false)" class="py-3.5 px-4 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-md">
-                                <i class="fa-solid fa-floppy-disk"></i> Lưu & Tải Tệp Sao Lưu Ngay
-                            </button>
-                            <button onclick="restoreFromDedicatedLocalVault()" class="py-3.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-500/20">
-                                <i class="fa-solid fa-clock-rotate-left"></i> Khôi Phục Từ Tệp Đã Lưu
-                            </button>
-                        </div>
-
-                        <!-- DANH SÁCH CÁC ĐIỂM KHÔI PHỤC TỰ ĐỘNG GẦN ĐÂY -->
-                        <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
-                            <div class="flex items-center justify-between text-[10px] font-extrabold text-amber-400 uppercase">
-                                <span><i class="fa-solid fa-history"></i> Điểm sao lưu gần đây (Tối đa 5 bản):</span>
-                                <span id="auto-backup-counter" class="text-emerald-400 font-mono">Tiến trình: 30s</span>
-                            </div>
-                            <div id="local-vault-history-list" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></div>
-                        </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-2 border-t border-slate-800/80">
-                            <button onclick="exportLocalBackupFile()" class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/30 font-bold rounded-xl text-[11px] uppercase flex items-center justify-center gap-1.5 transition cursor-pointer">
-                                <i class="fa-solid fa-file-export"></i> Xuất Tệp Lưu Trữ (.JSON)
-                            </button>
-                            <label class="py-2.5 px-3 bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/30 font-bold rounded-xl text-[11px] uppercase flex items-center justify-center gap-1.5 transition cursor-pointer text-center">
-                                <i class="fa-solid fa-file-import"></i> Nạp Tệp Sao Lưu (.JSON)
-                                <input type="file" accept=".json" onchange="importLocalBackupFile(event)" class="hidden">
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="pt-3 border-t border-slate-700">
-                        <button onclick="resetRevenueData()" class="w-full py-4 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 text-red-400 border border-red-500/40 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 transition cursor-pointer">
-                            <i class="fa-solid fa-rotate-left"></i> Reset Doanh Thu (Đưa Doanh Thu Về 0đ)
+                        <button onclick="saveToDedicatedLocalVault(false)" class="py-3.5 px-4 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-md">
+                            <i class="fa-solid fa-floppy-disk"></i> Lưu & Tải Tệp Sao Lưu Ngay
                         </button>
-                        <p class="text-[11px] text-slate-300 text-center mt-2 italic">⚠️ Hành động này sẽ xóa toàn bộ lịch sử hóa đơn / đã bán để reset doanh thu về 0đ (kho hàng, sửa chữa và bảo hành được giữ nguyên).</p>
+                        <button onclick="restoreFromDedicatedLocalVault()" class="py-3.5 px-4 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black rounded-xl text-xs uppercase flex items-center justify-center gap-2 transition cursor-pointer shadow-lg shadow-emerald-500/20">
+                            <i class="fa-solid fa-clock-rotate-left"></i> Khôi Phục Từ Tệp Đã Lưu
+                        </button>
                     </div>
-                    <div id="cloud-log-box" class="hidden p-4 bg-slate-950/90 rounded-2xl border border-slate-700 font-mono text-[11px] text-slate-200 space-y-1.5 max-h-48 overflow-y-auto"></div>
-                </div>
-            </div>
-        </section>
 
-        <!-- TAB 7: USERS -->
-        <section id="tab-users" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div class="glass-panel p-5 sm:p-7 rounded-[2rem] h-fit space-y-4 shadow-2xl border border-slate-700 lg:sticky lg:top-24">
-                    <div class="border-b border-slate-700 pb-3"><h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400"><i class="fa-solid fa-user-plus"></i></div> Tạo Tài Khoản</h3></div>
-                    <form onsubmit="createStaffAccount(event)" class="space-y-3.5">
-                        <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Tên NV</label><input type="text" id="staffName" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
-                        <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Đăng Nhập</label><input type="text" id="staffUsername" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
-                        <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Mật Khẩu</label><input type="password" id="staffPassword" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
-                        <div class="p-3.5 bg-cyan-950/40 border border-cyan-800/60 rounded-2xl text-[11px] text-cyan-200 space-y-1">
-                            <p class="font-bold"><i class="fa-solid fa-shield-halved"></i> NV không được phép xóa dữ liệu.</p>
-                        </div>
-                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 transition active:scale-95 cursor-pointer"><i class="fa-solid fa-plus-circle"></i> Tạo Tài Khoản</button>
-                    </form>
+                    <!-- DANH SÁCH CÁC ĐIỂM KHÔI PHỤC TỰ ĐỘNG GẦN ĐÂY -->
+                    <div class="space-y-1.5 pt-2 border-t border-slate-800/80">
+                        <span class="block text-[10px] font-bold text-slate-400 uppercase">Lịch sử các điểm sao lưu tự động gần nhất:</span>
+                        <div id="local-vault-history-list" class="space-y-1.5 max-h-36 overflow-y-auto pr-1"></div>
+                    </div>
                 </div>
-                <div class="lg:col-span-2 glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
-                    <div class="border-b border-slate-700 pb-3"><h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400"><i class="fa-solid fa-users"></i></div> Danh Sách Nhân Viên</h3></div>
-                    <div id="staff-list" class="space-y-3"></div>
-                </div>
-            </div>
-        </section>
 
-        <!-- TAB 8: NHẬT KÝ HOẠT ĐỘNG -->
-        <section id="tab-logs" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
+                <div class="pt-3 border-t border-slate-700">
+                    <button onclick="resetRevenueData()" class="w-full py-4 bg-gradient-to-r from-red-500/20 to-red-600/20 hover:from-red-500/30 text-red-400 border border-red-500/40 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 transition cursor-pointer">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Doanh Thu (Đưa Doanh Thu Về 0đ)
+                    </button>
+                    <p class="text-[11px] text-slate-300 text-center mt-2 italic">⚠️ Hành động này sẽ xóa toàn bộ lịch sử hóa đơn / đã bán để reset doanh thu về 0đ (kho hàng, sửa chữa và bảo hành được giữ nguyên).</p>
+                </div>
+                <div id="cloud-log-box" class="hidden p-4 bg-slate-950/90 rounded-2xl border border-slate-700 font-mono text-[11px] text-slate-200 space-y-1.5 max-h-48 overflow-y-auto"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB 7: USERS -->
+    <section id="tab-users" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div class="glass-panel p-5 sm:p-7 rounded-[2rem] h-fit space-y-4 shadow-2xl border border-slate-700 lg:sticky lg:top-24">
+                <div class="border-b border-slate-700 pb-3"><h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400"><i class="fa-solid fa-user-plus"></i></div> Tạo Tài Khoản</h3></div>
+                <form onsubmit="createStaffAccount(event)" class="space-y-3.5">
+                    <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Tên NV</label><input type="text" id="staffName" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
+                    <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Đăng Nhập</label><input type="text" id="staffUsername" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
+                    <div class="space-y-1"><label class="block text-xs font-bold text-slate-200 uppercase">Mật Khẩu</label><input type="password" id="staffPassword" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-cyan-400 transition"></div>
+                    <div class="p-3.5 bg-cyan-950/40 border border-cyan-800/60 rounded-2xl text-[11px] text-cyan-200 space-y-1">
+                        <p class="font-bold"><i class="fa-solid fa-shield-halved"></i> NV không được phép xóa dữ liệu.</p>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 transition active:scale-95 cursor-pointer"><i class="fa-solid fa-plus-circle"></i> Tạo Tài Khoản</button>
+                </form>
+            </div>
+            <div class="lg:col-span-2 glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
+                <div class="border-b border-slate-700 pb-3"><h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400"><i class="fa-solid fa-users"></i></div> Danh Sách Nhân Viên</h3></div>
+                <div id="staff-list" class="space-y-3"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TAB: NHẬT KÝ HOẠT ĐỘNG -->
+    <section id="tab-logs" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
             <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
                 <div class="flex items-center justify-between border-b border-slate-700 pb-3">
                     <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400"><i class="fa-solid fa-clipboard-list"></i></div> Nhật Ký Hệ Thống</h3>
                     <button onclick="clearLogs()" class="text-xs text-red-400 hover:text-red-300 font-extrabold px-3.5 py-1.5 rounded-xl hover:bg-red-500/10 transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-trash-can"></i> Dọn Dẹp</button>
                 </div>
                 <div id="log-list" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- TAB: KÍNH CHIẾU YÊU -->
+        <section id="tab-kinh-chieu-yeu" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
+            <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-6 max-w-4xl mx-auto border border-amber-500/50 bg-gradient-to-b from-[#120a02] via-[#1a0e04] to-[#060301]">
+                <div class="flex items-center justify-between border-b border-amber-500/30 pb-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black shadow-lg text-xl">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-white text-lg sm:text-xl tracking-tight">KÍNH CHIẾU YÊU - SOI GIÁ ĐỐI THỦ</h3>
+                            <p class="text-xs text-amber-400 font-extrabold uppercase tracking-widest mt-0.5">Quản lý và tham khảo nhanh trang Facebook cửa hàng khác</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FORM NHẬP URL FACEBOOK ĐÃ FIX LỖI GIAO DIỆN -->
+                <div class="bg-slate-900/90 p-5 rounded-3xl border border-amber-500/30 space-y-4 shadow-inner">
+                    <h4 class="font-black text-white text-xs uppercase tracking-wide flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle text-amber-400"></i> Thêm Địa Chỉ Facebook Cửa Hàng Khác
+                    </h4>
+                    <form onsubmit="addCompetitorStore(event)" class="space-y-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="block text-[11px] font-bold text-slate-300 uppercase">Tên Cửa Hàng / Đối Thủ</label>
+                                <input type="text" id="compStoreName" required placeholder="VD: Laptop Cũ Cần Thơ..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-3 text-white text-xs focus:border-amber-400 transition">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-[11px] font-bold text-slate-300 uppercase">Đường Dẫn URL Facebook</label>
+                                <input type="text" id="compStoreUrl" required placeholder="https://facebook.com/cuahang..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3.5 py-3 text-white text-xs font-mono focus:border-amber-400 transition">
+                            </div>
+                        </div>
+                        <div class="flex justify-end pt-1">
+                            <button type="submit" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-2 transition cursor-pointer">
+                                <i class="fa-solid fa-plus-circle"></i> Lưu Địa Chỉ Đối Thủ
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- DANH SÁCH ĐÃ LƯU & LƯU TRỰC TIẾP ĐỊA CHỈ -->
+                <div class="bg-slate-900/90 p-5 rounded-3xl border border-amber-500/30 space-y-4 shadow-inner">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+                        <h4 class="font-black text-white text-xs sm:text-sm uppercase tracking-wide flex items-center gap-2">
+                            <i class="fa-solid fa-list text-amber-400"></i> Danh Sách Cửa Hàng Đang Theo Dõi (<span id="competitor-count">0</span>)
+                        </h4>
+                        <span class="text-[11px] text-amber-300 font-bold"><i class="fa-solid fa-bolt"></i> Click trực tiếp vào dòng địa chỉ để mở xem trang Facebook</span>
+                    </div>
+
+                    <!-- THANH NHẬP & LƯU ĐỊA CHỈ TRỰC TIẾP TRONG MỤC DANH SÁCH -->
+                    <form onsubmit="addQuickCompetitorStore(event)" class="flex flex-col sm:flex-row gap-2.5 bg-slate-950 p-3 rounded-2xl border border-amber-500/40">
+                        <input type="text" id="quickCompStoreName" placeholder="Tên cửa hàng (Tùy chọn)..." class="sm:w-1/3 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
+                        <input type="text" id="quickCompStoreUrl" required placeholder="Nhập địa chỉ URL Facebook cửa hàng khác vào đây để lưu..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-white text-xs font-mono focus:outline-none focus:border-amber-400 transition">
+                        <button type="submit" class="px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-xl text-xs uppercase tracking-wider shadow-lg flex items-center justify-center gap-1.5 transition cursor-pointer flex-shrink-0">
+                            <i class="fa-solid fa-plus-circle"></i> Lưu Địa Chỉ
+                        </button>
+                    </form>
+
+                    <div id="competitor-stores-list" class="space-y-2.5 max-h-[450px] overflow-y-auto pr-1">
+                        <div class="p-8 text-center text-slate-400 text-xs font-bold">Chưa có địa chỉ cửa hàng nào được lưu. Sếp hãy nhập đường dẫn URL vào thanh bên trên để lưu nhé.</div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -1682,11 +1741,101 @@
 
     <!-- SCRIPT LOGIC -->
     <script>
-        let selectedRepairParts = [];
+        // --- MÔ ĐUN KÍNH CHIẾU YÊU (QUẢN LÝ URL FACEBOOK ĐỐI THỦ & MỞ NHANH CHROME) ---
+        function addCompetitorStore(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('compStoreName');
+            const urlInput = document.getElementById('compStoreUrl');
+            const name = (nameInput?.value || '').trim() || 'Cửa hàng Facebook';
+            let url = (urlInput?.value || '').trim();
+            if (!url) return;
 
-        function openMultiPartsModal() {
-            renderMultiPartsModalList();
-            document.getElementById('multi-parts-modal').classList.remove('hidden');
+            saveCompetitorStoreEntry(name, url);
+            if (nameInput) nameInput.value = '';
+            if (urlInput) urlInput.value = '';
+        }
+
+        function addQuickCompetitorStore(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('quickCompStoreName');
+            const urlInput = document.getElementById('quickCompStoreUrl');
+            let url = (urlInput?.value || '').trim();
+            if (!url) return;
+
+            let name = (nameInput?.value || '').trim();
+            if (!name) {
+                try {
+                    const cleanUrl = url.replace(/^https?:\/\/(www\.)?facebook\.com\//i, '').split(/[/?#]/)[0];
+                    name = cleanUrl ? `FB: ${cleanUrl}` : `Cửa hàng FB #${(appData.competitors || []).length + 1}`;
+                } catch (err) {
+                    name = `Cửa hàng FB #${(appData.competitors || []).length + 1}`;
+                }
+            }
+
+            saveCompetitorStoreEntry(name, url);
+            if (nameInput) nameInput.value = '';
+            if (urlInput) urlInput.value = '';
+        }
+
+        function saveCompetitorStoreEntry(name, url) {
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            if (!appData.competitors) appData.competitors = [];
+            appData.competitors.unshift({
+                id: 'COMP_' + Date.now(),
+                name,
+                url,
+                createdAt: new Date().toLocaleString('vi-VN')
+            });
+
+            saveAndSync();
+            renderCompetitorStores();
+            showToast("Đã lưu địa chỉ vào Danh Sách Cửa Hàng Đang Theo Dõi!", "success");
+        }
+
+        function openCompetitorInChrome(url) {
+            if (!url) return;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        function renderCompetitorStores() {
+            const listEl = document.getElementById('competitor-stores-list');
+            const countEl = document.getElementById('competitor-count');
+            if (!listEl) return;
+
+            const competitors = appData.competitors || [];
+            if (countEl) countEl.innerText = competitors.length;
+
+            if (competitors.length === 0) {
+                listEl.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs font-bold">Chưa có địa chỉ cửa hàng nào được lưu. Sếp hãy nhập đường dẫn URL vào thanh bên trên để lưu nhé.</div>`;
+                return;
+            }
+
+            listEl.innerHTML = competitors.map((c, idx) => `
+                <div class="glass-card p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 border border-amber-500/30 hover:border-amber-400 transition">
+                    <div onclick="openCompetitorInChrome('${c.url.replace(/'/g, "\\'")}')" class="space-y-1 min-w-0 flex-1 cursor-pointer group" title="Click để mở ngay trang Facebook này trên trình duyệt">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2 py-0.5 rounded-md bg-amber-500/20 text-amber-300 font-black text-[10px] border border-amber-500/30">#${idx + 1}</span>
+                            <div class="font-extrabold text-white group-hover:text-amber-400 text-sm truncate transition">${c.name}</div>
+                        </div>
+                        <div class="text-xs text-cyan-400 font-mono group-hover:underline truncate block"><i class="fa-brands fa-facebook text-blue-400 mr-1"></i>${c.url}</div>
+                        <span class="text-[10px] text-slate-500 block">Đã lưu lúc: ${c.createdAt}</span>
+                    </div>
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <button type="button" onclick="deleteCompetitorStore('${c.id}')" class="p-2.5 text-red-400 hover:bg-red-500/15 rounded-xl transition cursor-pointer border border-red-500/20" title="Xóa địa chỉ này"><i class="fa-solid fa-trash text-xs"></i></button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function deleteCompetitorStore(id) {
+            if (!(await customConfirm("Xóa địa chỉ cửa hàng này khỏi danh sách kính chiếu yêu?"))) return;
+            appData.competitors = (appData.competitors || []).filter(c => c.id !== id);
+            saveAndSync();
+            renderCompetitorStores();
+            showToast("Đã xóa địa chỉ", "info");
         }
 
         function closeMultiPartsModal() {
@@ -4465,7 +4614,7 @@
                 return showToast("Chỉ Admin mới được truy cập!", "error");
             }
             currentTab = tabId;
-            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'warranties', 'debts', 'thien', 'expenses', 'cloud', 'users', 'logs'].forEach(t => {
+            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'warranties', 'debts', 'thien', 'expenses', 'kinh-chieu-yeu', 'cloud', 'users', 'logs'].forEach(t => {
                 document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tabId);
                 
                 const btnNav = document.getElementById(`nav-${t}`);
@@ -4490,6 +4639,9 @@
                     }
                 }
             });
+            if (tabId === 'kinh-chieu-yeu') {
+                renderCompetitorStores();
+            }
         }
 
         function renderServerFields() {
@@ -4625,6 +4777,7 @@
                     appData.debts = appData.debts || [];
                     appData.cleanings = appData.cleanings || [];
                     appData.expenses = appData.expenses || [];
+                    appData.competitors = appData.competitors || [];
                     appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
                     appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
                 }
@@ -4649,6 +4802,7 @@
             startAutoLocalBackupEngine(); // Kích hoạt bộ máy tự động sao lưu ngầm định kỳ 30s
             updateLocalVaultStatusUI();
             renderAll();
+            renderCompetitorStores();
             setTimeout(triggerStockAlert, 1000);
         }
 
@@ -6305,7 +6459,6 @@
                 const partProd = (appData.products || []).find(p => p.id === item.id);
                 if (partProd) {
                     const deductQty = Number(item.qty || 1);
-                    // Nếu là hỗ trợ bảo hành miễn phí, có thể không trừ kho linh kiện hoặc trừ tùy ý, ở đây ta giữ nguyên linh kiện bảo hành
                     totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
                     usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
                 }
@@ -6335,31 +6488,34 @@
             };
             appData.invoices.unshift(newInv);
 
-            const expiryDate = new Date(); 
-            expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
-            if (!appData.warranties) appData.warranties = [];
-            appData.warranties.unshift({
-                id: 'WAR_REP_' + Date.now(),
-                customer: rep.customer,
-                phone: rep.phone || '',
-                product: `Sửa chữa ${isWarrantySupport ? '(Bảo hành miễn phí)' : ''}: ${rep.device}${usedPartsSummary}`,
-                repairId: rep.id,
-                invoiceId: newInv.id,
-                parts: partsList,
-                price: finalCost,
-                thienCut: thienCut,
-                imei: 'REP #' + rep.id.slice(-6),
-                warrantyMonths,
-                expiryDate: expiryDate.toLocaleDateString('vi-VN'),
-                createdAt: new Date().toLocaleDateString('vi-VN')
-            });
+            // CHỈ TẠO THẺ BẢO HÀNH NẾU KHÔNG PHẢI LÀ HỖ TRỢ BẢO HÀNH MIỄN PHÍ (0Đ)
+            if (!isWarrantySupport) {
+                const expiryDate = new Date(); 
+                expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
+                if (!appData.warranties) appData.warranties = [];
+                appData.warranties.unshift({
+                    id: 'WAR_REP_' + Date.now(),
+                    customer: rep.customer,
+                    phone: rep.phone || '',
+                    product: `Sửa chữa: ${rep.device}${usedPartsSummary}`,
+                    repairId: rep.id,
+                    invoiceId: newInv.id,
+                    parts: partsList,
+                    price: finalCost,
+                    thienCut: thienCut,
+                    imei: 'REP #' + rep.id.slice(-6),
+                    warrantyMonths,
+                    expiryDate: expiryDate.toLocaleDateString('vi-VN'),
+                    createdAt: new Date().toLocaleDateString('vi-VN')
+                });
+            }
 
-            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ' : finalCost.toLocaleString('vi-VN') + 'đ'})`);
+            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ - Không tạo thẻ BH' : finalCost.toLocaleString('vi-VN') + 'đ'})`);
             closeCompleteRepairModal();
             saveAndSync();
             renderAll();
             printRepairTicket(rep.id);
-            showToast(isWarrantySupport ? "Đã hoàn tất hỗ trợ bảo hành 0đ thành công!" : "Đã hoàn tất thanh toán sửa chữa!", "success");
+            showToast(isWarrantySupport ? "Đã hoàn tất hỗ trợ bảo hành 0đ (Không tạo thẻ bảo hành)!" : "Đã hoàn tất thanh toán sửa chữa & lưu bảo hành!", "success");
         }
 
         function closeCompleteRepairModal() {
