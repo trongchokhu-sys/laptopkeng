@@ -355,8 +355,8 @@
 
     <!-- HEADER / NAVIGATION -->
     <header class="glass-panel border-b border-slate-800/80 sticky top-0 z-40 shadow-2xl w-full">
-        <!-- NƠI ĐẶT TÁC GIẢ TRỌNG NGUYỄN Ở TRÊN CÙNG Ở GIỮA ỨNG DỤNG -->
-        <div class="absolute top-2 left-1/2 transform -translate-x-1/2 z-50 hidden sm:block">
+        <!-- NƠI ĐẶT TÁC GIẢ TRỌNG NGUYỄN Ở GÓC TRÊN CÙNG BÊN PHẢI ỨNG DỤNG -->
+        <div class="absolute top-2.5 right-4 z-50 hidden sm:block">
             <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-amber-500/25 via-purple-500/25 to-pink-500/25 border-2 border-amber-400 text-sm sm:text-base font-black text-amber-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] animate-bounce tracking-wide" style="font-family: 'Plus Jakarta Sans', sans-serif; text-rendering: optimizeLegibility;">
                 <i class="fa-solid fa-crown text-amber-300 text-sm"></i> Tác giả: <span class="text-white font-extrabold tracking-wider bg-gradient-to-r from-amber-200 via-pink-300 to-yellow-300 bg-clip-text text-transparent italic">Trọng Nguyễn</span>
             </span>
@@ -396,26 +396,17 @@
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
                     <button id="nav-expenses" onclick="switchTab('expenses')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-money-bill-transfer text-red-400"></i> Chi Phí</button>
-                    <!-- NÚT ĐỔI MẬT KHẨU TRÊN DESKTOP NAV -->
-                    <button onclick="openChangePasswordModal()" title="Đổi mật khẩu tài khoản" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-yellow-300 hover:bg-yellow-500/20 bg-yellow-500/10 border border-yellow-500/30 transition cursor-pointer shadow-lg"><i class="fa-solid fa-key"></i> Đổi Mật Khẩu</button>
-                    <button onclick="openAutoUpdateModal()" title="Cập nhật ứng dụng" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-emerald-400 hover:bg-emerald-500/20 bg-emerald-500/10 border border-emerald-500/30 transition cursor-pointer shadow-lg shadow-emerald-500/10"><i class="fa-solid fa-rotate text-emerald-400"></i> Cập Nhật</button>
-                    <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" title="Cửa hàng Chợ Tốt" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-amber-400 hover:bg-amber-500/20 bg-amber-500/10 border border-amber-500/30 transition cursor-pointer"><i class="fa-solid fa-store"></i> Chợ Tốt</a>
                     <button onclick="openCaroModal()" title="Cờ Caro 2 Người" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-cyan-300 hover:bg-cyan-500/20 bg-gradient-to-r from-cyan-600/30 to-cyan-500/10 border border-cyan-500/40 transition cursor-pointer shadow-lg shadow-cyan-500/10"><i class="fa-solid fa-chess-board text-cyan-400"></i> Cờ Caro</button>
-                    <button onclick="openPublicWarrantyModal()" title="Tra Cứu Bảo Hành Online" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 text-emerald-300 hover:bg-emerald-500/20 bg-gradient-to-r from-emerald-600/30 to-emerald-500/10 border border-emerald-500/40 transition cursor-pointer shadow-lg shadow-emerald-500/10"><i class="fa-solid fa-magnifying-glass text-emerald-400"></i> Tra Cứu BH</button>
-                    <button id="nav-cloud" onclick="switchTab('cloud')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-fire text-amber-400"></i> Cloud</button>
-                    <button id="nav-logs" onclick="switchTab('logs')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-clipboard-list text-purple-400"></i> Nhật Ký</button>
                     <button id="nav-users" onclick="switchTab('users')" style="display: none;" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-users-gear text-cyan-400"></i> Nhân Viên</button>
                     <div class="h-4 w-[1px] bg-slate-700 mx-1"></div>
-                    <!-- Nút Livestream Chốt Đơn Đặt Nằm Kế Nút Đăng Xuất -->
                     <button onclick="openLivestreamModal()" title="Bán hàng Livestream Facebook & TikTok tự động" class="px-3.5 py-2.5 rounded-xl text-xs font-extrabold flex items-center gap-1.5 bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 text-white transition cursor-pointer shadow-lg shadow-pink-500/20 border border-pink-400/40">
                         <i class="fa-solid fa-video text-white animate-pulse"></i> Livestream
                     </button>
-                    <button onclick="handleLogout()" title="Đăng Xuất" class="px-3 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1 bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 transition cursor-pointer"><i class="fa-solid fa-right-from-bracket"></i></button>
+                    <button onclick="handleLogout()" title="Đăng Xuất" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1 bg-red-500/15 hover:bg-red-500/25 text-red-400 border border-red-500/30 transition cursor-pointer"><i class="fa-solid fa-right-from-bracket"></i></button>
                 </nav>
 
                 <!-- Mobile Top Right Action -->
                 <div class="lg:hidden flex items-center gap-1.5">
-                    <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" title="Chợ Tốt" class="p-2.5 rounded-xl text-amber-400 hover:bg-slate-800 bg-slate-900 border border-amber-500/40 flex items-center justify-center"><i class="fa-solid fa-store text-xs"></i></a>
                     <button onclick="openLivestreamModal()" title="Livestream" class="p-2.5 rounded-xl text-white bg-gradient-to-r from-pink-600 to-rose-600 border border-pink-400/40"><i class="fa-solid fa-video text-xs"></i></button>
                     <button onclick="handleLogout()" class="p-2.5 rounded-xl text-red-400 hover:bg-slate-800 bg-slate-900 border border-slate-800/80"><i class="fa-solid fa-right-from-bracket text-xs"></i></button>
                     <button onclick="toggleMobileMenu()" class="p-3 rounded-xl text-amber-400 hover:bg-slate-800 bg-slate-900/90 border border-amber-500/40 cursor-pointer shadow-lg shadow-amber-500/10"><i class="fa-solid fa-bars text-base"></i></button>
@@ -447,12 +438,8 @@
                 <button onclick="switchTab('debts'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-file-invoice-dollar text-base text-pink-400"></i> Quản Lý Công Nợ</button>
                 <button onclick="switchTab('thien'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-hand-holding-dollar text-base text-yellow-400"></i> Tiền Của Thiện</button>
                 <button onclick="switchTab('expenses'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-money-bill-transfer text-base text-red-400"></i> Quản Lý Chi Phí</button>
-                <a href="https://www.chotot.com/user/62c17d43b80fc43032ee8844c6f5e127" target="_blank" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-amber-400 bg-slate-900 border border-amber-500/40 shadow-md"><i class="fa-solid fa-store text-base text-amber-400"></i> Cửa Hàng Chợ Tốt</a>
                 <button onclick="openCaroModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-cyan-300 bg-slate-900 border border-cyan-500/40 shadow-md"><i class="fa-solid fa-chess-board text-base text-cyan-400"></i> Cờ Caro 2 Người</button>
                 <button onclick="openLivestreamModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-pink-300 bg-slate-900 border border-pink-500/40 shadow-md"><i class="fa-solid fa-video text-base text-pink-400"></i> Livestream Chốt Đơn</button>
-                <button onclick="openChangePasswordModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-yellow-300 bg-slate-900 border border-yellow-500/40 shadow-md"><i class="fa-solid fa-key text-base text-yellow-400"></i> Đổi Mật Khẩu</button>
-                <button onclick="openPublicWarrantyModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-300 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-magnifying-glass text-base text-emerald-400"></i> Tra Cứu BH Public</button>
-                <button onclick="openAutoUpdateModal(); toggleMobileMenu();" class="text-left p-3.5 rounded-xl text-xs font-extrabold flex flex-col gap-2 text-emerald-400 bg-slate-900 border border-emerald-500/40 shadow-md"><i class="fa-solid fa-rotate text-base text-emerald-400"></i> Cập Nhật</button>
                 <button id="mobile-nav-cloud" onclick="switchTab('cloud'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-fire text-base text-amber-500"></i> Cloud & Firebase</button>
                 <button id="mobile-nav-logs" onclick="switchTab('logs'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-clipboard-list text-base text-purple-400"></i> Nhật Ký</button>
                 <button id="mobile-nav-users" onclick="switchTab('users'); toggleMobileMenu()" style="display: none;" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-users-gear text-base text-cyan-400"></i> Nhân Viên</button>
@@ -2393,8 +2380,29 @@
                 renderUsedLaptopMarketChart();
                 initPersistentTechNews();
 
+                // GẮN SỰ KIỆN TRỰC TIẾP QUA JAVASCRIPT ĐẢM BẢO PHẢN HỒI 100% CHO NÚT CẬP NHẬT
+                const btnUpdateDesktop = document.getElementById('btn-desktop-auto-update');
+                if (btnUpdateDesktop) {
+                    btnUpdateDesktop.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openAutoUpdateModal();
+                        return false;
+                    };
+                }
+
+                const btnUpdateMobile = document.getElementById('btn-mobile-auto-update');
+                if (btnUpdateMobile) {
+                    btnUpdateMobile.onclick = function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        openAutoUpdateModal();
+                        toggleMobileMenu();
+                        return false;
+                    };
+                }
+
                 if (autoNewsRefreshIntervalId) clearInterval(autoNewsRefreshIntervalId);
-                // Cập nhật real-time liên tục bản tin giá linh kiện mỗi 10 giây
                 autoNewsRefreshIntervalId = setInterval(() => {
                     fetchLatestTechNews(false, true);
                 }, 10000);
