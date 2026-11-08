@@ -999,6 +999,37 @@
             </div>
         </section>
 
+        <!-- EDIT SOLD INVOICE MODAL -->
+        <div id="edit-sold-modal" class="hidden fixed inset-0 z-[185] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
+            <div class="glass-panel w-full max-w-lg rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                    <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2 uppercase">
+                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-pen-to-square"></i></div> Chỉnh Sửa Hóa Đơn Đã Bán
+                    </h3>
+                    <button onclick="closeEditSoldModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+                <form onsubmit="saveEditSoldInvoice(event)" class="space-y-3.5">
+                    <input type="hidden" id="editInvId" value="">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Tên Khách Hàng</label>
+                        <input type="text" id="editInvCustomer" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Số Điện Thoại</label>
+                        <input type="text" id="editInvPhone" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Tổng Thanh Toán (VNĐ)</label>
+                        <input type="number" id="editInvTotal" required min="0" class="w-full bg-slate-900 border border-amber-500/50 rounded-2xl px-4 py-3.5 text-amber-400 font-black text-xs focus:outline-none focus:border-amber-400 transition">
+                    </div>
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" onclick="closeEditSoldModal()" class="px-5 py-3 rounded-2xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer">Hủy Bỏ</button>
+                        <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex items-center gap-2 active:scale-95 transition cursor-pointer"><i class="fa-solid fa-save"></i> Lưu Thay Đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- TAB 4: SỬA CHỮA -->
         <section id="tab-repairs" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -1080,6 +1111,16 @@
                         <label class="block text-xs font-bold text-amber-400 uppercase">Giá Tiền Sửa Chữa Thực Tế (VNĐ) <span class="text-red-400">*</span></label>
                         <input type="number" id="completeRepCost" required min="0" class="w-full bg-slate-900 border border-amber-500/50 rounded-2xl px-4 py-3.5 text-white text-xs font-black text-amber-400 focus:outline-none focus:border-amber-400 transition" placeholder="Nhập số tiền sửa chữa...">
                     </div>
+
+                    <!-- THÊM TÙY CHỌN PHƯƠNG THỨC THANH TOÁN TIỀN MẶT HOẶC CHUYỂN KHOẢN -->
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Phương Thức Thanh Toán <span class="text-red-400">*</span></label>
+                        <select id="completeRepPaymentMethod" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition font-bold">
+                            <option value="Tiền mặt">💵 Tiền mặt</option>
+                            <option value="Chuyển khoản">🏦 Chuyển khoản ngân hàng</option>
+                        </select>
+                    </div>
+
                     <div id="complete-warranty-duration-container" class="space-y-1">
                         <label class="block text-xs font-bold text-slate-200 uppercase">Thời Gian Bảo Hành Sửa Chữa</label>
                         <select id="completeRepWarrantyMonths" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:outline-none focus:border-amber-400 transition">
@@ -6373,6 +6414,37 @@
         }
 
         function exportSoldInvoice(id) { const inv = appData.invoices.find(i => i.id === id); if(inv) printInvoiceReceipt(inv); }
+        
+        function openEditSoldModal(id) {
+            const inv = (appData.invoices || []).find(i => i.id === id);
+            if (!inv) return;
+            document.getElementById('editInvId').value = inv.id;
+            document.getElementById('editInvCustomer').value = inv.customerName || '';
+            document.getElementById('editInvPhone').value = inv.customerPhone || '';
+            document.getElementById('editInvTotal').value = inv.total || 0;
+            document.getElementById('edit-sold-modal').classList.remove('hidden');
+        }
+
+        function closeEditSoldModal() {
+            document.getElementById('edit-sold-modal')?.classList.add('hidden');
+        }
+
+        function saveEditSoldInvoice(e) {
+            e.preventDefault();
+            const id = document.getElementById('editInvId').value;
+            const inv = (appData.invoices || []).find(i => i.id === id);
+            if (inv) {
+                inv.customerName = document.getElementById('editInvCustomer').value.trim();
+                inv.customerPhone = document.getElementById('editInvPhone').value.trim();
+                inv.total = Number(document.getElementById('editInvTotal').value) || 0;
+                logAction(`Chỉnh sửa hóa đơn đã bán ${id} (${inv.customerName})`);
+                saveAndSync();
+                renderSoldProducts();
+                showToast("Cập nhật hóa đơn thành công!", "success");
+            }
+            closeEditSoldModal();
+        }
+
         async function deleteSoldInvoice(id) {
             if (currentUser?.role !== 'admin') return;
             if (!(await customConfirm("Xóa hóa đơn này vĩnh viễn?"))) return;
@@ -6402,7 +6474,7 @@
                                 <span class="font-mono text-xs text-amber-400 font-extrabold">${inv.id}</span>
                                 <span class="text-[11px] text-slate-300 font-semibold">• ${inv.createdAt}</span>
                             </div>
-                            <div class="font-extrabold text-white text-sm sm:text-base truncate">${inv.customerName}</div>
+                            <div class="font-extrabold text-white text-sm sm:text-base truncate">${inv.customerName} ${inv.customerPhone ? '<span class="text-xs text-cyan-300 font-mono font-bold">(' + inv.customerPhone + ')</span>' : ''}</div>
                         </div>
                         <div class="lg:w-1/2 text-xs text-slate-200 font-medium space-y-1 max-h-20 overflow-y-auto lg:max-h-full">
                             ${inv.items.map(i => `<div class="truncate">• ${i.name} <span class="text-amber-400 font-bold">(x${i.qty})</span></div>`).join('')}
@@ -6412,6 +6484,7 @@
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2.5 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
+                        <button onclick="openEditSoldModal('${inv.id}')" class="px-3.5 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-pen-to-square"></i> Sửa</button>
                         <button onclick="exportSoldInvoice('${inv.id}')" class="px-3.5 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-amber-500/20"><i class="fa-solid fa-file-arrow-down"></i> Hóa Đơn</button>
                         ${isAdmin ? `<button onclick="deleteSoldInvoice('${inv.id}')" class="px-3.5 py-2 text-red-400 hover:bg-red-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1.5 transition cursor-pointer border border-red-500/20"><i class="fa-solid fa-trash"></i> Xóa</button>` : ''}
                     </div>
