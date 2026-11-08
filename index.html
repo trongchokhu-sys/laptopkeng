@@ -6273,55 +6273,103 @@
             }
 
             const htmlContent = `
-                <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; max-width: 148mm; margin: 0 auto; padding: 30px; border: 2px solid #f59e0b; border-radius: 16px; background: #fff; color: #111;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f59e0b; padding-bottom: 15px; margin-bottom: 20px;">
-                        <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; width: 100%; max-width: 130mm; margin: 0 auto; padding: 15px; border: 2px solid #f59e0b; border-radius: 12px; background: #fff; color: #111; box-sizing: border-box;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f59e0b; padding-bottom: 10px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
                             ${textLogoHTML}
                             <div>
-                                <h1 style="margin: 0; font-size: 18px; font-weight: 900; color: #78350f;">LAPTOP KENG CẦN THƠ</h1>
-                                <p style="margin: 2px 0 0; font-size: 10px; color: #b45309; font-weight: 700;">HỆ THỐNG BÁN LẺ & SỬA CHỮA LAPTOP CHUYÊN NGHIỆP</p>
+                                <h1 style="margin: 0; font-size: 15px; font-weight: 900; color: #78350f;">LAPTOP KENG CẦN THƠ</h1>
+                                <p style="margin: 2px 0 0; font-size: 9px; color: #b45309; font-weight: 700;">HỆ THỐNG BÁN LẺ & SỬA CHỮA LAPTOP</p>
                             </div>
                         </div>
                         <div style="text-align: right;">
-                            <h2 style="margin: 0; font-size: 15px; font-weight: 800; color: #b45309;">PHIẾU BẢO HÀNH</h2>
-                            <p style="margin: 2px 0 0; font-size: 10px; color: #64748b;">Mã Thẻ: ${war.id}</p>
+                            <h2 style="margin: 0; font-size: 13px; font-weight: 800; color: #b45309;">PHIẾU BẢO HÀNH</h2>
+                            <p style="margin: 2px 0 0; font-size: 9px; color: #64748b;">Mã Thẻ: ${war.id}</p>
                         </div>
                     </div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; font-size: 12px;">
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Họ Tên Khách Hàng:</p><p style="margin: 0; font-size: 14px; font-weight: 800;">${war.customer} ${war.phone ? '('+war.phone+')' : ''}</p>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; font-size: 11px;">
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Họ Tên Khách Hàng:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${war.customer} ${war.phone ? '('+war.phone+')' : ''}</p>
                         </div>
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Sản Phẩm Thiết Bị:</p><p style="margin: 0; font-size: 14px; font-weight: 800;">${war.product}</p>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Sản Phẩm Thiết Bị:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${war.product}</p>
                         </div>
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Mã Seri / IMEI:</p><p style="margin: 0; font-size: 13px; font-weight: 700;">${war.imei || 'Không có'}</p>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Mã Seri / IMEI:</p><p style="margin: 0; font-size: 11px; font-weight: 700;">${war.imei || 'Không có'}</p>
                         </div>
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Giá Tiền Sản Phẩm:</p><p style="margin: 0; font-size: 14px; font-weight: 900; color: #d97706;">${foundPriceText}</p>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Giá Tiền Sản Phẩm:</p><p style="margin: 0; font-size: 12px; font-weight: 900; color: #d97706;">${foundPriceText}</p>
                         </div>
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7; grid-column: span 2;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Thời Gian Bảo Hành:</p><p style="margin: 0; font-size: 15px; font-weight: 900; color: #059669;">${war.warrantyMonths || 6} Tháng (Hạn bảo hành đến: ${war.expiryDate})</p>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Thời Gian Bảo Hành:</p><p style="margin: 0; font-size: 13px; font-weight: 900; color: #059669;">${war.warrantyMonths || 6} Tháng (Hạn bảo hành đến: ${war.expiryDate})</p>
                         </div>
-                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7; grid-column: span 2;">
-                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;"><i class="fa-solid fa-gift"></i> Quà Tặng Kèm:</p><p style="margin: 0; font-size: 13px; font-weight: 800; color: #b45309;">${giftListText}</p>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;"><i class="fa-solid fa-gift"></i> Quà Tặng Kèm:</p><p style="margin: 0; font-size: 11px; font-weight: 800; color: #b45309;">${giftListText}</p>
                         </div>
                     </div>
-                    <div style="margin-bottom: 25px; font-size: 11px; line-height: 1.5; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                        <p style="margin: 0 0 6px; font-weight: 800; color: #1e293b;">QUY ĐỊNH BẢO HÀNH:</p>
-                        <ul style="margin: 0; padding-left: 16px; color: #475569;">
+                    <div style="margin-bottom: 15px; font-size: 10px; line-height: 1.4; background: #f8fafc; padding: 8px 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
+                        <p style="margin: 0 0 4px; font-weight: 800; color: #1e293b;">QUY ĐỊNH BẢO HÀNH:</p>
+                        <ul style="margin: 0; padding-left: 14px; color: #475569;">
                             <li>Bảo hành phần cứng lỗi nhà sản xuất trong thời gian quy định (${war.warrantyMonths || 6} tháng).</li>
-                            <li>Không bảo hành rơi vỡ, vào nước, cháy nổ, hoặc tem rách.</li>
-                            <li>Hotline hỗ trợ kỹ thuật: 0909059343 (Trọng Nguyễn).</li>
+                            <li>Không bảo hành rơi vỡ, vào nước, cháy nổ, hoặc tem rách. Hotline: 0909059343.</li>
                         </ul>
                     </div>
-                    <div style="display: flex; justify-content: space-between; text-align: center; font-size: 12px; margin-top: 30px;">
-                        <div><p style="margin: 0; font-weight: bold;">Khách Hàng</p><p style="margin: 2px 0 35px; font-size: 10px; color: #64748b;">(Ký và ghi rõ họ tên)</p></div>
-                        <div><p style="margin: 0; font-weight: bold;">KENG STORE</p><p style="margin: 2px 0 35px; font-size: 10px; color: #64748b;">(Đóng dấu, ký tên)</p></div>
+                    <div style="display: flex; justify-content: space-between; text-align: center; font-size: 11px; margin-top: 20px;">
+                        <div><p style="margin: 0; font-weight: bold;">Khách Hàng</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Ký ghi rõ họ tên)</p></div>
+                        <div><p style="margin: 0; font-weight: bold;">KENG STORE</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Đóng dấu, ký tên)</p></div>
                     </div>
                 </div>
             `;
             showExportModal(htmlContent, `PhieuBaoHanh_${war.id}.html`, { customerName: war.customer, customerPhone: war.phone || '', id: war.id, totalText: `Bảo hành sản phẩm: ${war.product} (${war.warrantyMonths || 6} tháng - Hạn: ${war.expiryDate})` });
+        }
+
+        function printRepairTicket(id) {
+            const rep = appData.repairs.find(r => r.id === id);
+            if (!rep) return;
+            const costText = Number(rep.cost||0) < 0 ? 'Báo giá sau' : `${Number(rep.cost||0).toLocaleString('vi-VN')} đ`;
+            const warrantyMonthsText = `${rep.warrantyMonths || 3} Tháng`;
+
+            const htmlContent = `
+                <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; width: 100%; max-width: 130mm; margin: 0 auto; padding: 15px; border: 2px solid #f59e0b; border-radius: 12px; background: #fff; color: #111; box-sizing: border-box;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f59e0b; padding-bottom: 10px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            ${textLogoHTML}
+                            <div>
+                                <h1 style="margin: 0; font-size: 15px; font-weight: 900; color: #78350f;">LAPTOP KENG CẦN THƠ</h1>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <h2 style="margin: 0; font-size: 13px; font-weight: 800; color: #b45309;">PHIẾU SỬA CHỮA / NHẬN MÁY</h2>
+                            <p style="margin: 2px 0 0; font-size: 9px; color: #64748b;">Mã Phiếu: ${rep.id}</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; font-size: 11px;">
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Khách Hàng:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${rep.customer} ${rep.phone ? '('+rep.phone+')' : ''}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Thiết Bị:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${rep.device}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Tình Trạng / Lỗi:</p><p style="margin: 0; font-size: 12px; font-weight: 700;">${rep.issue || 'Không'}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Bảo Hành:</p><p style="margin: 0; font-size: 12px; font-weight: 900; color: #059669;">${warrantyMonthsText}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Chi Phí:</p><p style="margin: 0; font-size: 13px; font-weight: 900; color: #059669;">${costText}</p>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 15px; font-size: 10px; line-height: 1.4; background: #fff5f5; padding: 8px 10px; border-radius: 6px; border: 1px solid #fecaca; color: #dc2626; font-weight: 700;">
+                        ⚠️ Lưu ý: Cửa hàng không chịu trách nhiệm về dữ liệu trong quá trình sửa chữa. Quý khách vui lòng sao lưu dữ liệu.
+                    </div>
+                    <div style="display: flex; justify-content: space-between; text-align: center; font-size: 11px; margin-top: 20px;">
+                        <div><p style="margin: 0; font-weight: bold;">Khách Hàng</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Ký xác nhận)</p></div>
+                        <div><p style="margin: 0; font-weight: bold;">Kỹ Thuật Viên</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Ký tên)</p></div>
+                    </div>
+                </div>
+            `;
+            showExportModal(htmlContent, `PhieuSua_${rep.id}.html`, { customerName: rep.customer, customerPhone: rep.phone || '', id: rep.id, totalText: `Sửa chữa thiết bị: ${rep.device} (Bảo hành: ${warrantyMonthsText}) - Phí: ${costText}` });
         }
 
         function exportSoldInvoice(id) { const inv = appData.invoices.find(i => i.id === id); if(inv) printInvoiceReceipt(inv); }
