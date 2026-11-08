@@ -5498,22 +5498,17 @@
             const list = document.getElementById('product-list');
             if (!list) return;
             
-            const searchKey = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase().trim();
+            // Tự động ẩn và loại bỏ hoàn toàn các sản phẩm có số lượng tồn kho <= 0 khỏi danh sách kho hàng
             const products = (appData.products || []).filter(p => {
+                const hasStock = Number(p.qty || 0) > 0;
                 const matchCat = currentInvCategory === 'all' || p.category === currentInvCategory;
-                const matchSearch = (p.name || '').toLowerCase().includes(searchKey) ||
-                                    (p.code || '').toLowerCase().includes(searchKey) ||
-                                    (p.laptopDetails?.serial || '').toLowerCase().includes(searchKey) ||
-                                    (p.laptopDetails?.cpu || '').toLowerCase().includes(searchKey) ||
-                                    (p.chargerDetails?.wattage || '').toLowerCase().includes(searchKey);
-                return matchCat && matchSearch;
+                return hasStock && matchCat;
             });
 
-            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm phù hợp trong kho.</div>`;
+            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm còn hàng nào trong kho.</div>`;
             
             const isAdmin = currentUser?.role === 'admin';
             list.innerHTML = products.map(p => {
-                // Hiển thị kích thước màn hình đính kèm trực tiếp vào tên sản phẩm nếu có
                 let displayName = p.name || 'Không tên';
                 if (p.laptopDetails && p.laptopDetails.screen && !displayName.toLowerCase().includes(p.laptopDetails.screen.toLowerCase())) {
                     displayName += ` (${p.laptopDetails.screen})`;
@@ -5522,13 +5517,12 @@
                     displayName += ` (${p.chargerDetails.wattage})`;
                 }
                 return `
-                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-slate-700/80 ${p.qty <= 0 ? 'opacity-60 grayscale-[30%]' : ''}">
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-slate-700/80">
                     <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
                         <div class="lg:w-[40%] space-y-1.5 min-w-0">
                             <div class="flex items-center gap-2">
                                 <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${p.category || 'Khác'}</span>
                                 <span class="text-xs font-mono text-amber-400 font-extrabold">${p.code || ''}</span>
-                                ${p.qty <= 0 ? '<span class="text-[10px] font-black bg-red-500/20 text-red-400 border border-red-500/40 px-2 py-0.5 rounded-md animate-pulse">HẾT HÀNG</span>' : ''}
                             </div>
                             <h4 class="font-extrabold text-white text-sm sm:text-base truncate">${displayName}</h4>
                             ${p.laptopDetails ? `<div class="text-[11px] text-slate-300 font-mono font-medium">${p.laptopDetails.cpu||''} • ${p.laptopDetails.ram||''} • ${p.laptopDetails.ssd||''} • ${p.laptopDetails.screen||''} ${p.laptopDetails.serial ? '• Seri: <span class="text-amber-400 font-bold">' + p.laptopDetails.serial + '</span>' : ''}</div>` : ''}
@@ -5541,7 +5535,7 @@
                             </div>
                         </div>
                         <div class="lg:w-[30%] flex items-center lg:justify-end">
-                            <span class="text-xs font-black ${p.qty <= 0 ? 'text-red-400 bg-red-500/20 border-red-500/40' : 'text-amber-300 bg-amber-500/20 border-amber-500/30'} border px-3.5 py-1.5 rounded-xl">Kho: ${p.qty}</span>
+                            <span class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-500/30 px-3.5 py-1.5 rounded-xl">Kho: ${p.qty}</span>
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2.5 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
@@ -5724,17 +5718,19 @@
                 }
             }
 
+            // Tự động ẩn và loại bỏ hoàn toàn các sản phẩm có số lượng tồn kho <= 0 khỏi giao diện POS bán hàng
             const products = (appData.products || []).filter(p => {
+                const hasStock = Number(p.qty || 0) > 0;
                 const matchCat = currentPosCategory === 'all' || p.category === currentPosCategory;
                 const matchSearch = (p.name||'').toLowerCase().includes(searchKey) || 
                                     ((p.code||'').toLowerCase().includes(searchKey)) ||
                                     ((p.laptopDetails?.screen||'').toLowerCase().includes(searchKey)) ||
                                     ((p.laptopDetails?.serial||'').toLowerCase().includes(searchKey)) ||
                                     ((p.chargerDetails?.wattage||'').toLowerCase().includes(searchKey));
-                return matchCat && matchSearch && Number(p.qty) > 0;
+                return hasStock && matchCat && matchSearch;
             });
 
-            if (products.length === 0) return grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-300 font-bold bg-[#090e17] rounded-3xl border border-slate-700">Không tìm thấy sản phẩm nào trong kho.</div>`;
+            if (products.length === 0) return grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-300 font-bold bg-[#090e17] rounded-3xl border border-slate-700">Không tìm thấy sản phẩm còn hàng nào.</div>`;
 
             grid.innerHTML = products.map(p => {
                 let displayName = p.name;
@@ -6722,7 +6718,6 @@
 
             let usedPartsSummary = '';
             let totalPartsCost = 0;
-            let totalPartsSellingPrice = 0;
             let partsList = rep.parts || (rep.partId ? [{ id: rep.partId, qty: 1 }] : []);
 
             partsList.forEach(item => {
@@ -6731,33 +6726,24 @@
                     const deductQty = Number(item.qty || 1);
                     partProd.qty = Math.max(0, Number(partProd.qty || 0) - deductQty);
                     totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
-                    totalPartsSellingPrice += Number(partProd.price || 0) * deductQty;
                     usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
                 }
             });
 
-            // Tính quỹ Tiền Của Thiện: Nếu phiếu sửa chữa có chọn linh kiện thay thế từ kho, trích đúng 10% tiền lời (lợi nhuận ròng) từ các linh kiện đó
+            const profit = finalCost - totalPartsCost;
             let thienCut = 0;
-            let thienDescParts = [];
-            
-            if (partsList.length > 0 && totalPartsSellingPrice > totalPartsCost) {
-                const partsProfit = totalPartsSellingPrice - totalPartsCost;
-                thienCut = Math.round(partsProfit * 0.10); // 10% tiền lời từ linh kiện thay thế
-                thienDescParts.push(`Trích 10% tiền lời linh kiện sửa chữa: ${rep.device}`);
-            } else {
-                // Sửa chữa thông thường không dùng linh kiện kho trích 30% lợi nhuận ròng như cũ
-                const profit = finalCost - totalPartsCost;
-                if (profit > 0) {
-                    thienCut = Math.round(profit * 0.3);
-                    thienDescParts.push(`Trích 30% Sửa chữa: ${rep.device}`);
-                }
-            }
-
-            if (thienCut > 0) {
+            if (profit > 0) {
                 if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
-                appData.thienFunds.balance = (appData.thienFunds.balance || 0) + thienCut;
+                if (!Array.isArray(appData.thienFunds.transactions)) appData.thienFunds.transactions = [];
+                
+                // Nếu sửa chữa có chọn linh kiện thay thế thì tính cho Tiền Của Thiện 10% lợi nhuận, nếu không có linh kiện thì 30%
+                const hasParts = partsList.length > 0;
+                const percentage = hasParts ? 0.10 : 0.30;
+                thienCut = Math.round(profit * percentage);
+
+                appData.thienFunds.balance = (Number(appData.thienFunds.balance) || 0) + thienCut;
                 appData.thienFunds.transactions.push({
-                    desc: thienDescParts.join(', '),
+                    desc: `Trích ${hasParts ? '10%' : '30%'} Sửa chữa ${hasParts ? '(có linh kiện)' : ''}: ${rep.device}`,
                     amount: thienCut,
                     date: new Date().toLocaleString('vi-VN')
                 });
