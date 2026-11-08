@@ -2845,13 +2845,16 @@
             }
 
             if (modal) {
-                if (currentUser && currentUser.username) {
+                // KIỂM TRA NGHIÊM NGẶT: Bắt buộc phải có phiên đăng nhập hợp lệ mới cho phép truy cập hệ thống
+                if (currentUser && currentUser.username && currentUser.role) {
                     modal.classList.add('hidden');
                     if (aiAssistant) aiAssistant.classList.remove('hidden');
                 } else {
                     modal.classList.remove('hidden');
                     if (aiAssistant) aiAssistant.classList.add('hidden');
                     currentUser = null;
+                    // Xóa triệt để mọi session không hợp lệ
+                    localStorage.removeItem('keng_user_session');
                 }
             }
             updateRoleUI();
@@ -3846,6 +3849,11 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Đảm bảo ép buộc yêu cầu đăng nhập trên mọi môi trường khởi chạy (bao gồm cả .exe và file://)
+            const activeSession = localStorage.getItem('keng_user_session');
+            if (!activeSession) {
+                currentUser = null;
+            }
             checkAuth();
             loadPersistentState();
             generateAutoProductCode();
