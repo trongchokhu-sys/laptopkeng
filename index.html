@@ -3850,10 +3850,8 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             // Đảm bảo ép buộc yêu cầu đăng nhập trên mọi môi trường khởi chạy (bao gồm cả .exe và file://)
-            const activeSession = localStorage.getItem('keng_user_session');
-            if (!activeSession) {
-                currentUser = null;
-            }
+            // Xóa triệt để phiên đăng nhập cũ mỗi khi mở lại ứng dụng
+            localStorage.removeItem('keng_user_session');
             checkAuth();
             loadPersistentState();
             generateAutoProductCode();
@@ -5498,14 +5496,20 @@
             const list = document.getElementById('product-list');
             if (!list) return;
             
-            // Tự động ẩn và loại bỏ hoàn toàn các sản phẩm có số lượng tồn kho <= 0 khỏi danh sách kho hàng
+            const searchKey = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase().trim();
+            // Tự động ẩn và loại bỏ các sản phẩm có số lượng tồn kho <= 0 khỏi danh sách kho hàng
             const products = (appData.products || []).filter(p => {
                 const hasStock = Number(p.qty || 0) > 0;
                 const matchCat = currentInvCategory === 'all' || p.category === currentInvCategory;
-                return hasStock && matchCat;
+                const matchSearch = (p.name || '').toLowerCase().includes(searchKey) ||
+                                    (p.code || '').toLowerCase().includes(searchKey) ||
+                                    (p.laptopDetails?.serial || '').toLowerCase().includes(searchKey) ||
+                                    (p.laptopDetails?.cpu || '').toLowerCase().includes(searchKey) ||
+                                    (p.chargerDetails?.wattage || '').toLowerCase().includes(searchKey);
+                return hasStock && matchCat && matchSearch;
             });
 
-            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm còn hàng nào trong kho.</div>`;
+            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm còn hàng phù hợp trong kho.</div>`;
             
             const isAdmin = currentUser?.role === 'admin';
             list.innerHTML = products.map(p => {
@@ -5718,7 +5722,7 @@
                 }
             }
 
-            // Tự động ẩn và loại bỏ hoàn toàn các sản phẩm có số lượng tồn kho <= 0 khỏi giao diện POS bán hàng
+            // Tự động ẩn và loại bỏ các sản phẩm có tồn kho bằng 0 hoặc âm khỏi giao diện POS bán hàng
             const products = (appData.products || []).filter(p => {
                 const hasStock = Number(p.qty || 0) > 0;
                 const matchCat = currentPosCategory === 'all' || p.category === currentPosCategory;
