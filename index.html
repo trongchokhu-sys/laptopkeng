@@ -395,6 +395,7 @@
                     <button id="nav-sold" onclick="switchTab('sold')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-bag-shopping"></i> Đã Bán</button>
                     <button id="nav-repairs" onclick="switchTab('repairs')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-wrench"></i> Sửa Chữa</button>
                     <button id="nav-cleaning" onclick="switchTab('cleaning')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-pump-soap text-amber-400"></i> Vệ Sinh</button>
+                    <button id="nav-deposits" onclick="switchTab('deposits')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-emerald-400"></i> Đặt Cọc</button>
                     <button id="nav-warranties" onclick="switchTab('warranties')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-shield-halved"></i> Bảo Hành</button>
                     <button id="nav-debts" onclick="switchTab('debts')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-file-invoice-dollar text-pink-400"></i> Công Nợ</button>
                     <button id="nav-thien" onclick="switchTab('thien')" class="px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 text-slate-200 hover:bg-slate-800 hover:text-white transition cursor-pointer"><i class="fa-solid fa-hand-holding-dollar text-yellow-400"></i> Tiền Của Thiện</button>
@@ -446,6 +447,7 @@
                 <button onclick="switchTab('sold'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-bag-shopping text-base text-emerald-400"></i> Lịch Sử Đã Bán</button>
                 <button onclick="switchTab('repairs'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-wrench text-base text-blue-400"></i> Quản Lý Sửa Chữa</button>
                 <button onclick="switchTab('cleaning'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-pump-soap text-base text-amber-400"></i> Vệ Sinh Laptop</button>
+                <button onclick="switchTab('deposits'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-hand-holding-dollar text-base text-emerald-400"></i> Cọc Máy & Linh Kiện</button>
                 <button onclick="switchTab('warranties'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-shield-halved text-base text-cyan-400"></i> Thẻ Bảo Hành</button>
                 <button onclick="switchTab('debts'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-file-invoice-dollar text-base text-pink-400"></i> Quản Lý Công Nợ</button>
                 <button onclick="switchTab('thien'); toggleMobileMenu()" class="text-left p-3.5 rounded-xl text-xs font-bold flex flex-col gap-2 text-slate-100 bg-slate-900 border border-slate-800 shadow-md"><i class="fa-solid fa-hand-holding-dollar text-base text-yellow-400"></i> Tiền Của Thiện</button>
@@ -1139,6 +1141,41 @@
             </div>
         </div>
 
+        <!-- RETURN UNFIXABLE MACHINE MODAL (TRẢ MÁY KHÔNG SỬA ĐƯỢC) -->
+        <div id="return-unfixable-modal" class="hidden fixed inset-0 z-[192] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
+            <div class="glass-panel w-full max-w-md rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-amber-500/50 animate-fadeIn">
+                <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                    <h3 class="font-extrabold text-white text-sm sm:text-base flex items-center gap-2 uppercase">
+                        <div class="w-8 h-8 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-rotate-left"></i></div> Trả Máy (Không Sửa Được)
+                    </h3>
+                    <button onclick="closeReturnUnfixableModal()" class="text-slate-300 hover:text-white p-2 rounded-xl hover:bg-slate-800 transition cursor-pointer"><i class="fa-solid fa-xmark text-lg"></i></button>
+                </div>
+                <form onsubmit="confirmReturnUnfixable(event)" class="space-y-4">
+                    <input type="hidden" id="returnRepId" value="">
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Khách Hàng</label>
+                        <input type="text" id="returnRepCust" readonly class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-white text-xs font-bold cursor-not-allowed">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Thiết Bị</label>
+                        <input type="text" id="returnRepDevice" readonly class="w-full bg-slate-950 border border-slate-800 rounded-2xl px-4 py-3 text-white text-xs font-bold cursor-not-allowed">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-slate-200 uppercase">Lý Do / Tình Trạng Không Sửa Được <span class="text-red-400">*</span></label>
+                        <textarea id="returnRepReason" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-3.5 text-white text-xs h-20 focus:border-amber-400 transition" placeholder="VD: Lỗi chipset nặng, không có linh kiện thay thế, khách không đồng ý chi phí..."></textarea>
+                    </div>
+                    <div class="space-y-1">
+                        <label class="block text-xs font-bold text-amber-400 uppercase">Phí Kiểm Tra / Phí Dịch Vụ (VNĐ) <span class="text-slate-400 font-normal">(Thường là 0đ)</span></label>
+                        <input type="number" id="returnRepFee" min="0" value="0" class="w-full bg-slate-900 border border-amber-500/40 rounded-2xl px-4 py-3.5 text-white text-xs font-bold text-amber-400 focus:border-amber-400 transition">
+                    </div>
+                    <div class="flex items-center justify-end gap-3 pt-2">
+                        <button type="button" onclick="closeReturnUnfixableModal()" class="px-5 py-3 rounded-2xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer">Hủy Bỏ</button>
+                        <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex items-center gap-2 active:scale-95 transition cursor-pointer"><i class="fa-solid fa-print"></i> Xác Nhận Trả Máy & In Phiếu</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <!-- COMPLETE CLEANING MODAL -->
         <div id="complete-cleaning-modal" class="hidden fixed inset-0 z-[195] bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4 transition-opacity">
             <div class="glass-panel w-full max-w-md rounded-[2.5rem] p-5 sm:p-8 shadow-2xl space-y-5 relative border border-slate-700 animate-fadeIn">
@@ -1434,6 +1471,108 @@
             </div>
         </section>
 
+        <!-- TAB: ĐẶT CỌC MÁY & LINH KIỆN -->
+        <section id="tab-deposits" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div class="glass-panel p-5 sm:p-7 rounded-[2rem] h-fit space-y-4 shadow-2xl border border-slate-700 lg:sticky lg:top-24">
+                    <div class="border-b border-slate-700 pb-3 flex items-center justify-between">
+                        <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            <span id="deposit-form-title">Tạo Phiếu Đặt Cọc</span>
+                        </h3>
+                        <button type="button" id="deposit-cancel-edit" onclick="resetDepositForm()" class="hidden text-xs text-slate-300 hover:text-white underline cursor-pointer transition">Hủy</button>
+                    </div>
+                    <form onsubmit="saveDeposit(event)" class="space-y-3.5">
+                        <input type="hidden" id="editDepositId" value="">
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Phân Loại Đặt Cọc <span class="text-red-400">*</span></label>
+                            <select id="depType" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-emerald-400 transition font-bold">
+                                <option value="Cọc Máy (Laptop)">💻 Cọc Máy (Laptop)</option>
+                                <option value="Cọc Linh Kiện">⚙️ Cọc Linh Kiện / Phụ Kiện</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Tên Khách Hàng <span class="text-red-400">*</span></label>
+                            <input type="text" id="depCustomer" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-emerald-400 transition" placeholder="Nhập họ tên khách hàng...">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Số Điện Thoại</label>
+                            <input type="text" id="depPhone" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-emerald-400 transition" placeholder="Số điện thoại liên hệ...">
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-emerald-400 uppercase"><i class="fa-solid fa-boxes-stacked"></i> Chọn Nhanh Sản Phẩm Từ Kho</label>
+                            <select id="depInventorySelect" onchange="onSelectDepositProductFromInventory(this.value)" class="w-full bg-slate-900 border border-emerald-500/40 rounded-2xl px-4 py-3 text-emerald-300 text-xs font-bold focus:outline-none focus:border-emerald-400 transition">
+                                <option value="">-- Chọn máy / linh kiện có sẵn trong kho (hoặc nhập tay bên dưới) --</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Tên Máy / Linh Kiện Đặt Cọc <span class="text-red-400">*</span></label>
+                            <input type="text" id="depItemName" required class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-emerald-400 transition" placeholder="VD: Dell XPS 9310 / Màn hình 15.6 FHD...">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold text-slate-200 uppercase">Tổng Giá Trị (VNĐ)</label>
+                                <input type="number" id="depTotalPrice" required min="0" value="0" oninput="updateDepositRemainPreview()" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs font-bold focus:border-emerald-400 transition">
+                            </div>
+                            <div class="space-y-1">
+                                <label class="block text-xs font-bold text-emerald-400 uppercase">Số Tiền Cọc (VNĐ)</label>
+                                <input type="number" id="depAmount" required min="0" value="0" oninput="updateDepositRemainPreview()" class="w-full bg-slate-900 border border-emerald-500/50 rounded-2xl px-4 py-3.5 text-emerald-400 text-xs font-black focus:border-emerald-400 transition">
+                            </div>
+                        </div>
+                        <div class="p-3 bg-slate-950 rounded-2xl border border-slate-800 flex items-center justify-between text-xs">
+                            <span class="text-slate-400 font-bold uppercase">Còn lại phải thu:</span>
+                            <span id="depRemainPreview" class="font-black text-amber-400 text-sm">0 đ</span>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Phương Thức Nhận Cọc</label>
+                            <select id="depPaymentMethod" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-emerald-400 transition font-bold">
+                                <option value="Tiền mặt">💵 Tiền mặt</option>
+                                <option value="Chuyển khoản">🏦 Chuyển khoản ngân hàng</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1">
+                            <label class="block text-xs font-bold text-slate-200 uppercase">Ghi Chú / Ngày Hẹn Lấy</label>
+                            <textarea id="depNote" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-3.5 text-white text-xs h-16 focus:border-emerald-400 transition" placeholder="Ghi chú cấu hình, tình trạng hoặc ngày hẹn nhận..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 text-slate-950 font-black rounded-2xl text-xs uppercase shadow-lg flex justify-center items-center gap-2 active:scale-95 transition cursor-pointer">
+                            <i class="fa-solid fa-print"></i> <span id="deposit-btn-text">Lưu & In Phiếu Cọc</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-3xl border border-emerald-500/30 flex items-center gap-4 shadow-xl relative overflow-hidden">
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-lg flex-shrink-0 shadow-lg"><i class="fa-solid fa-sack-dollar"></i></div>
+                            <div>
+                                <p class="text-[11px] font-extrabold text-emerald-400 uppercase tracking-wider">Tổng Tiền Cọc Đang Giữ</p>
+                                <h3 id="summary-deposit-holding" class="text-xl sm:text-2xl font-black text-white mt-0.5">0 đ</h3>
+                            </div>
+                        </div>
+                        <div class="glass-card p-5 rounded-3xl border border-amber-500/30 flex items-center gap-4 shadow-xl relative overflow-hidden">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400 text-lg flex-shrink-0 shadow-lg"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <p class="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider">Tổng Tiền Còn Lại Chờ Thu</p>
+                                <h3 id="summary-deposit-remain" class="text-xl sm:text-2xl font-black text-white mt-0.5">0 đ</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
+                        <div class="border-b border-slate-700 pb-3 flex flex-col sm:flex-row justify-between items-center gap-3">
+                            <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase">
+                                <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400"><i class="fa-solid fa-clipboard-list"></i></div> Danh Sách Phiếu Cọc Máy & Linh Kiện
+                            </h3>
+                            <div class="relative w-full sm:w-64">
+                                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400 text-xs"></i>
+                                <input type="text" id="depositSearch" oninput="renderDeposits()" placeholder="Tìm tên khách, SĐT, tên máy..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl pl-11 pr-4 py-3 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-emerald-400 transition">
+                            </div>
+                        </div>
+                        <div id="deposit-list" class="space-y-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- TAB 6: CLOUD -->
         <section id="tab-cloud" class="hidden space-y-4 sm:space-y-6 animate-fadeIn">
             <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5 max-w-3xl mx-auto border border-slate-700">
@@ -1609,7 +1748,7 @@
                     <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400"><i class="fa-solid fa-clipboard-list"></i></div> Nhật Ký Hệ Thống</h3>
                     <button onclick="clearLogs()" class="text-xs text-red-400 hover:text-red-300 font-extrabold px-3.5 py-1.5 rounded-xl hover:bg-red-500/10 transition cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-trash-can"></i> Dọn Dẹp</button>
                 </div>
-                <div id="log-list" class="space-y-3"></div>
+                    <div id="log-list" class="space-y-3"></div>
             </div>
         </section>
 
@@ -2844,7 +2983,7 @@
         }
 
         let appData = {
-            products: [], invoices: [], repairs: [], warranties: [], activityLogs: [], debts: [], cleanings: [], expenses: [],
+            products: [], invoices: [], repairs: [], warranties: [], activityLogs: [], debts: [], cleanings: [], expenses: [], deposits: [],
             thienFunds: { balance: 0, transactions: [] },
             users: [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }]
         };
@@ -4694,7 +4833,7 @@
                 return showToast("Chỉ Admin mới được truy cập!", "error");
             }
             currentTab = tabId;
-            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'warranties', 'debts', 'thien', 'expenses', 'marketing', 'cloud', 'users', 'logs'].forEach(t => {
+            ['pos', 'products', 'sold', 'repairs', 'cleaning', 'deposits', 'warranties', 'debts', 'thien', 'expenses', 'marketing', 'cloud', 'users', 'logs'].forEach(t => {
                 document.getElementById(`tab-${t}`)?.classList.toggle('hidden', t !== tabId);
                 
                 const btnNav = document.getElementById(`nav-${t}`);
@@ -4857,6 +4996,7 @@
                     appData.debts = appData.debts || [];
                     appData.cleanings = appData.cleanings || [];
                     appData.expenses = appData.expenses || [];
+                    appData.deposits = appData.deposits || [];
                     appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
                     appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
                 }
@@ -5165,8 +5305,49 @@
         function renderAll() {
             reconcileRevokedWarrantiesForThien();
             renderStats(); renderPOS(); renderProducts();
-            renderSoldProducts(); renderRepairs(); renderCleanings(); renderWarranties(); renderDebts(); renderExpenses(); renderThienFunds(); renderStaffList(); renderActivityLogs();
+            renderSoldProducts(); renderRepairs(); renderCleanings(); renderDeposits(); renderWarranties(); renderDebts(); renderExpenses(); renderThienFunds(); renderStaffList(); renderActivityLogs();
             populateRepairPartOptions();
+            populateDepositInventoryOptions();
+        }
+
+        function populateDepositInventoryOptions() {
+            const selectEl = document.getElementById('depInventorySelect');
+            if (!selectEl) return;
+            const availableProducts = (appData.products || []).filter(p => Number(p.qty || 0) > 0);
+            selectEl.innerHTML = `<option value="">-- Chọn máy / linh kiện có sẵn trong kho (hoặc nhập tay bên dưới) --</option>` + availableProducts.map(p => {
+                let specInfo = '';
+                if (p.laptopDetails && p.laptopDetails.cpu) {
+                    specInfo = ` [${p.laptopDetails.cpu}/${p.laptopDetails.ram || ''}/${p.laptopDetails.ssd || ''}]`;
+                }
+                return `<option value="${p.id}">[${p.category || 'SP'}] ${p.name}${specInfo} - Giá: ${Number(p.price || 0).toLocaleString('vi-VN')}đ (Kho: ${p.qty})</option>`;
+            }).join('');
+        }
+
+        function onSelectDepositProductFromInventory(prodId) {
+            if (!prodId) return;
+            const prod = (appData.products || []).find(p => p.id === prodId);
+            if (!prod) return;
+
+            const itemNameInput = document.getElementById('depItemName');
+            const totalPriceInput = document.getElementById('depTotalPrice');
+            const depTypeSelect = document.getElementById('depType');
+
+            let fullProductName = prod.name;
+            if (prod.laptopDetails && prod.laptopDetails.cpu) {
+                const specs = [prod.laptopDetails.cpu, prod.laptopDetails.ram, prod.laptopDetails.ssd, prod.laptopDetails.screen].filter(Boolean).join(' / ');
+                if (specs) fullProductName += ` (${specs})`;
+            } else if (prod.chargerDetails && prod.chargerDetails.wattage) {
+                fullProductName += ` (${prod.chargerDetails.wattage})`;
+            }
+
+            if (itemNameInput) itemNameInput.value = fullProductName;
+            if (totalPriceInput) totalPriceInput.value = Number(prod.price || 0);
+            if (depTypeSelect) {
+                depTypeSelect.value = prod.category === 'Laptop' ? 'Cọc Máy (Laptop)' : 'Cọc Linh Kiện';
+            }
+
+            updateDepositRemainPreview();
+            showToast(`Đã chọn "${prod.name}" từ kho!`, "success");
         }
 
         function populateRepairPartOptions() {
@@ -5408,6 +5589,249 @@
                 </div>
             `;
             showExportModal(htmlContent, `PhieuVeSinh_${clean.id}.html`, { customerName: clean.customer, customerPhone: clean.phone || '', id: clean.id, totalText: `Vệ sinh laptop: ${clean.packageName} (${clean.model}) - Phí: ${Number(clean.price||0).toLocaleString('vi-VN')}đ` });
+        }
+
+        // --- DEPOSIT (CỌC MÁY & CỌC LINH KIỆN) FUNCTIONS ---
+        function updateDepositRemainPreview() {
+            const total = Number(document.getElementById('depTotalPrice')?.value) || 0;
+            const deposit = Number(document.getElementById('depAmount')?.value) || 0;
+            const remain = Math.max(0, total - deposit);
+            const previewEl = document.getElementById('depRemainPreview');
+            if (previewEl) previewEl.innerText = remain.toLocaleString('vi-VN') + ' đ';
+        }
+
+        function saveDeposit(e) {
+            e.preventDefault();
+            const id = document.getElementById('editDepositId').value;
+            const type = document.getElementById('depType').value;
+            const customer = document.getElementById('depCustomer').value.trim();
+            const phone = document.getElementById('depPhone').value.trim();
+            const itemName = document.getElementById('depItemName').value.trim();
+            const totalPrice = Number(document.getElementById('depTotalPrice').value) || 0;
+            const depositAmount = Number(document.getElementById('depAmount').value) || 0;
+            const paymentMethod = document.getElementById('depPaymentMethod').value;
+            const note = document.getElementById('depNote').value.trim();
+
+            if (!customer || !itemName) return;
+            if (!appData.deposits) appData.deposits = [];
+
+            if (id) {
+                const dep = appData.deposits.find(d => d.id === id);
+                if (dep) {
+                    Object.assign(dep, { type, customer, phone, itemName, totalPrice, depositAmount, paymentMethod, note });
+                }
+                logAction(`Cập nhật phiếu đặt cọc ${id} (${customer} - ${itemName})`);
+                showToast("Đã cập nhật phiếu đặt cọc!", "success");
+            } else {
+                const newDep = {
+                    id: 'DEP_' + Date.now(),
+                    type, customer, phone, itemName, totalPrice, depositAmount, paymentMethod, note,
+                    status: 'holding',
+                    createdAt: new Date().toLocaleString('vi-VN')
+                };
+                appData.deposits.unshift(newDep);
+                logAction(`Tạo phiếu ${type}: ${itemName} cho khách ${customer} - Cọc: ${depositAmount.toLocaleString('vi-VN')}đ (${paymentMethod})`);
+                printDepositReceipt(newDep);
+                showToast("Tạo phiếu đặt cọc thành công!", "success");
+            }
+
+            resetDepositForm();
+            saveAndSync();
+            renderAll();
+        }
+
+        function resetDepositForm() {
+            const form = document.querySelector('#tab-deposits form');
+            if (form) form.reset();
+            document.getElementById('editDepositId').value = '';
+            document.getElementById('deposit-form-title').innerText = "Tạo Phiếu Đặt Cọc";
+            document.getElementById('deposit-btn-text').innerText = "Lưu & In Phiếu Cọc";
+            document.getElementById('deposit-cancel-edit').classList.add('hidden');
+            updateDepositRemainPreview();
+        }
+
+        function editDeposit(id) {
+            const dep = (appData.deposits || []).find(d => d.id === id);
+            if (!dep) return;
+            document.getElementById('editDepositId').value = dep.id;
+            document.getElementById('depType').value = dep.type || 'Cọc Máy (Laptop)';
+            document.getElementById('depCustomer').value = dep.customer || '';
+            document.getElementById('depPhone').value = dep.phone || '';
+            document.getElementById('depItemName').value = dep.itemName || '';
+            document.getElementById('depTotalPrice').value = dep.totalPrice || 0;
+            document.getElementById('depAmount').value = dep.depositAmount || 0;
+            document.getElementById('depPaymentMethod').value = dep.paymentMethod || 'Tiền mặt';
+            document.getElementById('depNote').value = dep.note || '';
+            updateDepositRemainPreview();
+
+            document.getElementById('deposit-form-title').innerText = "Sửa Phiếu Đặt Cọc";
+            document.getElementById('deposit-btn-text').innerText = "Lưu Thay Đổi";
+            document.getElementById('deposit-cancel-edit').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function completeDepositOrder(id) {
+            const dep = (appData.deposits || []).find(d => d.id === id);
+            if (!dep || dep.status === 'completed') return;
+            const remain = Math.max(0, Number(dep.totalPrice || 0) - Number(dep.depositAmount || 0));
+
+            if (!(await customConfirm(`Xác nhận khách "${dep.customer}" đã thanh toán đủ phần còn lại (${remain.toLocaleString('vi-VN')}đ) và nhận "${dep.itemName}"? Hệ thống sẽ tự động tạo hóa đơn bán hàng.`))) return;
+
+            dep.status = 'completed';
+            dep.completedAt = new Date().toLocaleString('vi-VN');
+
+            if (!appData.invoices) appData.invoices = [];
+            const newInv = {
+                id: 'INV_DEP_' + Date.now(),
+                customerName: dep.customer,
+                customerPhone: dep.phone || '',
+                items: [{ name: `${dep.itemName} (Hoàn tất phiếu ${dep.type} #${dep.id.slice(-5)})`, price: Number(dep.totalPrice || dep.depositAmount || 0), qty: 1, costPrice: 0 }],
+                total: Number(dep.totalPrice || dep.depositAmount || 0),
+                createdAt: new Date().toLocaleString('vi-VN')
+            };
+            appData.invoices.unshift(newInv);
+
+            logAction(`Hoàn tất giao hàng & thu đủ phiếu cọc ${dep.id} (${dep.customer} - ${dep.itemName})`);
+            saveAndSync();
+            renderAll();
+            printInvoiceReceipt(newInv);
+            showToast("Đã hoàn tất phiếu đặt cọc và tạo hóa đơn bán hàng!", "success");
+        }
+
+        async function deleteDeposit(id) {
+            if (currentUser?.role !== 'admin') return;
+            if (!(await customConfirm("Xóa phiếu đặt cọc này?"))) return;
+            appData.deposits = (appData.deposits || []).filter(d => d.id !== id);
+            logAction(`Xóa phiếu đặt cọc ${id}`);
+            saveAndSync();
+            renderDeposits();
+            showToast("Đã xóa phiếu đặt cọc", "info");
+        }
+
+        function renderDeposits() {
+            const list = document.getElementById('deposit-list');
+            const holdingEl = document.getElementById('summary-deposit-holding');
+            const remainEl = document.getElementById('summary-deposit-remain');
+
+            let totalHolding = 0;
+            let totalRemain = 0;
+
+            (appData.deposits || []).forEach(d => {
+                if (d.status !== 'completed') {
+                    const depAmt = Number(d.depositAmount || 0);
+                    const totAmt = Number(d.totalPrice || 0);
+                    totalHolding += depAmt;
+                    totalRemain += Math.max(0, totAmt - depAmt);
+                }
+            });
+
+            if (holdingEl) holdingEl.innerText = totalHolding.toLocaleString('vi-VN') + ' đ';
+            if (remainEl) remainEl.innerText = totalRemain.toLocaleString('vi-VN') + ' đ';
+
+            if (!list) return;
+            const searchKey = (document.getElementById('depositSearch')?.value || '').toLowerCase();
+
+            const deposits = (appData.deposits || []).filter(d =>
+                (d.customer || '').toLowerCase().includes(searchKey) ||
+                (d.phone || '').toLowerCase().includes(searchKey) ||
+                (d.itemName || '').toLowerCase().includes(searchKey) ||
+                (d.type || '').toLowerCase().includes(searchKey)
+            );
+
+            if (deposits.length === 0) {
+                list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Chưa có phiếu đặt cọc máy hoặc linh kiện nào.</div>`;
+                return;
+            }
+
+            const isAdmin = currentUser?.role === 'admin';
+            list.innerHTML = deposits.map(d => {
+                const isDone = d.status === 'completed';
+                const isLaptop = (d.type || '').includes('Máy');
+                const remain = Math.max(0, Number(d.totalPrice || 0) - Number(d.depositAmount || 0));
+                return `
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${isDone ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-700/80'}">
+                    <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
+                        <div class="lg:w-[35%] space-y-1 min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full ${isLaptop ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40' : 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'}">${d.type}</span>
+                                ${isDone ? '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ĐÃ GIAO & THU ĐỦ</span>' : '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ĐANG GIỮ CỌC</span>'}
+                            </div>
+                            <div class="font-extrabold text-white text-sm sm:text-base truncate">${d.customer} ${d.phone ? '<span class="text-xs text-cyan-300 font-mono">(' + d.phone + ')</span>' : ''}</div>
+                            <div class="text-[10px] text-slate-400">${d.createdAt} • ${d.paymentMethod || 'Tiền mặt'}</div>
+                        </div>
+                        <div class="lg:w-[35%] space-y-1 min-w-0">
+                            <div class="font-extrabold text-amber-300 text-xs sm:text-sm truncate">${d.itemName}</div>
+                            <div class="text-xs text-slate-300 truncate">Ghi chú: ${d.note || 'Không có'}</div>
+                        </div>
+                        <div class="lg:w-[30%] lg:text-right space-y-0.5">
+                            <div class="text-xs text-slate-300">Tổng: <strong class="text-white">${Number(d.totalPrice || 0).toLocaleString('vi-VN')} đ</strong></div>
+                            <div class="text-sm font-black text-emerald-400">Đã cọc: ${Number(d.depositAmount || 0).toLocaleString('vi-VN')} đ</div>
+                            ${!isDone ? `<div class="text-xs font-extrabold text-amber-400">Còn lại: ${remain.toLocaleString('vi-VN')} đ</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-2 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
+                        <button onclick="printDepositReceiptById('${d.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-amber-500/20" title="In phiếu cọc"><i class="fa-solid fa-print"></i></button>
+                        <button onclick="editDeposit('${d.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold transition cursor-pointer border border-amber-500/20" title="Sửa"><i class="fa-solid fa-pen-to-square"></i></button>
+                        ${!isDone ? `<button onclick="completeDepositOrder('${d.id}')" class="px-3 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-emerald-500/40"><i class="fa-solid fa-check"></i> Giao & Thu Đủ</button>` : ''}
+                        ${isAdmin ? `<button onclick="deleteDeposit('${d.id}')" class="px-3 py-2 text-red-400 hover:bg-red-500/15 rounded-xl text-xs font-bold transition cursor-pointer border border-red-500/20"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        function printDepositReceiptById(id) {
+            const dep = (appData.deposits || []).find(d => d.id === id);
+            if (dep) printDepositReceipt(dep);
+        }
+
+        function printDepositReceipt(dep) {
+            const remain = Math.max(0, Number(dep.totalPrice || 0) - Number(dep.depositAmount || 0));
+            const htmlContent = `
+                <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; width: 100%; max-width: 130mm; margin: 0 auto; padding: 15px; border: 2px solid #f59e0b; border-radius: 12px; background: #fff; color: #111; box-sizing: border-box;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f59e0b; padding-bottom: 10px; margin-bottom: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            ${textLogoHTML}
+                            <div>
+                                <h1 style="margin: 0; font-size: 15px; font-weight: 900; color: #78350f;">LAPTOP KENG CẦN THƠ</h1>
+                                <p style="margin: 2px 0 0; font-size: 9px; color: #b45309; font-weight: 700;">49D1A Trần Nam Phú - Tân An - Cần Thơ</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <h2 style="margin: 0; font-size: 13px; font-weight: 800; color: #b45309;">PHIẾU XÁC NHẬN ĐẶT CỌC</h2>
+                            <p style="margin: 2px 0 0; font-size: 9px; color: #64748b;">Mã Phiếu: ${dep.id}</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; font-size: 11px;">
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Khách Hàng:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${dep.customer} ${dep.phone ? '('+dep.phone+')' : ''}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Loại Đặt Cọc:</p><p style="margin: 0; font-size: 12px; font-weight: 800; color: #b45309;">${dep.type}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Sản Phẩm / Linh Kiện Đặt Cọc:</p><p style="margin: 0; font-size: 13px; font-weight: 900; color: #111;">${dep.itemName}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Tổng Giá Trị:</p><p style="margin: 0; font-size: 12px; font-weight: 800;">${Number(dep.totalPrice || 0).toLocaleString('vi-VN')} đ</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Đã Đặt Cọc (${dep.paymentMethod || 'Tiền mặt'}):</p><p style="margin: 0; font-size: 13px; font-weight: 900; color: #059669;">${Number(dep.depositAmount || 0).toLocaleString('vi-VN')} đ</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 8px 10px; border-radius: 6px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #78350f; font-weight: bold;">Số Tiền Còn Lại Khi Nhận Hàng:</p><p style="margin: 0; font-size: 13px; font-weight: 900; color: #d97706;">${remain.toLocaleString('vi-VN')} đ</p>
+                        </div>
+                        <div style="background: #f8fafc; padding: 8px 10px; border-radius: 6px; border: 1px solid #e2e8f0; grid-column: span 2;">
+                            <p style="margin: 0 0 2px; color: #334155; font-weight: bold;">Ghi Chú / Ngày Hẹn:</p><p style="margin: 0; font-size: 11px;">${dep.note || 'Không có'}</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; text-align: center; font-size: 11px; margin-top: 20px;">
+                        <div><p style="margin: 0; font-weight: bold;">Khách Hàng</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Ký xác nhận)</p></div>
+                        <div><p style="margin: 0; font-weight: bold;">Đại Diện Cửa Hàng</p><p style="margin: 2px 0 25px; font-size: 9px; color: #64748b;">(Ký tên)</p></div>
+                    </div>
+                </div>
+            `;
+            showExportModal(htmlContent, `PhieuDatCoc_${dep.id}.html`, { customerName: dep.customer, customerPhone: dep.phone || '', id: dep.id, totalText: `${dep.type}: ${dep.itemName} - Đã cọc: ${Number(dep.depositAmount||0).toLocaleString('vi-VN')}đ (Còn lại: ${remain.toLocaleString('vi-VN')}đ)` });
         }
 
         async function deleteCleaning(id) {
@@ -6560,33 +6984,131 @@
             const isAdmin = currentUser?.role === 'admin';
             list.innerHTML = repairs.map(r => {
                 const isCompleted = r.completed === true;
-                const costDisplay = isCompleted ? `<span class="text-emerald-400 font-extrabold">${Number(r.cost||0).toLocaleString('vi-VN')} đ (Đã xong)</span>` : (Number(r.cost||0) < 0 ? '<span class="text-amber-400 font-extrabold">Báo giá sau</span>' : `${Number(r.cost||0).toLocaleString('vi-VN')} đ`);
+                const isReturnedUnfixable = r.returnedUnfixable === true;
+                
+                let statusBadge = '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ĐANG XỬ LÝ</span>';
+                if (isCompleted) {
+                    statusBadge = '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ĐÃ HOÀN TẤT</span>';
+                } else if (isReturnedUnfixable) {
+                    statusBadge = '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-red-500/20 text-red-300 border border-red-500/40">ĐÃ TRẢ MÁY (KHÔNG SỬA ĐƯỢC)</span>';
+                }
+
+                const costDisplay = isCompleted ? `<span class="text-emerald-400 font-extrabold">${Number(r.cost||0).toLocaleString('vi-VN')} đ (Đã xong)</span>` : (isReturnedUnfixable ? `<span class="text-red-400 font-extrabold">Không sửa được (Phí: ${Number(r.cost||0).toLocaleString('vi-VN')}đ)</span>` : (Number(r.cost||0) < 0 ? '<span class="text-amber-400 font-extrabold">Báo giá sau</span>' : `${Number(r.cost||0).toLocaleString('vi-VN')} đ`));
+                
                 return `
-                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${isCompleted ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-slate-700/80'}">
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${isCompleted ? 'border-emerald-500/40 bg-emerald-950/10' : (isReturnedUnfixable ? 'border-red-500/40 bg-red-950/10' : 'border-slate-700/80')}">
                     <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
                         <div class="lg:w-[35%] space-y-1 min-w-0">
                             <div class="flex items-center gap-2">
                                 <span class="font-mono text-xs text-amber-400 font-extrabold">${r.id}</span>
-                                ${isCompleted ? '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">ĐÃ HOÀN TẤT</span>' : '<span class="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">ĐANG XỬ LÝ</span>'}
+                                ${statusBadge}
                             </div>
                             <div class="font-extrabold text-white text-sm sm:text-base truncate">${r.customer} ${r.phone ? '<span class="text-xs text-cyan-300 font-mono font-bold">(' + r.phone + ')</span>' : ''}</div>
                         </div>
                         <div class="lg:w-[40%] space-y-1 min-w-0">
                             <div class="font-extrabold text-amber-300 text-xs truncate">${r.device}</div>
-                            <div class="text-xs text-slate-200 font-medium line-clamp-2" title="${r.issue}">Lỗi: ${r.issue}</div>
+                            <div class="text-xs text-slate-200 font-medium line-clamp-2" title="${r.issue}">${isReturnedUnfixable ? 'Lý do trả máy: ' + (r.returnReason || r.issue) : 'Lỗi: ' + r.issue}</div>
                         </div>
                         <div class="lg:w-[25%] lg:text-right text-sm sm:text-base">
                             ${costDisplay}
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
-                        <button onclick="printRepairTicket('${r.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-amber-500/20" title="In phiếu"><i class="fa-solid fa-print"></i></button>
-                        <button onclick="editRepair('${r.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-amber-500/20" title="Chỉnh sửa phiếu"><i class="fa-solid fa-pen-to-square"></i></button>
-                        ${!isCompleted ? `<button onclick="openCompleteRepairModal('${r.id}')" class="px-3 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-emerald-500/40"><i class="fa-solid fa-check"></i> Hoàn tất</button>` : ''}
+                        <button onclick="${isReturnedUnfixable ? `printReturnUnfixableTicket('${r.id}')` : `printRepairTicket('${r.id}')`}" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-amber-500/20" title="In phiếu"><i class="fa-solid fa-print"></i></button>
+                        ${!isCompleted && !isReturnedUnfixable ? `
+                            <button onclick="editRepair('${r.id}')" class="px-3 py-2 text-amber-400 hover:bg-amber-500/15 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-amber-500/20" title="Chỉnh sửa phiếu"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="openCompleteRepairModal('${r.id}')" class="px-3 py-2 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-emerald-500/40" title="Hoàn tất"><i class="fa-solid fa-check"></i> Hoàn tất</button>
+                            <button onclick="openReturnUnfixableModal('${r.id}')" class="px-3 py-2 bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 rounded-xl text-xs font-extrabold flex items-center gap-1 transition cursor-pointer border border-amber-500/40" title="Trả máy (Không sửa được)"><i class="fa-solid fa-rotate-left"></i> Trả máy</button>
+                        ` : ''}
                         ${isAdmin ? `<button onclick="deleteRepair('${r.id}')" class="px-3 py-2 text-red-400 hover:bg-red-500/15 rounded-xl text-xs font-bold transition cursor-pointer border border-red-500/20" title="Xóa phiếu"><i class="fa-solid fa-trash"></i></button>` : ''}
                     </div>
                 </div>
             `;}).join('');
+        }
+
+        function openReturnUnfixableModal(id) {
+            const rep = (appData.repairs || []).find(r => r.id === id);
+            if (!rep) return;
+            document.getElementById('returnRepId').value = rep.id;
+            document.getElementById('returnRepCust').value = rep.customer + (rep.phone ? ' (' + rep.phone + ')' : '');
+            document.getElementById('returnRepDevice').value = rep.device;
+            document.getElementById('returnRepReason').value = '';
+            document.getElementById('returnRepFee').value = 0;
+            document.getElementById('return-unfixable-modal').classList.remove('hidden');
+        }
+
+        function closeReturnUnfixableModal() {
+            document.getElementById('return-unfixable-modal').classList.add('hidden');
+        }
+
+        function confirmReturnUnfixable(e) {
+            e.preventDefault();
+            const id = document.getElementById('returnRepId').value;
+            const reason = document.getElementById('returnRepReason').value.trim();
+            const fee = Number(document.getElementById('returnRepFee').value) || 0;
+
+            const rep = (appData.repairs || []).find(r => r.id === id);
+            if (!rep) return;
+
+            rep.returnedUnfixable = true;
+            rep.returnReason = reason;
+            rep.cost = fee;
+            rep.completed = false;
+
+            logAction(`Trả máy không sửa được cho khách ${rep.customer} (${rep.device}) - Lý do: ${reason}`);
+            closeReturnUnfixableModal();
+            saveAndSync();
+            renderRepairs();
+            printReturnUnfixableTicket(rep.id);
+            showToast("Đã ghi nhận trả máy cho khách thành công!", "success");
+        }
+
+        function printReturnUnfixableTicket(id) {
+            const rep = (appData.repairs || []).find(r => r.id === id);
+            if (!rep) return;
+
+            const htmlContent = `
+                <div style="font-family: 'Plus Jakarta Sans', Arial, sans-serif; max-width: 148mm; margin: 0 auto; padding: 30px; border: 2px solid #f59e0b; border-radius: 16px; background: #fff; color: #111;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #f59e0b; padding-bottom: 15px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            ${textLogoHTML}
+                            <div>
+                                <h1 style="margin: 0; font-size: 18px; font-weight: 900; color: #78350f;">LAPTOP KENG CẦN THƠ</h1>
+                                <p style="margin: 2px 0 0; font-size: 10px; color: #b45309; font-weight: 700;">HỆ THỐNG BÁN LẺ & SỬA CHỮA LAPTOP</p>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <h2 style="margin: 0; font-size: 15px; font-weight: 800; color: #b45309;">PHIẾU TRẢ MÁY (KHÔNG SỬA ĐƯỢC)</h2>
+                            <p style="margin: 2px 0 0; font-size: 10px; color: #64748b;">Mã Phiếu: ${rep.id}</p>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; font-size: 12px;">
+                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Khách Hàng:</p><p style="margin: 0; font-size: 14px; font-weight: 800;">${rep.customer} ${rep.phone ? '('+rep.phone+')' : ''}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7;">
+                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Thiết Bị:</p><p style="margin: 0; font-size: 14px; font-weight: 800;">${rep.device}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Tình Trạng Tiếp Nhận Ban Đầu:</p><p style="margin: 0; font-size: 13px; font-weight: 700;">${rep.issue || 'Không'}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold; color: #dc2626;">Lý Do Trả Máy (Không Sửa Được):</p><p style="margin: 0; font-size: 13px; font-weight: 800; color: #dc2626;">${rep.returnReason || 'Không sửa được do lỗi phần cứng nặng / không có linh kiện thay thế'}</p>
+                        </div>
+                        <div style="background: #fffbeb; padding: 10px 14px; border-radius: 8px; border: 1px solid #fef3c7; grid-column: span 2;">
+                            <p style="margin: 0 0 3px; color: #78350f; font-weight: bold;">Phí Kiểm Tra / Dịch Vụ:</p><p style="margin: 0; font-size: 15px; font-weight: 900; color: #059669;">${Number(rep.cost||0).toLocaleString('vi-VN')} đ</p>
+                        </div>
+                    </div>
+                    <div style="margin-bottom: 25px; font-size: 11px; line-height: 1.5; background: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                        <p style="margin: 0; font-weight: 700; color: #334155;">Xác nhận quý khách đã nhận lại đầy đủ thiết bị và linh kiện ban đầu trong tình trạng nguyên vẹn.</p>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; text-align: center; font-size: 12px; margin-top: 30px;">
+                        <div><p style="margin: 0; font-weight: bold;">Khách Hàng (Đã nhận lại máy)</p><p style="margin: 2px 0 35px; font-size: 10px; color: #64748b;">(Ký ghi rõ họ tên)</p></div>
+                        <div><p style="margin: 0; font-weight: bold;">Kỹ Thuật Viên</p><p style="margin: 2px 0 35px; font-size: 10px; color: #64748b;">(Ký tên)</p></div>
+                    </div>
+                </div>
+            `;
+            showExportModal(htmlContent, `PhieuTraMay_${rep.id}.html`, { customerName: rep.customer, customerPhone: rep.phone || '', id: rep.id, totalText: `Trả máy không sửa được: ${rep.device} - Phí kiểm tra: ${Number(rep.cost||0).toLocaleString('vi-VN')}đ` });
         }
 
         function editRepair(id) {
@@ -6750,10 +7272,12 @@
             const isWarrantySupport = document.getElementById('completeRepWarrantySupport')?.checked || false;
             const finalCost = isWarrantySupport ? 0 : (Number(document.getElementById('completeRepCost')?.value) || 0);
             const warrantyMonths = Number(document.getElementById('completeRepWarrantyMonths')?.value) || rep.warrantyMonths || 3;
+            const paymentMethod = document.getElementById('completeRepPaymentMethod')?.value || 'Tiền mặt';
 
             rep.cost = finalCost;
             rep.completed = true;
             rep.warrantyMonths = warrantyMonths;
+            rep.paymentMethod = paymentMethod;
             if (isWarrantySupport) rep.isWarrantySupport = true;
 
             let usedPartsSummary = '';
@@ -6764,6 +7288,7 @@
                 const partProd = (appData.products || []).find(p => p.id === item.id);
                 if (partProd) {
                     const deductQty = Number(item.qty || 1);
+                    partProd.qty = Math.max(0, Number(partProd.qty || 0) - deductQty);
                     totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
                     usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
                 }
@@ -6773,10 +7298,13 @@
             let thienCut = 0;
             if (profit > 0 && !isWarrantySupport) {
                 if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
-                thienCut = Math.round(profit * 0.3);
-                appData.thienFunds.balance = (appData.thienFunds.balance || 0) + thienCut;
+                if (!Array.isArray(appData.thienFunds.transactions)) appData.thienFunds.transactions = [];
+                const hasParts = partsList.length > 0;
+                const percentage = hasParts ? 0.10 : 0.30;
+                thienCut = Math.round(profit * percentage);
+                appData.thienFunds.balance = (Number(appData.thienFunds.balance) || 0) + thienCut;
                 appData.thienFunds.transactions.push({
-                    desc: `Trích 30% Sửa chữa: ${rep.device}`,
+                    desc: `Trích ${hasParts ? '10%' : '30%'} Sửa chữa ${hasParts ? '(có linh kiện)' : ''}: ${rep.device}`,
                     amount: thienCut,
                     date: new Date().toLocaleString('vi-VN')
                 });
@@ -6787,7 +7315,8 @@
                 id: 'INV_REP_' + Date.now(),
                 customerName: rep.customer,
                 customerPhone: rep.phone || '',
-                items: [{ name: `Sửa chữa thiết bị (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ' : 'Tính phí'}): ${rep.device} (Lỗi: ${rep.issue})${usedPartsSummary ? ' - Linh kiện:' + usedPartsSummary : ''}`, price: finalCost, qty: 1, costPrice: totalPartsCost }],
+                paymentMethod: paymentMethod,
+                items: [{ name: `Sửa chữa thiết bị (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ' : paymentMethod}): ${rep.device} (Lỗi: ${rep.issue})${usedPartsSummary ? ' - Linh kiện:' + usedPartsSummary : ''}`, price: finalCost, qty: 1, costPrice: totalPartsCost }],
                 total: finalCost,
                 createdAt: new Date().toLocaleString('vi-VN')
             };
@@ -6815,101 +7344,17 @@
                 });
             }
 
-            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ - Không tạo thẻ BH' : finalCost.toLocaleString('vi-VN') + 'đ'})`);
+            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} (${isWarrantySupport ? 'Hỗ trợ bảo hành 0đ - Không tạo thẻ BH' : finalCost.toLocaleString('vi-VN') + 'đ - ' + paymentMethod})`);
             closeCompleteRepairModal();
             saveAndSync();
             renderAll();
             printRepairTicket(rep.id);
-            showToast(isWarrantySupport ? "Đã hoàn tất hỗ trợ bảo hành 0đ (Không tạo thẻ bảo hành)!" : "Đã hoàn tất thanh toán sửa chữa & lưu bảo hành!", "success");
+            showToast(isWarrantySupport ? "Đã hoàn tất hỗ trợ bảo hành 0đ!" : `Đã hoàn tất sửa chữa (${paymentMethod}) & lưu bảo hành!`, "success");
         }
 
         function closeCompleteRepairModal() {
             const modal = document.getElementById('complete-repair-modal');
             if (modal) modal.classList.add('hidden');
-        }
-
-        function confirmCompleteRepair(e) {
-            e.preventDefault();
-            const id = document.getElementById('completeRepId').value;
-            const rep = (appData.repairs || []).find(r => r.id === id);
-            if (!rep) return;
-
-            const finalCost = Number(document.getElementById('completeRepCost').value) || 0;
-            const warrantyMonths = Number(document.getElementById('completeRepWarrantyMonths').value) || rep.warrantyMonths || 3;
-
-            rep.cost = finalCost;
-            rep.completed = true;
-            rep.warrantyMonths = warrantyMonths;
-
-            let usedPartsSummary = '';
-            let totalPartsCost = 0;
-            let partsList = rep.parts || (rep.partId ? [{ id: rep.partId, qty: 1 }] : []);
-
-            partsList.forEach(item => {
-                const partProd = (appData.products || []).find(p => p.id === item.id);
-                if (partProd) {
-                    const deductQty = Number(item.qty || 1);
-                    partProd.qty = Math.max(0, Number(partProd.qty || 0) - deductQty);
-                    totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
-                    usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
-                }
-            });
-
-            const profit = finalCost - totalPartsCost;
-            let thienCut = 0;
-            if (profit > 0) {
-                if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
-                if (!Array.isArray(appData.thienFunds.transactions)) appData.thienFunds.transactions = [];
-                
-                // Nếu sửa chữa có chọn linh kiện thay thế thì tính cho Tiền Của Thiện 10% lợi nhuận, nếu không có linh kiện thì 30%
-                const hasParts = partsList.length > 0;
-                const percentage = hasParts ? 0.10 : 0.30;
-                thienCut = Math.round(profit * percentage);
-
-                appData.thienFunds.balance = (Number(appData.thienFunds.balance) || 0) + thienCut;
-                appData.thienFunds.transactions.push({
-                    desc: `Trích ${hasParts ? '10%' : '30%'} Sửa chữa ${hasParts ? '(có linh kiện)' : ''}: ${rep.device}`,
-                    amount: thienCut,
-                    date: new Date().toLocaleString('vi-VN')
-                });
-            }
-
-            if (!appData.invoices) appData.invoices = [];
-            const newInv = {
-                id: 'INV_REP_' + Date.now(),
-                customerName: rep.customer,
-                customerPhone: rep.phone || '',
-                items: [{ name: `Sửa chữa thiết bị: ${rep.device} (Lỗi: ${rep.issue})${usedPartsSummary ? ' - Linh kiện:' + usedPartsSummary : ''}`, price: finalCost, qty: 1, costPrice: totalPartsCost }],
-                total: finalCost,
-                createdAt: new Date().toLocaleString('vi-VN')
-            };
-            appData.invoices.unshift(newInv);
-
-            const expiryDate = new Date(); 
-            expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
-            if (!appData.warranties) appData.warranties = [];
-            appData.warranties.unshift({
-                id: 'WAR_REP_' + Date.now(),
-                customer: rep.customer,
-                phone: rep.phone || '',
-                product: `Sửa chữa: ${rep.device}${usedPartsSummary}`,
-                repairId: rep.id,
-                invoiceId: newInv.id,
-                parts: partsList,
-                price: finalCost,
-                thienCut: thienCut,
-                imei: 'REP #' + rep.id.slice(-6),
-                warrantyMonths,
-                expiryDate: expiryDate.toLocaleDateString('vi-VN'),
-                createdAt: new Date().toLocaleDateString('vi-VN')
-            });
-
-            logAction(`Hoàn tất sửa chữa ${rep.id} cho khách ${rep.customer} - ${finalCost.toLocaleString('vi-VN')}đ`);
-            closeCompleteRepairModal();
-            saveAndSync();
-            renderAll();
-            printRepairTicket(rep.id);
-            showToast("Đã hoàn tất, trừ kho linh kiện và lưu bảo hành thành công!", "success");
         }
 
         async function deleteRepair(id) {
