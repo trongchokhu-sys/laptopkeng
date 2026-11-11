@@ -1516,6 +1516,7 @@
                             <select id="depInventorySelect" onchange="onSelectDepositProductFromInventory(this.value)" class="w-full bg-slate-900 border border-emerald-500/40 rounded-2xl px-4 py-3 text-emerald-300 text-xs font-bold focus:outline-none focus:border-emerald-400 transition">
                                 <option value="">-- Chọn máy / linh kiện có sẵn trong kho (hoặc nhập tay bên dưới) --</option>
                             </select>
+                            <input type="hidden" id="depProductId" value="">
                         </div>
                         <div class="space-y-1">
                             <label class="block text-xs font-bold text-slate-200 uppercase">Tên Máy / Linh Kiện Đặt Cọc <span class="text-red-400">*</span></label>
@@ -1920,28 +1921,37 @@
                     </div>
                     <div>
                         <h3 class="font-black text-white text-base tracking-tight">ĐỔI MẬT KHẨU TÀI KHOẢN</h3>
-                        <p class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest">Bảo mật tài khoản đăng nhập</p>
+                        <p id="change-pwd-account-label" class="text-[11px] text-amber-400 font-extrabold uppercase tracking-widest">Bảo mật tài khoản đăng nhập</p>
                     </div>
                 </div>
                 <button onclick="closeChangePasswordModal()" class="w-10 h-10 rounded-2xl bg-slate-900 text-slate-300 hover:text-white border border-slate-700 hover:bg-slate-800 transition cursor-pointer flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-lg"></i></button>
             </div>
-
-            <form onsubmit="submitChangePassword(event)" class="space-y-4 relative z-10 text-xs">
+            <form id="change-password-form" onsubmit="submitChangePassword(event)" class="space-y-4 relative z-10 text-xs">
+                <div id="change-pwd-feedback" class="hidden p-3 rounded-2xl text-xs font-extrabold text-center border"></div>
                 <div class="space-y-1.5">
                     <label class="block font-bold text-slate-200 uppercase">Mật Khẩu Hiện Tại <span class="text-red-400">*</span></label>
-                    <input type="password" id="currentPassword" required placeholder="Nhập mật khẩu hiện tại..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                    <div class="relative">
+                        <input type="password" id="currentPassword" placeholder="Nhập mật khẩu hiện tại..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl pl-4 pr-11 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                        <button type="button" onclick="toggleChangePwdField('currentPassword', 'icon-cur-pwd')" class="absolute right-4 top-3.5 text-slate-400 hover:text-white transition cursor-pointer"><i id="icon-cur-pwd" class="fa-solid fa-eye text-xs"></i></button>
+                    </div>
                 </div>
                 <div class="space-y-1.5">
                     <label class="block font-bold text-slate-200 uppercase">Mật Khẩu Mới <span class="text-red-400">*</span></label>
-                    <input type="password" id="newPassword" required placeholder="Nhập mật khẩu mới (ít nhất 4 ký tự)..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                    <div class="relative">
+                        <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới (ít nhất 4 ký tự)..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl pl-4 pr-11 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                        <button type="button" onclick="toggleChangePwdField('newPassword', 'icon-new-pwd')" class="absolute right-4 top-3.5 text-slate-400 hover:text-white transition cursor-pointer"><i id="icon-new-pwd" class="fa-solid fa-eye text-xs"></i></button>
+                    </div>
                 </div>
                 <div class="space-y-1.5">
                     <label class="block font-bold text-slate-200 uppercase">Xác Nhận Mật Khẩu Mới <span class="text-red-400">*</span></label>
-                    <input type="password" id="confirmPassword" required placeholder="Nhập lại mật khẩu mới..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-4 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                    <div class="relative">
+                        <input type="password" id="confirmPassword" onkeydown="if(event.key==='Enter'){event.preventDefault(); submitChangePassword(event);}" placeholder="Nhập lại mật khẩu mới..." class="w-full bg-slate-900 border border-slate-700 rounded-2xl pl-4 pr-11 py-3.5 text-white text-xs focus:border-amber-400 transition">
+                        <button type="button" onclick="toggleChangePwdField('confirmPassword', 'icon-cfm-pwd')" class="absolute right-4 top-3.5 text-slate-400 hover:text-white transition cursor-pointer"><i id="icon-cfm-pwd" class="fa-solid fa-eye text-xs"></i></button>
+                    </div>
                 </div>
                 <div class="flex items-center justify-end gap-3 pt-3">
                     <button type="button" onclick="closeChangePasswordModal()" class="px-5 py-3 rounded-2xl font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 transition cursor-pointer">Hủy Bỏ</button>
-                    <button type="submit" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl uppercase tracking-wider shadow-lg flex items-center gap-2 active:scale-95 transition cursor-pointer">
+                    <button type="button" id="btn-save-new-password" onclick="submitChangePassword(event)" class="px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 text-slate-950 font-black rounded-2xl uppercase tracking-wider shadow-lg flex items-center gap-2 active:scale-95 transition cursor-pointer">
                         <i class="fa-solid fa-check"></i> Lưu Mật Khẩu Mới
                     </button>
                 </div>
@@ -2155,6 +2165,23 @@
         let isLoginLocked = false;
         let loginCooldownTimer = null;
 
+        function getAccountPassword(username) {
+            const u = (username || '').trim().toLowerCase();
+            if (appData && appData.adminPasswords && appData.adminPasswords[u]) {
+                return String(appData.adminPasswords[u]);
+            }
+            try {
+                const localAdmins = JSON.parse(localStorage.getItem('keng_admin_passwords_v2026') || '{}');
+                if (localAdmins && localAdmins[u]) return String(localAdmins[u]);
+            } catch (e) {}
+
+            if (u === ADMIN_USER.toLowerCase()) return ADMIN_PASS;
+            if (u === 'thien') return '123456';
+
+            const staffMatch = (appData.users || []).find(st => (st.username || '').trim().toLowerCase() === u);
+            return staffMatch ? String(staffMatch.password) : null;
+        }
+
         function checkAutoLoginOnType() {
             if (isLoginLocked) return;
             const user = document.getElementById('loginUsername')?.value.trim();
@@ -2162,14 +2189,15 @@
             const errorMsg = document.getElementById('login-error-msg');
 
             if (!user || !pass) return;
+            const uLower = user.toLowerCase();
 
             let matchedUser = null;
-            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+            if (uLower === ADMIN_USER.toLowerCase() && pass === getAccountPassword(ADMIN_USER)) {
                 matchedUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
-            } else if (user === 'thien' && pass === '123456') {
+            } else if (uLower === 'thien' && pass === getAccountPassword('thien')) {
                 matchedUser = { id: 'thien_manager', name: 'Quản lý', username: 'thien', role: 'admin' };
             } else {
-                const staffMatch = (appData.users || []).find(u => u.username === user && u.password === pass);
+                const staffMatch = (appData.users || []).find(u => (u.username || '').trim().toLowerCase() === uLower && String(u.password) === pass);
                 if (staffMatch) {
                     matchedUser = { id: staffMatch.id, name: staffMatch.name, username: staffMatch.username, role: 'staff' };
                 }
@@ -3076,22 +3104,23 @@
             const pass = document.getElementById('loginPassword')?.value.trim();
             const errorMsg = document.getElementById('login-error-msg');
             const errorText = document.getElementById('login-error-text');
+            const uLower = (user || '').toLowerCase();
 
-            if (user === ADMIN_USER && pass === ADMIN_PASS) {
+            if (uLower === ADMIN_USER.toLowerCase() && pass === getAccountPassword(ADMIN_USER)) {
                 loginFailedAttempts = 0;
                 currentUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
                 finishLogin(errorMsg, e.target);
                 return;
             }
 
-            if (user === 'thien' && pass === '123456') {
+            if (uLower === 'thien' && pass === getAccountPassword('thien')) {
                 loginFailedAttempts = 0;
                 currentUser = { id: 'thien_manager', name: 'Quản lý', username: 'thien', role: 'admin' };
                 finishLogin(errorMsg, e.target);
                 return;
             }
 
-            const staffMatch = (appData.users || []).find(u => u.username === user && u.password === pass);
+            const staffMatch = (appData.users || []).find(u => (u.username || '').trim().toLowerCase() === uLower && String(u.password) === pass);
             if (staffMatch) {
                 loginFailedAttempts = 0;
                 currentUser = { id: staffMatch.id, name: staffMatch.name, username: staffMatch.username, role: 'staff' };
@@ -3812,12 +3841,71 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        function toggleChangePwdField(inputId, iconId) {
+            const inp = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (!inp || !icon) return;
+            if (inp.type === 'password') {
+                inp.type = 'text';
+                icon.className = 'fa-solid fa-eye-slash text-xs';
+            } else {
+                inp.type = 'password';
+                icon.className = 'fa-solid fa-eye text-xs';
+            }
+        }
+
+        function showChangePwdFeedback(msg, isError = true) {
+            const box = document.getElementById('change-pwd-feedback');
+            if (box) {
+                box.classList.remove('hidden');
+                box.className = isError
+                    ? 'p-3 rounded-2xl text-xs font-extrabold text-center border bg-red-500/20 text-red-300 border-red-500/40 animate-fadeIn'
+                    : 'p-3 rounded-2xl text-xs font-extrabold text-center border bg-emerald-500/20 text-emerald-300 border-emerald-500/40 animate-fadeIn';
+                box.innerHTML = `<i class="fa-solid ${isError ? 'fa-circle-exclamation' : 'fa-circle-check'} mr-1"></i> ${msg}`;
+            }
+            showToast(msg, isError ? "error" : "success");
+        }
+
+        function getActiveAccountForPasswordChange() {
+            if (currentUser && currentUser.username) return currentUser;
+            try {
+                const savedSession = localStorage.getItem('keng_user_session');
+                if (savedSession) {
+                    const parsed = JSON.parse(savedSession);
+                    if (parsed && parsed.username) {
+                        currentUser = parsed;
+                        return currentUser;
+                    }
+                }
+            } catch (e) {}
+            currentUser = { id: 'admin_master', name: 'Sếp', username: ADMIN_USER, role: 'admin' };
+            return currentUser;
+        }
+
         function openChangePasswordModal() {
+            const activeUser = getActiveAccountForPasswordChange();
             const modal = document.getElementById('change-password-modal');
             if (modal) {
                 modal.classList.remove('hidden');
                 const form = modal.querySelector('form');
                 if (form) form.reset();
+                const fb = document.getElementById('change-pwd-feedback');
+                if (fb) fb.classList.add('hidden');
+                const labelEl = document.getElementById('change-pwd-account-label');
+                if (labelEl) {
+                    labelEl.innerText = `Tài khoản: ${activeUser.name} (${activeUser.username})`;
+                }
+                ['currentPassword', 'newPassword', 'confirmPassword'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.type = 'password';
+                        el.value = '';
+                    }
+                });
+                ['icon-cur-pwd', 'icon-new-pwd', 'icon-cfm-pwd'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.className = 'fa-solid fa-eye text-xs';
+                });
             }
         }
 
@@ -3827,44 +3915,57 @@
         }
 
         function submitChangePassword(e) {
-            e.preventDefault();
-            const currentPass = document.getElementById('currentPassword').value.trim();
-            const newPass = document.getElementById('newPassword').value.trim();
-            const confirmPass = document.getElementById('confirmPassword').value.trim();
+            if (e && typeof e.preventDefault === 'function') e.preventDefault();
+            if (e && typeof e.stopPropagation === 'function') e.stopPropagation();
 
-            if (!currentUser) return showToast("Vui lòng đăng nhập trước!", "error");
-            if (newPass.length < 4) return showToast("Mật khẩu mới phải có ít nhất 4 ký tự!", "error");
-            if (newPass !== confirmPass) return showToast("Mật khẩu xác nhận không khớp!", "error");
+            const currentPass = (document.getElementById('currentPassword')?.value || '').trim();
+            const newPass = (document.getElementById('newPassword')?.value || '').trim();
+            const confirmPass = (document.getElementById('confirmPassword')?.value || '').trim();
 
-            let isValidCurrent = false;
-            if (currentUser.role === 'admin') {
-                if (currentUser.username === 'thien') {
-                    if (currentPass === '123456') isValidCurrent = true;
-                } else {
-                    if (currentPass === ADMIN_PASS) isValidCurrent = true;
+            if (!currentPass) return showChangePwdFeedback("Vui lòng nhập mật khẩu hiện tại!", true);
+            if (!newPass) return showChangePwdFeedback("Vui lòng nhập mật khẩu mới!", true);
+            if (newPass.length < 4) return showChangePwdFeedback("Mật khẩu mới phải có ít nhất 4 ký tự!", true);
+            if (newPass !== confirmPass) return showChangePwdFeedback("Mật khẩu xác nhận không khớp với mật khẩu mới!", true);
+
+            const activeUser = getActiveAccountForPasswordChange();
+            const uLower = (activeUser.username || ADMIN_USER).trim().toLowerCase();
+            let actualCurrentPass = getAccountPassword(uLower);
+
+            if (activeUser.role !== 'admin') {
+                const staffObj = (appData.users || []).find(u => u.id === activeUser.id || (u.username || '').trim().toLowerCase() === uLower);
+                if (staffObj) actualCurrentPass = String(staffObj.password);
+            }
+
+            if (currentPass !== String(actualCurrentPass)) {
+                return showChangePwdFeedback("Mật khẩu hiện tại không chính xác!", true);
+            }
+
+            if (activeUser.role === 'admin' || uLower === ADMIN_USER.toLowerCase() || uLower === 'thien') {
+                if (!appData.adminPasswords || typeof appData.adminPasswords !== 'object') {
+                    appData.adminPasswords = {};
                 }
+                appData.adminPasswords[uLower] = newPass;
+                try {
+                    const localAdmins = JSON.parse(localStorage.getItem('keng_admin_passwords_v2026') || '{}');
+                    localAdmins[uLower] = newPass;
+                    localStorage.setItem('keng_admin_passwords_v2026', JSON.stringify(localAdmins));
+                } catch (err) {}
+                saveAndSync();
+                showChangePwdFeedback(`Đã đổi và lưu mật khẩu mới cho tài khoản ${activeUser.username} thành công!`, false);
             } else {
-                const staffObj = (appData.users || []).find(u => u.id === currentUser.id);
-                if (staffObj && staffObj.password === currentPass) isValidCurrent = true;
-            }
-
-            if (!isValidCurrent) {
-                return showToast("Mật khẩu hiện tại không chính xác!", "error");
-            }
-
-            if (currentUser.role === 'admin') {
-                showToast("Đổi mật khẩu tài khoản Admin thành công!", "success");
-            } else {
-                const staffObj = (appData.users || []).find(u => u.id === currentUser.id);
+                const staffObj = (appData.users || []).find(u => u.id === activeUser.id || (u.username || '').trim().toLowerCase() === uLower);
                 if (staffObj) {
                     staffObj.password = newPass;
                     saveAndSync();
+                    renderStaffList();
                 }
-                showToast("Đổi mật khẩu tài khoản nhân viên thành công!", "success");
+                showChangePwdFeedback(`Đã đổi mật khẩu tài khoản nhân viên ${activeUser.username} thành công!`, false);
             }
 
-            logAction(`Thay đổi mật khẩu tài khoản: ${currentUser.name}`);
-            closeChangePasswordModal();
+            logAction(`Thay đổi mật khẩu tài khoản: ${activeUser.name} (${activeUser.username})`);
+            setTimeout(() => {
+                closeChangePasswordModal();
+            }, 700);
         }
 
         async function triggerAppSelfUpdate() {
@@ -5018,7 +5119,13 @@
                     appData.deposits = appData.deposits || [];
                     appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
                     appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
+                    appData.adminPasswords = appData.adminPasswords || {};
                 }
+
+                try {
+                    const localAdmins = JSON.parse(localStorage.getItem('keng_admin_passwords_v2026') || '{}');
+                    appData.adminPasswords = { ...(appData.adminPasswords || {}), ...localAdmins };
+                } catch (e) {}
 
                 const savedConfig = localStorage.getItem('keng_firebase_config');
                 if (savedConfig) {
@@ -5055,6 +5162,7 @@
                 expenses: Array.isArray(safeClone.expenses) ? safeClone.expenses : [],
                 thienFunds: safeClone.thienFunds || { balance: 0, transactions: [] },
                 users: Array.isArray(safeClone.users) ? safeClone.users : [],
+                adminPasswords: safeClone.adminPasswords || {},
                 activityLogs: Array.isArray(safeClone.activityLogs) ? safeClone.activityLogs : []
             };
         }
@@ -5383,7 +5491,12 @@
                 }
 
                 if (cloudData) {
+                    const existingAdminPwds = appData.adminPasswords || {};
                     appData = cloudData;
+                    try {
+                        const localAdmins = JSON.parse(localStorage.getItem('keng_admin_passwords_v2026') || '{}');
+                        appData.adminPasswords = { ...(appData.adminPasswords || {}), ...existingAdminPwds, ...localAdmins };
+                    } catch (e) {}
                     localStorage.setItem('keng_store_data', JSON.stringify(appData));
                     renderAll();
                     addCloudLog("✅ Tải dữ liệu thành công!", "success");
@@ -5427,7 +5540,7 @@
         function populateDepositInventoryOptions() {
             const selectEl = document.getElementById('depInventorySelect');
             if (!selectEl) return;
-            const availableProducts = (appData.products || []).filter(p => Number(p.qty || 0) > 0);
+            const availableProducts = (appData.products || []).filter(p => Number(p.qty || 0) > 0 && !isProductDeposited(p));
             selectEl.innerHTML = `<option value="">-- Chọn máy / linh kiện có sẵn trong kho (hoặc nhập tay bên dưới) --</option>` + availableProducts.map(p => {
                 let specInfo = '';
                 if (p.laptopDetails && p.laptopDetails.cpu) {
@@ -5437,10 +5550,33 @@
             }).join('');
         }
 
+        // Kiểm tra xem sản phẩm có đang được giữ cọc hay không
+        function getActiveDepositForProduct(prod) {
+            if (!prod) return null;
+            const prodNameLower = (prod.name || '').trim().toLowerCase();
+            return (appData.deposits || []).find(d => {
+                if (d.status === 'completed') return false;
+                if (d.productId && d.productId === prod.id) return true;
+                const depItemLower = (d.itemName || '').trim().toLowerCase();
+                if (!prodNameLower || !depItemLower) return false;
+                return depItemLower === prodNameLower || depItemLower.startsWith(prodNameLower + ' (');
+            }) || null;
+        }
+
+        function isProductDeposited(prod) {
+            return getActiveDepositForProduct(prod) !== null;
+        }
+
         function onSelectDepositProductFromInventory(prodId) {
-            if (!prodId) return;
+            const depProdIdInput = document.getElementById('depProductId');
+            if (!prodId) {
+                if (depProdIdInput) depProdIdInput.value = '';
+                return;
+            }
             const prod = (appData.products || []).find(p => p.id === prodId);
             if (!prod) return;
+
+            if (depProdIdInput) depProdIdInput.value = prod.id;
 
             const itemNameInput = document.getElementById('depItemName');
             const totalPriceInput = document.getElementById('depTotalPrice');
@@ -5725,6 +5861,17 @@
             const depositAmount = Number(document.getElementById('depAmount').value) || 0;
             const paymentMethod = document.getElementById('depPaymentMethod').value;
             const note = document.getElementById('depNote').value.trim();
+            let productId = document.getElementById('depProductId')?.value || '';
+
+            // Nếu người dùng nhập tay trùng tên sản phẩm trong kho thì tự động liên kết mã sản phẩm
+            if (!productId) {
+                const matchedProd = (appData.products || []).find(p => {
+                    const pName = (p.name || '').trim().toLowerCase();
+                    const iName = itemName.toLowerCase();
+                    return pName && (iName === pName || iName.startsWith(pName + ' ('));
+                });
+                if (matchedProd) productId = matchedProd.id;
+            }
 
             if (!customer || !itemName) return;
             if (!appData.deposits) appData.deposits = [];
@@ -5732,21 +5879,27 @@
             if (id) {
                 const dep = appData.deposits.find(d => d.id === id);
                 if (dep) {
-                    Object.assign(dep, { type, customer, phone, itemName, totalPrice, depositAmount, paymentMethod, note });
+                    Object.assign(dep, { type, customer, phone, itemName, productId: productId || dep.productId || '', totalPrice, depositAmount, paymentMethod, note });
                 }
                 logAction(`Cập nhật phiếu đặt cọc ${id} (${customer} - ${itemName})`);
                 showToast("Đã cập nhật phiếu đặt cọc!", "success");
             } else {
                 const newDep = {
                     id: 'DEP_' + Date.now(),
-                    type, customer, phone, itemName, totalPrice, depositAmount, paymentMethod, note,
+                    type, customer, phone, itemName, productId, totalPrice, depositAmount, paymentMethod, note,
                     status: 'holding',
                     createdAt: new Date().toLocaleString('vi-VN')
                 };
                 appData.deposits.unshift(newDep);
                 logAction(`Tạo phiếu ${type}: ${itemName} cho khách ${customer} - Cọc: ${depositAmount.toLocaleString('vi-VN')}đ (${paymentMethod})`);
                 printDepositReceipt(newDep);
-                showToast("Tạo phiếu đặt cọc thành công!", "success");
+                showToast("Tạo phiếu đặt cọc thành công! Sản phẩm đã được khóa giữ cọc.", "success");
+            }
+
+            // Nếu sản phẩm vừa đặt cọc đang nằm trong giỏ hàng POS thì tự động gỡ khỏi giỏ hàng
+            if (productId) {
+                cart = cart.filter(c => c.id !== productId);
+                renderCart();
             }
 
             resetDepositForm();
@@ -5758,6 +5911,8 @@
             const form = document.querySelector('#tab-deposits form');
             if (form) form.reset();
             document.getElementById('editDepositId').value = '';
+            const depProdIdInput = document.getElementById('depProductId');
+            if (depProdIdInput) depProdIdInput.value = '';
             document.getElementById('deposit-form-title').innerText = "Tạo Phiếu Đặt Cọc";
             document.getElementById('deposit-btn-text').innerText = "Lưu & In Phiếu Cọc";
             document.getElementById('deposit-cancel-edit').classList.add('hidden');
@@ -5768,6 +5923,8 @@
             const dep = (appData.deposits || []).find(d => d.id === id);
             if (!dep) return;
             document.getElementById('editDepositId').value = dep.id;
+            const depProdIdInput = document.getElementById('depProductId');
+            if (depProdIdInput) depProdIdInput.value = dep.productId || '';
             document.getElementById('depType').value = dep.type || 'Cọc Máy (Laptop)';
             document.getElementById('depCustomer').value = dep.customer || '';
             document.getElementById('depPhone').value = dep.phone || '';
@@ -5794,12 +5951,28 @@
             dep.status = 'completed';
             dep.completedAt = new Date().toLocaleString('vi-VN');
 
+            // Trừ tồn kho của sản phẩm đã cọc khi hoàn tất giao máy
+            let matchedProd = (appData.products || []).find(p => p.id === dep.productId);
+            if (!matchedProd) {
+                matchedProd = (appData.products || []).find(p => {
+                    const pName = (p.name || '').trim().toLowerCase();
+                    const iName = (dep.itemName || '').trim().toLowerCase();
+                    return pName && (iName === pName || iName.startsWith(pName + ' ('));
+                });
+            }
+            let itemCostPrice = 0;
+            if (matchedProd) {
+                itemCostPrice = Number(matchedProd.costPrice || 0);
+                matchedProd.qty = Math.max(0, Number(matchedProd.qty || 0) - 1);
+                purgeZeroStockProducts();
+            }
+
             if (!appData.invoices) appData.invoices = [];
             const newInv = {
                 id: 'INV_DEP_' + Date.now(),
                 customerName: dep.customer,
                 customerPhone: dep.phone || '',
-                items: [{ name: `${dep.itemName} (Hoàn tất phiếu ${dep.type} #${dep.id.slice(-5)})`, price: Number(dep.totalPrice || dep.depositAmount || 0), qty: 1, costPrice: 0 }],
+                items: [{ id: matchedProd ? matchedProd.id : '', name: `${dep.itemName} (Hoàn tất phiếu ${dep.type} #${dep.id.slice(-5)})`, price: Number(dep.totalPrice || dep.depositAmount || 0), qty: 1, costPrice: itemCostPrice }],
                 total: Number(dep.totalPrice || dep.depositAmount || 0),
                 createdAt: new Date().toLocaleString('vi-VN')
             };
@@ -6145,17 +6318,21 @@
                     displayName += ` (${p.chargerDetails.wattage})`;
                 }
                 const qtyNum = Number(p.qty || 0);
-                const qtyBadgeClass = qtyNum > 0 
-                    ? "text-amber-300 bg-amber-500/20 border-amber-500/40" 
-                    : "text-red-400 bg-red-500/20 border-red-500/40";
+                const activeDep = getActiveDepositForProduct(p);
+                const qtyBadgeClass = activeDep
+                    ? "text-pink-300 bg-pink-500/20 border-pink-500/40"
+                    : (qtyNum > 0 
+                        ? "text-amber-300 bg-amber-500/20 border-amber-500/40" 
+                        : "text-red-400 bg-red-500/20 border-red-500/40");
                 return `
-                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${qtyNum > 0 ? 'border-slate-700/80' : 'border-red-500/30 opacity-75'}">
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${activeDep ? 'border-pink-500/40' : (qtyNum > 0 ? 'border-slate-700/80' : 'border-red-500/30 opacity-75')}">
                     <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
                         <div class="lg:w-[40%] space-y-1.5 min-w-0">
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <span class="text-[10px] font-black px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">#${idx + 1}</span>
                                 <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${p.category || 'Khác'}</span>
                                 <span class="text-xs font-mono text-amber-400 font-extrabold">${p.code || ''}</span>
+                                ${activeDep ? `<span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/40"><i class="fa-solid fa-lock"></i> ĐÃ NHẬN CỌC (${activeDep.customer})</span>` : ''}
                             </div>
                             <h4 class="font-extrabold text-white text-sm sm:text-base truncate">${displayName}</h4>
                             ${p.laptopDetails ? `<div class="text-[11px] text-slate-300 font-mono font-medium">${p.laptopDetails.cpu||''} • ${p.laptopDetails.ram||''} • ${p.laptopDetails.ssd||''} • ${p.laptopDetails.screen||''} ${p.laptopDetails.serial ? '• Seri: <span class="text-amber-400 font-bold">' + p.laptopDetails.serial + '</span>' : ''}</div>` : ''}
@@ -6382,6 +6559,26 @@
                 if (p.chargerDetails && p.chargerDetails.wattage && !displayName.toLowerCase().includes(p.chargerDetails.wattage.toLowerCase())) {
                     displayName += ` (${p.chargerDetails.wattage})`;
                 }
+                const activeDep = getActiveDepositForProduct(p);
+                if (activeDep) {
+                    return `
+                    <div class="glass-card p-3 sm:p-4 rounded-2xl flex flex-col justify-between gap-2.5 opacity-60 cursor-not-allowed border border-pink-500/40 bg-[#111827] select-none" onclick="showToast('Sản phẩm này đã nhận cọc của khách ${activeDep.customer.replace(/'/g, "\\'")}, không thể chọn thanh toán!', 'error')">
+                        <div>
+                            <div class="flex items-center justify-between mb-1.5 gap-1">
+                                <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-md bg-pink-500/20 text-pink-300 border border-pink-500/40"><i class="fa-solid fa-lock"></i> ĐÃ NHẬN CỌC</span>
+                                <span class="text-[10px] font-mono font-extrabold text-slate-400 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-md truncate">Khách: ${activeDep.customer}</span>
+                            </div>
+                            <h4 class="font-bold text-slate-300 text-xs sm:text-sm leading-snug line-clamp-2 line-through">${displayName}</h4>
+                            ${p.laptopDetails ? `<div class="text-[10px] text-slate-400 font-mono mt-1 line-clamp-1">${p.laptopDetails.cpu||''} • ${p.laptopDetails.ram||''} • ${p.laptopDetails.ssd||''}</div>` : ''}
+                            ${p.chargerDetails ? `<div class="text-[10px] text-slate-400 font-mono mt-1">CS: <span class="text-amber-400 font-bold">${p.chargerDetails.wattage}</span></div>` : ''}
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-slate-800">
+                            <span class="font-black text-slate-400 text-xs sm:text-sm">${Number(p.price).toLocaleString('vi-VN')} đ</span>
+                            <div class="px-2 py-1 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center justify-center text-[10px] font-black"><i class="fa-solid fa-ban mr-1"></i> Đã Cọc</div>
+                        </div>
+                    </div>
+                    `;
+                }
                 return `
                 <div class="glass-card p-3 sm:p-4 rounded-2xl flex flex-col justify-between gap-2.5 hover:border-amber-500 shadow-lg group transition cursor-pointer border border-slate-700/80 bg-[#111827]" onclick="addToCart('${p.id}')">
                     <div>
@@ -6480,6 +6677,11 @@
                 showToast('Không tìm thấy sản phẩm!', 'error');
                 return;
             }
+            const activeDep = getActiveDepositForProduct(prod);
+            if (activeDep) {
+                showToast(`Sản phẩm "${prod.name}" đã nhận cọc của khách ${activeDep.customer}, không thể chọn để thanh toán!`, 'error');
+                return;
+            }
             const pQty = Number(prod.qty) || 0;
             if (pQty <= 0) {
                 showToast('Sản phẩm này đã hết hàng!', 'error');
@@ -6540,6 +6742,16 @@
         function openCheckoutModal() {
             if (cart.length === 0) return showToast("Giỏ hàng trống!", "error");
             
+            let depositedInCart = cart.find(item => {
+                let p = appData.products.find(x => x.id === item.id);
+                return p && isProductDeposited(p);
+            });
+            if (depositedInCart) {
+                cart = cart.filter(i => i.id !== depositedInCart.id);
+                renderCart();
+                return showToast(`Sản phẩm "${depositedInCart.name}" đã được đặt cọc nên không thể thanh toán tại POS!`, "error");
+            }
+
             let outOfStock = cart.find(item => {
                 let p = appData.products.find(x => x.id === item.id);
                 return !p || p.qty < item.qty;
@@ -6668,6 +6880,12 @@
                 imei = cart[0].serial;
             }
             
+            let depositedItem = cart.find(item => {
+                let p = (appData.products || []).find(x => x.id === item.id);
+                return p && isProductDeposited(p);
+            });
+            if (depositedItem) return showToast(`Sản phẩm "${depositedItem.name}" đang được giữ cọc, không thể thanh toán!`, 'error');
+
             let outOfStock = cart.find(item => { let p = (appData.products || []).find(x => x.id === item.id); return !p || p.qty < item.qty; });
             if(outOfStock) return showToast('Sản phẩm trong giỏ đã hết hàng. Vui lòng kiểm tra lại!', 'error');
 
