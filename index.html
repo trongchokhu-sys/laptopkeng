@@ -485,10 +485,14 @@
         
         <!-- STATS BAR -->
         <div class="grid grid-cols-2 lg:grid-cols-6 gap-3 sm:gap-4">
-            <div class="glass-card p-4 sm:p-5 rounded-2xl flex items-center gap-3 sm:gap-4 border border-slate-700/80 shadow-xl relative overflow-hidden group">
+            <div onclick="switchTab('products')" title="Nhấn để xem chi tiết Kho Hàng" class="glass-card p-4 sm:p-5 rounded-2xl flex items-center gap-3 sm:gap-4 border border-slate-700/80 shadow-xl relative overflow-hidden group cursor-pointer">
                 <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-amber-500/15 rounded-full blur-xl group-hover:bg-amber-500/30 transition-all"></div>
                 <div class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-amber-500/20 to-amber-500/40 border border-amber-500/50 flex items-center justify-center text-amber-400 text-base sm:text-lg flex-shrink-0 shadow-lg"><i class="fa-solid fa-laptop"></i></div>
-                <div class="min-w-0"><p class="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider truncate">Tồn Kho</p><h3 id="stat-products" class="text-xl sm:text-2xl font-black text-white mt-0.5">0</h3></div>
+                <div class="min-w-0">
+                    <p class="text-[11px] font-extrabold text-amber-400 uppercase tracking-wider truncate">Tồn Kho</p>
+                    <h3 id="stat-products" class="text-xl sm:text-2xl font-black text-white mt-0.5">0</h3>
+                    <p id="stat-products-detail" class="text-[9px] text-slate-300 font-bold truncate mt-0.5">0 mã sản phẩm</p>
+                </div>
             </div>
             <div class="glass-card p-4 sm:p-5 rounded-2xl flex items-center gap-3 sm:gap-4 border border-slate-700/80 shadow-xl relative overflow-hidden group">
                 <div class="absolute -right-4 -bottom-4 w-16 h-16 bg-blue-500/15 rounded-full blur-xl group-hover:bg-blue-500/30 transition-all"></div>
@@ -968,7 +972,15 @@
             <!-- Danh Sách Kho Hàng -->
             <div class="glass-panel p-5 sm:p-8 rounded-[2rem] shadow-2xl space-y-5">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-slate-700 pb-3">
-                    <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase"><div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-boxes-stacked"></i></div> Kho Hàng</h3>
+                    <div class="flex items-center gap-2.5 flex-wrap">
+                        <h3 class="font-black text-white text-xs sm:text-sm flex items-center gap-2 uppercase">
+                            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400"><i class="fa-solid fa-boxes-stacked"></i></div> 
+                            Kho Hàng
+                        </h3>
+                        <span id="inventory-summary-badge" class="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 font-black text-xs shadow-sm">
+                            Tổng: 0 SP
+                        </span>
+                    </div>
                     
                     <!-- THANH TÌM KIẾM SẢN PHẨM TRONG KHO -->
                     <div class="relative w-full sm:w-72">
@@ -1602,27 +1614,32 @@
                                 </div>
                                 <div>
                                     <h4 class="font-black text-emerald-400 text-xs uppercase tracking-wide flex items-center gap-2">
-                                        3 Tệp Lưu Trữ Cục Bộ (10h, 16h, 22h)
+                                        3 Tệp Lưu Trữ Cục Bộ (C:\laptopkeng\Recovery)
                                         <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                                     </h4>
-                                    <p id="local-vault-status" class="text-[10px] text-slate-400 font-mono">Tự động ghi đè theo ngày mới...</p>
+                                    <p id="local-vault-status" class="text-[10px] text-slate-400 font-mono">Đường dẫn: C:\laptopkeng\Recovery • Tự động xoay vòng ghi đè khi điều chỉnh dữ liệu</p>
                                 </div>
                             </div>
                             <span class="text-[9px] font-black px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-                                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> AUTO SNAPSHOT
+                                <i class="fa-solid fa-rotate animate-spin text-[8px]"></i> AUTO ROTATE 3 FILES
                             </span>
                         </div>
 
                         <p class="text-[11px] text-slate-300 leading-relaxed">
-                            💡 <strong>Quy chế lưu trữ:</strong> Hệ thống tự động tạo 3 tệp lưu trữ vào các mốc <strong>10:00, 16:00 và 22:00</strong> mỗi ngày. Khi sang ngày hôm sau, 3 tệp mới sẽ tự động ghi đè lên 3 tệp của ngày hôm trước.
+                            💡 <strong>Cơ chế lưu trữ đầy đủ tại <code class="text-amber-300 font-mono">C:\laptopkeng\Recovery</code>:</strong> Mỗi lần bạn điều chỉnh dữ liệu, hệ thống sẽ tự động đóng gói <strong>toàn bộ 100% dữ liệu</strong> (Sản phẩm kho, Đã bán, Sửa chữa, Bảo hành, Vệ sinh, Đặt cọc, Công nợ, Chi phí, Tiền Của Thiện...) và luân phiên ghi đè tuần tự vào 3 tệp: <code class="text-emerald-300 font-mono">store_backup_file1.json</code> &rarr; <code class="text-emerald-300 font-mono">store_backup_file2.json</code> &rarr; <code class="text-emerald-300 font-mono">store_backup_file3.json</code>.
                         </p>
 
                         <!-- INPUT FILE ẨN ĐỂ CHỌN TỆP KHÔI PHỤC -->
                         <input type="file" id="customBackupFileInput" accept=".json" onchange="handleCustomFileRestore(event)" class="hidden">
 
-                        <!-- HIỂN THỊ 3 TỆP LƯU TRỮ CỤC BỘ CỐ ĐỊNH THEO MỐC 10H, 16H, 22H -->
+                        <!-- HIỂN THỊ 3 TỆP LƯU TRỮ CỤC BỘ XOAY VÒNG -->
                         <div class="space-y-2 pt-1">
-                            <span class="block text-[10px] font-bold text-slate-400 uppercase">Danh sách 3 tệp lưu trữ tự động trong ngày:</span>
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                                <span class="block text-[10px] font-bold text-slate-400 uppercase">Danh sách 3 tệp lưu trữ xoay vòng tự động trong <span class="text-amber-400 font-mono">C:\laptopkeng\Recovery</span>:</span>
+                                <button onclick="triggerManualFullBackupNow()" class="text-[10px] font-extrabold text-emerald-400 hover:text-emerald-300 underline cursor-pointer flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt"></i> Chạy lưu xoay vòng ngay vào lượt kế tiếp
+                                </button>
+                            </div>
                             <div id="three-daily-snapshots-list" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                                 <!-- Render bằng JS -->
                             </div>
@@ -4947,42 +4964,44 @@
         function loadPersistentState() {
             try {
                 let loadedValidData = null;
-                const securePayload = localStorage.getItem('keng_store_data_secure');
                 
-                if (securePayload) {
-                    try {
-                        const decodedData = decodeURIComponent(atob(securePayload));
-                        const parsed = JSON.parse(decodedData);
-                        if (parsed && Array.isArray(parsed.products) && parsed.products.length >= 0) {
-                            loadedValidData = parsed;
-                        }
-                    } catch (err) {}
+                // Ưu tiên kiểm tra toàn bộ các khóa lưu trữ hiện có của người dùng để bảo toàn 100% dữ liệu gốc
+                const storageKeys = [
+                    KENG_NAMESPACE_KEY_v2026,
+                    'keng_store_data',
+                    'keng_store_data_master_backup'
+                ];
+
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && key.startsWith('keng_store_data_backup_')) {
+                        storageKeys.push(key);
+                    }
+                }
+
+                for (const key of storageKeys) {
+                    const rawData = localStorage.getItem(key);
+                    if (rawData) {
+                        try {
+                            const parsed = JSON.parse(rawData);
+                            if (parsed && typeof parsed === 'object' && Array.isArray(parsed.products)) {
+                                loadedValidData = parsed;
+                                break;
+                            }
+                        } catch (e) {}
+                    }
                 }
 
                 if (!loadedValidData) {
-                    const storageKeys = [
-                        'keng_store_data',
-                        'keng_store_data_master_backup'
-                    ];
-
-                    for (let i = 0; i < localStorage.length; i++) {
-                        const key = localStorage.key(i);
-                        if (key && key.startsWith('keng_store_data_backup_')) {
-                            storageKeys.push(key);
-                        }
-                    }
-
-                    for (const key of storageKeys) {
-                        const rawData = localStorage.getItem(key);
-                        if (rawData) {
-                            try {
-                                const parsed = JSON.parse(rawData);
-                                if (parsed && Array.isArray(parsed.products) && parsed.products.length >= 0) {
-                                    loadedValidData = parsed;
-                                    break;
-                                }
-                            } catch (e) {}
-                        }
+                    const securePayload = localStorage.getItem('keng_store_data_secure');
+                    if (securePayload) {
+                        try {
+                            const decodedData = decodeURIComponent(atob(securePayload));
+                            const parsed = JSON.parse(decodedData);
+                            if (parsed && typeof parsed === 'object' && Array.isArray(parsed.products)) {
+                                loadedValidData = parsed;
+                            }
+                        } catch (err) {}
                     }
                 }
 
@@ -5014,67 +5033,155 @@
             localStorage.setItem('keng_firebase_config', JSON.stringify(serverConfig));
             renderServerFields();
             
-            seedDefaultParts();
-            checkAndApplyDailyExpense();
-            initDaily6AMTimer(); // Kích hoạt bộ định thời tự động trừ vào 6h sáng mỗi ngày
-            initDailyScheduledBackupTimer(); // Kích hoạt bộ định thời sao lưu 3 mốc 10h, 16h, 22h
+            // TUYỆT ĐỐI KHÔNG GỌI HÀM TỰ Ý THÊM DỮ LIỆU ẢO (seedDefaultParts) VÀ KHÔNG TỰ Ý THAY ĐỔI DỮ LIỆU CỦA NGƯỜI DÙNG
+            initDailyScheduledBackupTimer(); // Khởi tạo giao diện 3 tệp lưu trữ xoay vòng
             renderAll();
             setTimeout(triggerStockAlert, 1000);
         }
 
-        // BỘ ĐỊNH THỜI TỰ ĐỘNG TẠO 3 FILE LƯU TRỮ VÀO 10H, 16H, 22H (GHI ĐÈ KHI SANG NGÀY HÔM SAU)
+        // HỆ THỐNG 3 TỆP LƯU TRỮ CỤC BỘ XOAY VÒNG & GHI ĐÈ TỰ ĐỘNG MỖI KHI NGƯỜI DÙNG ĐIỀU CHỈNH DỮ LIỆU
+        const RECOVERY_FOLDER_PATH = 'C:\\laptopkeng\\Recovery';
+
+        function buildFullSystemDataPayload() {
+            const safeClone = JSON.parse(JSON.stringify(appData || {}));
+            return {
+                products: Array.isArray(safeClone.products) ? safeClone.products : [],
+                invoices: Array.isArray(safeClone.invoices) ? safeClone.invoices : [],
+                repairs: Array.isArray(safeClone.repairs) ? safeClone.repairs : [],
+                warranties: Array.isArray(safeClone.warranties) ? safeClone.warranties : [],
+                cleanings: Array.isArray(safeClone.cleanings) ? safeClone.cleanings : [],
+                deposits: Array.isArray(safeClone.deposits) ? safeClone.deposits : [],
+                debts: Array.isArray(safeClone.debts) ? safeClone.debts : [],
+                expenses: Array.isArray(safeClone.expenses) ? safeClone.expenses : [],
+                thienFunds: safeClone.thienFunds || { balance: 0, transactions: [] },
+                users: Array.isArray(safeClone.users) ? safeClone.users : [],
+                activityLogs: Array.isArray(safeClone.activityLogs) ? safeClone.activityLogs : []
+            };
+        }
+
+        function formatFullBackupSummary(d) {
+            if (!d) return "Chưa có dữ liệu";
+            const totalStockQty = (d.products || []).reduce((sum, p) => sum + Math.max(0, Number(p.qty || 0)), 0);
+            const modelCount = (d.products || []).length;
+            const invCount = (d.invoices || []).length;
+            const repCount = (d.repairs || []).length;
+            const warCount = (d.warranties || []).length;
+            const cleanCount = (d.cleanings || []).length;
+            const depCount = (d.deposits || []).length;
+            const debtCount = (d.debts || []).length;
+            return `Kho: ${totalStockQty} SP (${modelCount} mã) • HĐ: ${invCount} • Sửa: ${repCount} • BH: ${warCount} • VS: ${cleanCount} • Cọc: ${depCount} • Nợ: ${debtCount}`;
+        }
+
         function initDailyScheduledBackupTimer() {
-            function checkScheduleBackup() {
-                const now = new Date();
-                const currentHour = now.getHours();
-                const currentMinute = now.getMinutes();
-                const todayDateStr = now.toLocaleDateString('vi-VN');
+            syncThreeFilesFromRecoveryDisk();
+            updateThreeDailySnapshotsUI();
+            updateLocalVaultStatusUI();
+        }
 
-                const targetSlots = [
-                    { hour: 10, key: '10h', name: 'Mốc 10:00 Sáng' },
-                    { hour: 16, key: '16h', name: 'Mốc 16:00 Chiều' },
-                    { hour: 22, key: '22h', name: 'Mốc 22:00 Tối' }
-                ];
-
-                for (const slot of targetSlots) {
-                    if (currentHour === slot.hour && currentMinute <= 2) {
-                        const slotStorageKey = `keng_snapshot_${slot.key}_data`;
-                        const lastSavedDateKey = `keng_snapshot_${slot.key}_date`;
-                        const lastSavedDate = localStorage.getItem(lastSavedDateKey);
-
-                        // Ghi đè khi sang ngày mới hoặc chưa lưu trong ngày
-                        if (lastSavedDate !== todayDateStr) {
-                            try {
-                                const snapshotPayload = {
-                                    timestamp: `${slot.name} (${todayDateStr})`,
-                                    date: todayDateStr,
-                                    slot: slot.key,
-                                    data: JSON.parse(JSON.stringify(appData))
-                                };
-
-                                localStorage.setItem(slotStorageKey, JSON.stringify(snapshotPayload));
-                                localStorage.setItem(lastSavedDateKey, todayDateStr);
-
-                                if (window.require && typeof window.require === 'function') {
-                                    try {
-                                        const fs = window.require('fs');
-                                        const path = window.require('path');
-                                        const backupDir = 'C:\\laptopkeng\\Recovery';
-                                        if (!fs.existsSync(backupDir)) fs.mkdirSync(backupDir, { recursive: true });
-                                        fs.writeFileSync(path.join(backupDir, `store_backup_${slot.key}.json`), JSON.stringify(snapshotPayload, null, 2), 'utf-8');
-                                    } catch (e) {}
-                                }
-
-                                logAction(`Tự động cập nhật tệp sao lưu cục bộ ${slot.name} (${todayDateStr})`);
-                            } catch (e) {}
+        // Tự động đọc 3 tệp từ C:\laptopkeng\Recovery nếu đang chạy trên bản Desktop EXE
+        function syncThreeFilesFromRecoveryDisk() {
+            if (window.require && typeof window.require === 'function') {
+                try {
+                    const fs = window.require('fs');
+                    const path = window.require('path');
+                    if (!fs.existsSync(RECOVERY_FOLDER_PATH)) {
+                        fs.mkdirSync(RECOVERY_FOLDER_PATH, { recursive: true });
+                    }
+                    ['file1', 'file2', 'file3'].forEach(slotKey => {
+                        const filePath = path.join(RECOVERY_FOLDER_PATH, `store_backup_${slotKey}.json`);
+                        if (fs.existsSync(filePath)) {
+                            const rawDisk = fs.readFileSync(filePath, 'utf-8');
+                            if (rawDisk) {
+                                localStorage.setItem(`keng_snapshot_${slotKey}_data`, rawDisk);
+                            }
                         }
+                    });
+                } catch (e) {
+                    console.warn("Không thể đồng bộ đọc từ C:\\laptopkeng\\Recovery:", e);
+                }
+            }
+        }
+
+        function triggerManualFullBackupNow() {
+            triggerRotatingThreeFilesBackup("Sao lưu xoay vòng thủ công");
+            showToast("Đã lưu đầy đủ toàn bộ dữ liệu vào tệp xoay vòng kế tiếp tại C:\\laptopkeng\\Recovery!", "success");
+        }
+
+        function triggerRotatingThreeFilesBackup(reason = "Điều chỉnh dữ liệu hệ thống") {
+            try {
+                const slots = ['file1', 'file2', 'file3'];
+                const slotLabels = {
+                    'file1': 'Tệp Lưu Trữ 1',
+                    'file2': 'Tệp Lưu Trữ 2',
+                    'file3': 'Tệp Lưu Trữ 3'
+                };
+
+                // Lấy vị trí tệp xoay vòng hiện tại (0 -> 1 -> 2 -> 0)
+                let currentIdx = parseInt(localStorage.getItem('keng_rotating_backup_next_idx') || '0', 10);
+                if (isNaN(currentIdx) || currentIdx < 0 || currentIdx > 2) currentIdx = 0;
+
+                const activeSlotKey = slots[currentIdx];
+                const nextIdx = (currentIdx + 1) % 3;
+                const nowStr = new Date().toLocaleString('vi-VN');
+                const fileName = `store_backup_${activeSlotKey}.json`;
+                const fullFilePath = `${RECOVERY_FOLDER_PATH}\\${fileName}`;
+
+                // Đóng gói đầy đủ 100% các danh mục: sản phẩm, đã bán, sửa chữa, bảo hành, vệ sinh, đặt cọc, công nợ, chi phí, quỹ Thiện...
+                const fullData = buildFullSystemDataPayload();
+                const summaryStr = formatFullBackupSummary(fullData);
+
+                const snapshotPayload = {
+                    timestamp: nowStr,
+                    slot: activeSlotKey,
+                    slotName: slotLabels[activeSlotKey],
+                    fileName: fileName,
+                    filePath: fullFilePath,
+                    reason: reason,
+                    summary: summaryStr,
+                    counts: {
+                        totalStockQty: (fullData.products || []).reduce((s, p) => s + Math.max(0, Number(p.qty || 0)), 0),
+                        products: fullData.products.length,
+                        invoices: fullData.invoices.length,
+                        repairs: fullData.repairs.length,
+                        warranties: fullData.warranties.length,
+                        cleanings: fullData.cleanings.length,
+                        deposits: fullData.deposits.length,
+                        debts: fullData.debts.length,
+                        expenses: fullData.expenses.length
+                    },
+                    data: fullData
+                };
+
+                const serializedPayload = JSON.stringify(snapshotPayload, null, 2);
+
+                // 1. Lưu & chép đè lên tệp đến lượt trong bộ nhớ cục bộ
+                localStorage.setItem(`keng_snapshot_${activeSlotKey}_data`, serializedPayload);
+                localStorage.setItem('keng_rotating_backup_last_idx', currentIdx.toString());
+                localStorage.setItem('keng_rotating_backup_next_idx', nextIdx.toString());
+
+                // 2. Ghi trực tiếp vào thư mục C:\laptopkeng\Recovery trên môi trường Desktop .EXE (Node.js / Electron)
+                if (window.require && typeof window.require === 'function') {
+                    try {
+                        const fs = window.require('fs');
+                        const path = window.require('path');
+                        if (!fs.existsSync(RECOVERY_FOLDER_PATH)) {
+                            fs.mkdirSync(RECOVERY_FOLDER_PATH, { recursive: true });
+                        }
+                        // Ghi tệp xoay vòng hiện tại (store_backup_file1.json / file2 / file3)
+                        fs.writeFileSync(path.join(RECOVERY_FOLDER_PATH, fileName), serializedPayload, 'utf-8');
+                        // Đồng thời cập nhật bản tổng mới nhất store_backup.json trong C:\laptopkeng\Recovery
+                        fs.writeFileSync(path.join(RECOVERY_FOLDER_PATH, 'store_backup.json'), serializedPayload, 'utf-8');
+                    } catch (e) {
+                        console.warn("Lỗi ghi tệp vào C:\\laptopkeng\\Recovery:", e);
                     }
                 }
-                updateThreeDailySnapshotsUI();
-            }
 
-            setInterval(checkScheduleBackup, 60000);
-            checkScheduleBackup();
+                recordLocalVaultHistory(snapshotPayload, `${slotLabels[activeSlotKey]} (${fullFilePath})`);
+                updateThreeDailySnapshotsUI();
+                updateLocalVaultStatusUI();
+            } catch (e) {
+                console.error("Lỗi lưu xoay vòng 3 tệp:", e);
+            }
         }
 
         function updateThreeDailySnapshotsUI() {
@@ -5082,32 +5189,56 @@
             if (!listEl) return;
 
             const slots = [
-                { key: '10h', name: 'Mốc 10:00 Sáng' },
-                { key: '16h', name: 'Mốc 16:00 Chiều' },
-                { key: '22h', name: 'Mốc 22:00 Tối' }
+                { key: 'file1', legacyKey: '10h', name: 'Tệp Lưu Trữ 1', fileName: 'store_backup_file1.json' },
+                { key: 'file2', legacyKey: '16h', name: 'Tệp Lưu Trữ 2', fileName: 'store_backup_file2.json' },
+                { key: 'file3', legacyKey: '22h', name: 'Tệp Lưu Trữ 3', fileName: 'store_backup_file3.json' }
             ];
 
-            listEl.innerHTML = slots.map(slot => {
-                const raw = localStorage.getItem(`keng_snapshot_${slot.key}_data`);
-                let infoText = "Chưa có dữ liệu";
+            const lastIdx = parseInt(localStorage.getItem('keng_rotating_backup_last_idx') || '-1', 10);
+            const nextIdx = parseInt(localStorage.getItem('keng_rotating_backup_next_idx') || '0', 10);
+
+            listEl.innerHTML = slots.map((slot, idx) => {
+                let raw = localStorage.getItem(`keng_snapshot_${slot.key}_data`);
+                if (!raw && slot.legacyKey) {
+                    raw = localStorage.getItem(`keng_snapshot_${slot.legacyKey}_data`);
+                }
+
+                let infoText = "Chưa có bản lưu";
+                let summaryText = "Đang chờ thay đổi dữ liệu...";
+                let fullPathText = `${RECOVERY_FOLDER_PATH}\\${slot.fileName}`;
                 let hasData = false;
                 if (raw) {
                     try {
                         const parsed = JSON.parse(raw);
                         infoText = parsed.timestamp || slot.name;
+                        const d = parsed.data || parsed;
+                        summaryText = formatFullBackupSummary(d);
+                        fullPathText = parsed.filePath || `${RECOVERY_FOLDER_PATH}\\${slot.fileName}`;
                         hasData = true;
                     } catch (e) {}
                 }
 
+                const isLatest = (idx === lastIdx && hasData);
+                const isNext = (idx === nextIdx);
+
                 return `
-                    <div class="p-3 rounded-xl bg-slate-950 border ${hasData ? 'border-emerald-500/40' : 'border-slate-800'} flex flex-col justify-between gap-2 text-xs shadow-sm">
-                        <div>
-                            <span class="font-black text-emerald-400 block">${slot.name}</span>
-                            <span class="text-[10px] text-slate-400 font-mono block mt-0.5 truncate">${infoText}</span>
+                    <div class="p-3 rounded-xl bg-slate-950 border ${isLatest ? 'border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.25)]' : (hasData ? 'border-emerald-500/40' : 'border-slate-800')} flex flex-col justify-between gap-2 text-xs relative overflow-hidden">
+                        <div class="space-y-1">
+                            <div class="flex items-center justify-between gap-1">
+                                <span class="font-black text-emerald-400">${slot.name}</span>
+                                ${isLatest ? `<span class="text-[9px] font-black px-1.5 py-0.5 rounded bg-emerald-500 text-slate-950">MỚI LƯU ĐÈ</span>` : (isNext ? `<span class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">LƯỢT GHI KẾ TIẾP</span>` : '')}
+                            </div>
+                            <div class="text-[10px] text-amber-300 font-mono truncate" title="${fullPathText}">
+                                <i class="fa-solid fa-folder-tree text-[9px]"></i> ${fullPathText}
+                            </div>
+                            <span class="text-[10px] text-slate-300 font-mono block truncate"><i class="fa-regular fa-clock text-[9px]"></i> ${infoText}</span>
+                            <div class="text-[10px] text-emerald-200/90 font-semibold leading-snug bg-slate-900/90 p-2 rounded-lg border border-slate-800">
+                                ${summaryText}
+                            </div>
                         </div>
-                        <div class="flex items-center gap-1.5 pt-1 border-t border-slate-900">
-                            <button onclick="restoreDailySnapshot('${slot.key}')" ${!hasData ? 'disabled' : ''} class="flex-1 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-lg text-[10px] font-extrabold transition cursor-pointer disabled:opacity-40">Khôi phục</button>
-                            <button onclick="downloadDailySnapshot('${slot.key}')" ${!hasData ? 'disabled' : ''} class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 rounded-lg text-[10px] font-bold transition cursor-pointer disabled:opacity-40" title="Tải file"><i class="fa-solid fa-download"></i></button>
+                        <div class="flex items-center gap-1.5 pt-1.5 border-t border-slate-900">
+                            <button onclick="restoreDailySnapshot('${slot.key}')" ${!hasData ? 'disabled' : ''} class="flex-1 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 rounded-lg text-[10px] font-extrabold transition cursor-pointer disabled:opacity-40">Khôi phục đầy đủ</button>
+                            <button onclick="downloadDailySnapshot('${slot.key}')" ${!hasData ? 'disabled' : ''} class="px-2.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-amber-400 rounded-lg text-[10px] font-bold transition cursor-pointer disabled:opacity-40" title="Tải file ${slot.fileName}"><i class="fa-solid fa-download"></i></button>
                         </div>
                     </div>
                 `;
@@ -5116,12 +5247,34 @@
 
         async function restoreDailySnapshot(slotKey) {
             try {
-                const raw = localStorage.getItem(`keng_snapshot_${slotKey}_data`);
-                if (!raw) return showToast("Không tìm thấy tệp sao lưu của mốc này!", "error");
+                const legacyMap = { 'file1': '10h', 'file2': '16h', 'file3': '22h' };
+                let raw = null;
+
+                // Ưu tiên đọc trực tiếp từ thư mục C:\laptopkeng\Recovery nếu chạy trên bản EXE
+                if (window.require && typeof window.require === 'function') {
+                    try {
+                        const fs = window.require('fs');
+                        const path = window.require('path');
+                        const diskFile = path.join(RECOVERY_FOLDER_PATH, `store_backup_${slotKey}.json`);
+                        if (fs.existsSync(diskFile)) {
+                            raw = fs.readFileSync(diskFile, 'utf-8');
+                        }
+                    } catch (e) {}
+                }
+
+                if (!raw) {
+                    raw = localStorage.getItem(`keng_snapshot_${slotKey}_data`);
+                }
+                if (!raw && legacyMap[slotKey]) {
+                    raw = localStorage.getItem(`keng_snapshot_${legacyMap[slotKey]}_data`);
+                }
+                if (!raw) return showToast(`Không tìm thấy tệp store_backup_${slotKey}.json trong C:\\laptopkeng\\Recovery!`, "error");
+
                 const parsed = JSON.parse(raw);
                 const restoredData = parsed.data || parsed;
+                const summaryDetail = formatFullBackupSummary(restoredData);
 
-                if (!(await customConfirm(`Xác nhận khôi phục dữ liệu từ tệp sao lưu "${parsed.timestamp || slotKey}"?`))) return;
+                if (!(await customConfirm(`Xác nhận khôi phục toàn bộ dữ liệu từ "${parsed.slotName || slotKey}" (C:\\laptopkeng\\Recovery\\store_backup_${slotKey}.json - Lưu lúc: ${parsed.timestamp || 'Gần nhất'})?\n\nChi tiết bản lưu:\n${summaryDetail}`))) return;
 
                 appData = restoredData;
                 appData.warranties = appData.warranties || [];
@@ -5132,13 +5285,14 @@
                 appData.debts = appData.debts || [];
                 appData.cleanings = appData.cleanings || [];
                 appData.expenses = appData.expenses || [];
+                appData.deposits = appData.deposits || [];
                 appData.thienFunds = appData.thienFunds || { balance: 0, transactions: [] };
                 appData.users = appData.users || [{ id: 'user_default', name: 'Nhân Viên Mẫu', username: 'nhanvien', password: '123456', role: 'staff' }];
 
-                logAction(`Khôi phục dữ liệu từ tệp sao lưu mốc ${slotKey}`);
+                logAction(`Khôi phục toàn bộ dữ liệu từ C:\\laptopkeng\\Recovery\\store_backup_${slotKey}.json (${parsed.timestamp || ''})`);
                 saveAndSync();
                 renderAll();
-                showToast(`Khôi phục thành công từ tệp mốc ${slotKey}!`, "success");
+                showToast(`Khôi phục đầy đủ sản phẩm, sửa chữa, bảo hành từ ${parsed.slotName || slotKey} thành công!`, "success");
             } catch (e) {
                 showToast("Lỗi khôi phục tệp sao lưu!", "error");
             }
@@ -5146,7 +5300,11 @@
 
         function downloadDailySnapshot(slotKey) {
             try {
-                const raw = localStorage.getItem(`keng_snapshot_${slotKey}_data`);
+                const legacyMap = { 'file1': '10h', 'file2': '16h', 'file3': '22h' };
+                let raw = localStorage.getItem(`keng_snapshot_${slotKey}_data`);
+                if (!raw && legacyMap[slotKey]) {
+                    raw = localStorage.getItem(`keng_snapshot_${legacyMap[slotKey]}_data`);
+                }
                 if (!raw) return showToast("Không tìm thấy tệp!", "error");
                 const blob = new Blob([raw], { type: 'application/json;charset=utf-8' });
                 const url = URL.createObjectURL(blob);
@@ -5163,69 +5321,16 @@
             }
         }
 
-        // ĐẶT LỊCH TỰ ĐỘNG TRỪ 600.000Đ VÀO 6:00 SÁNG MỖI NGÀY
         function initDaily6AMTimer() {
-            function check6AMExecution() {
-                const now = new Date();
-                const currentHour = now.getHours();
-                const currentMinute = now.getMinutes();
-                const todayStr = now.toLocaleDateString('vi-VN');
-
-                if (currentHour === 6 && currentMinute <= 1) {
-                    if (!appData.expenses) appData.expenses = [];
-                    const alreadyApplied = appData.expenses.some(e => e.date === todayStr && e.isAuto);
-                    if (!alreadyApplied) {
-                        appData.expenses.unshift({
-                            id: 'EXP_AUTO_6AM_' + Date.now(),
-                            desc: 'Chi phí cố định 6h sáng hàng ngày (Mặt bằng, nhân sự, v.v...)',
-                            amount: 600000,
-                            date: todayStr,
-                            isAuto: true,
-                            createdAt: new Date().toLocaleString('vi-VN')
-                        });
-                        logAction("Tự động trừ 600.000đ chi phí cố định lúc 6:00 sáng");
-                        saveAndSync();
-                        renderAll();
-                    }
-                }
-            }
-            setInterval(check6AMExecution, 60000);
-            check6AMExecution();
+            // Đã tắt tự động thêm chi phí ngầm để đảm bảo chỉ người dùng mới được chỉnh sửa dữ liệu
         }
 
         function seedDefaultParts() {
-            if (!appData.products) appData.products = [];
-            const defaultParts = [
-                { name: "Màn hình 14 inch FHD", cost: 800000, price: 1200000 },
-                { name: "Màn hình 15.6 inch FHD", cost: 950000, price: 1400000 },
-                { name: "Màn hình 15.6 inch 144Hz", cost: 1500000, price: 2100000 },
-                { name: "RAM 8GB 3200", cost: 350000, price: 550000 },
-                { name: "RAM 16GB 3200", cost: 650000, price: 950000 },
-                { name: "RAM 8GB 4800", cost: 500000, price: 750000 },
-                { name: "RAM 16GB 4800", cost: 950000, price: 1350000 },
-                { name: "RAM 8GB 5600", cost: 650000, price: 900000 },
-                { name: "RAM 16GB 5600", cost: 1200000, price: 1650000 },
-                { name: "SSD 256GB", cost: 350000, price: 550000 },
-                { name: "SSD 512GB", cost: 650000, price: 950000 },
-                { name: "SSD 1TB", cost: 1200000, price: 1750000 }
-            ];
-            
-            let added = false;
-            defaultParts.forEach((dp, i) => {
-                if (!appData.products.some(p => p.name.toUpperCase() === dp.name.toUpperCase())) {
-                    appData.products.unshift({
-                        id: 'PROD_DEF_' + Date.now() + '_' + i,
-                        category: 'Linh kiện',
-                        name: dp.name,
-                        code: 'LK-DEF' + Math.floor(100+Math.random()*900),
-                        costPrice: dp.cost,
-                        price: dp.price,
-                        qty: 2
-                    });
-                    added = true;
-                }
-            });
-            if (added) saveAndSync();
+            // Đã vô hiệu hóa hoàn toàn việc tự ý thêm linh kiện ảo/mẫu vào hệ thống
+        }
+
+        function checkAndApplyDailyExpense() {
+            // Đã tắt cơ chế tự ý ghi dữ liệu chi phí tự động để bảo toàn 100% quyền kiểm soát dữ liệu cho người dùng
         }
 
         async function syncToServer(silent = false) {
@@ -5303,11 +5408,20 @@
         }
 
         function renderAll() {
+            purgeZeroStockProducts();
             reconcileRevokedWarrantiesForThien();
             renderStats(); renderPOS(); renderProducts();
             renderSoldProducts(); renderRepairs(); renderCleanings(); renderDeposits(); renderWarranties(); renderDebts(); renderExpenses(); renderThienFunds(); renderStaffList(); renderActivityLogs();
             populateRepairPartOptions();
             populateDepositInventoryOptions();
+        }
+
+        // Tự động loại bỏ các sản phẩm có số lượng tồn kho <= 0 khỏi danh sách kho
+        function purgeZeroStockProducts() {
+            if (!Array.isArray(appData.products)) return false;
+            const beforeLen = appData.products.length;
+            appData.products = appData.products.filter(p => Number(p.qty || 0) > 0);
+            return appData.products.length !== beforeLen;
         }
 
         function populateDepositInventoryOptions() {
@@ -5888,14 +6002,27 @@
         }
 
         function renderStats() {
-            const totalProducts = (appData.products || []).reduce((sum, p) => sum + Number(p.qty || 0), 0);
+            const allProds = appData.products || [];
+            const totalProducts = allProds.reduce((sum, p) => sum + Math.max(0, Number(p.qty || 0)), 0);
+            const inStockModels = allProds.filter(p => Number(p.qty || 0) > 0).length;
+
+            let laptopQty = 0;
+            let partQty = 0;
+            let chargerQty = 0;
+            allProds.forEach(p => {
+                const q = Math.max(0, Number(p.qty || 0));
+                if (p.category === 'Laptop') laptopQty += q;
+                else if (p.category === 'Linh kiện') partQty += q;
+                else if (p.category === 'Sạc Laptop') chargerQty += q;
+            });
             
             // Tính tổng tiền vốn và tổng giá trị tồn kho
             let totalInventoryCost = 0;
             let totalInventoryValue = 0;
-            (appData.products || []).forEach(p => {
-                totalInventoryCost += Number(p.costPrice || 0) * Number(p.qty || 0);
-                totalInventoryValue += Number(p.price || 0) * Number(p.qty || 0);
+            allProds.forEach(p => {
+                const q = Math.max(0, Number(p.qty || 0));
+                totalInventoryCost += Number(p.costPrice || 0) * q;
+                totalInventoryValue += Number(p.price || 0) * q;
             });
 
             // Tổng doanh thu nhận được (Gross Revenue) & Tổng tiền vốn sản phẩm đã bán
@@ -5930,7 +6057,33 @@
             // Doanh Thu thực tế = Tổng tiền thu - Tiền vốn sản phẩm đã bán - Chi phí cố định/phát sinh - Quỹ Thiện
             let netRevenue = totalReceived - totalSoldProductCost - totalExpenses - totalThienAccumulated;
             
-            document.getElementById('stat-products').innerText = totalProducts;
+            const statProdEl = document.getElementById('stat-products');
+            if (statProdEl) statProdEl.innerText = `${totalProducts} SP`;
+
+            const statProdDetailEl = document.getElementById('stat-products-detail');
+            if (statProdDetailEl) {
+                statProdDetailEl.innerText = `${inStockModels} mã (Máy: ${laptopQty} • LK: ${partQty} • Sạc: ${chargerQty})`;
+            }
+
+            // Cập nhật số lượng trên các nút danh mục ở POS và Kho Hàng
+            const updateCatBtnText = (id, label, count) => {
+                const btn = document.getElementById(id);
+                if (btn) btn.innerHTML = `${label} <span class="opacity-90 font-mono text-[10px]">(${count})</span>`;
+            };
+            updateCatBtnText('pos-cat-all', 'Tất Cả', totalProducts);
+            updateCatBtnText('pos-cat-laptop', 'Laptop', laptopQty);
+            updateCatBtnText('pos-cat-part', 'Linh Kiện', partQty);
+            updateCatBtnText('pos-cat-charger', 'Sạc Laptop', chargerQty);
+
+            updateCatBtnText('inv-cat-all', 'Tất Cả', totalProducts);
+            updateCatBtnText('inv-cat-laptop', 'Laptop', laptopQty);
+            updateCatBtnText('inv-cat-part', 'Linh Kiện', partQty);
+            updateCatBtnText('inv-cat-charger', 'Sạc Laptop', chargerQty);
+
+            const navProdBtn = document.getElementById('nav-products');
+            if (navProdBtn) {
+                navProdBtn.innerHTML = `<i class="fa-solid fa-boxes-stacked"></i> Kho <span class="px-1.5 py-0.5 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[10px] font-mono">${totalProducts}</span>`;
+            }
             
             const invCostEl = document.getElementById('stat-inventory-cost');
             if (invCostEl) invCostEl.innerText = privacyState.inventoryCost ? '*** đ' : totalInventoryCost.toLocaleString('vi-VN') + ' đ';
@@ -5962,7 +6115,7 @@
             if (!list) return;
             
             const searchKey = (document.getElementById('inventorySearchInput')?.value || '').toLowerCase().trim();
-            // Tự động ẩn và loại bỏ các sản phẩm có số lượng tồn kho <= 0 khỏi danh sách kho hàng
+            // Chỉ hiển thị các sản phẩm còn hàng trong kho (sản phẩm hết hàng đã tự động xóa khỏi kho)
             const products = (appData.products || []).filter(p => {
                 const hasStock = Number(p.qty || 0) > 0;
                 const matchCat = currentInvCategory === 'all' || p.category === currentInvCategory;
@@ -5974,10 +6127,16 @@
                 return hasStock && matchCat && matchSearch;
             });
 
-            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm còn hàng phù hợp trong kho.</div>`;
+            const filteredTotalQty = products.reduce((sum, p) => sum + Math.max(0, Number(p.qty || 0)), 0);
+            const summaryBadge = document.getElementById('inventory-summary-badge');
+            if (summaryBadge) {
+                summaryBadge.innerText = `Hiện có: ${filteredTotalQty} sản phẩm (${products.length} mặt hàng)`;
+            }
+
+            if (products.length === 0) return list.innerHTML = `<div class="p-10 text-center text-slate-400 font-bold">Không tìm thấy sản phẩm phù hợp trong kho.</div>`;
             
             const isAdmin = currentUser?.role === 'admin';
-            list.innerHTML = products.map(p => {
+            list.innerHTML = products.map((p, idx) => {
                 let displayName = p.name || 'Không tên';
                 if (p.laptopDetails && p.laptopDetails.screen && !displayName.toLowerCase().includes(p.laptopDetails.screen.toLowerCase())) {
                     displayName += ` (${p.laptopDetails.screen})`;
@@ -5985,11 +6144,16 @@
                 if (p.chargerDetails && p.chargerDetails.wattage && !displayName.toLowerCase().includes(p.chargerDetails.wattage.toLowerCase())) {
                     displayName += ` (${p.chargerDetails.wattage})`;
                 }
+                const qtyNum = Number(p.qty || 0);
+                const qtyBadgeClass = qtyNum > 0 
+                    ? "text-amber-300 bg-amber-500/20 border-amber-500/40" 
+                    : "text-red-400 bg-red-500/20 border-red-500/40";
                 return `
-                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border border-slate-700/80">
+                <div class="glass-card p-4 sm:p-5 rounded-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 border ${qtyNum > 0 ? 'border-slate-700/80' : 'border-red-500/30 opacity-75'}">
                     <div class="flex-1 flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-6 min-w-0">
                         <div class="lg:w-[40%] space-y-1.5 min-w-0">
                             <div class="flex items-center gap-2">
+                                <span class="text-[10px] font-black px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">#${idx + 1}</span>
                                 <span class="text-[10px] font-black px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">${p.category || 'Khác'}</span>
                                 <span class="text-xs font-mono text-amber-400 font-extrabold">${p.code || ''}</span>
                             </div>
@@ -6004,7 +6168,9 @@
                             </div>
                         </div>
                         <div class="lg:w-[30%] flex items-center lg:justify-end">
-                            <span class="text-xs font-black text-amber-300 bg-amber-500/20 border border-amber-500/30 px-3.5 py-1.5 rounded-xl">Kho: ${p.qty}</span>
+                            <span class="text-xs sm:text-sm font-black ${qtyBadgeClass} border px-4 py-2 rounded-xl shadow-sm">
+                                Số lượng kho: ${qtyNum} ${qtyNum <= 0 ? '(Hết hàng)' : ''}
+                            </span>
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2.5 pt-3 sm:pt-0 border-t lg:border-t-0 border-slate-700 lg:pl-4 lg:border-l">
@@ -6036,13 +6202,20 @@
             const prodIndex = appData.products.findIndex(p => p.id === id);
             if (prodIndex !== -1) {
                 const qty = Number(document.getElementById('editProdQty').value) || 0;
-                appData.products[prodIndex].name = document.getElementById('editProdName').value.trim();
-                const catSelect = document.getElementById('editProdCategory');
-                if (catSelect) appData.products[prodIndex].category = catSelect.value;
-                appData.products[prodIndex].costPrice = Number(document.getElementById('editProdCost').value) || 0;
-                appData.products[prodIndex].price = Number(document.getElementById('editProdPrice').value) || 0;
-                appData.products[prodIndex].qty = Math.max(0, qty);
-                showToast("Cập nhật thành công", "success");
+                const prodName = document.getElementById('editProdName').value.trim();
+                if (qty <= 0) {
+                    appData.products.splice(prodIndex, 1);
+                    logAction(`Tự động xóa sản phẩm hết hàng khỏi kho: ${prodName}`);
+                    showToast(`Sản phẩm "${prodName}" đã hết hàng (SL: 0) và tự động xóa khỏi kho!`, "info");
+                } else {
+                    appData.products[prodIndex].name = prodName;
+                    const catSelect = document.getElementById('editProdCategory');
+                    if (catSelect) appData.products[prodIndex].category = catSelect.value;
+                    appData.products[prodIndex].costPrice = Number(document.getElementById('editProdCost').value) || 0;
+                    appData.products[prodIndex].price = Number(document.getElementById('editProdPrice').value) || 0;
+                    appData.products[prodIndex].qty = qty;
+                    showToast("Cập nhật thành công", "success");
+                }
             }
             closeEditProductModal(); saveAndSync(); renderAll();
             triggerStockAlert(); // Kiểm tra kho sau khi sửa
@@ -6502,10 +6675,13 @@
             const customerSignature = sigCanvas && sigCanvas._getSigData ? sigCanvas._getSigData() : '';
 
             if (!appData.products) appData.products = [];
-            appData.products.forEach(p => { p.qty = Number(p.qty || 0); });
+            
+            // Lưu bản chụp thông tin gốc của các sản phẩm trong giỏ trước khi trừ kho / tự động xóa
+            const cartProductSnapshots = {};
             cart.forEach(item => {
                 const prod = appData.products.find(p => p.id === item.id);
                 if (prod) {
+                    cartProductSnapshots[item.id] = JSON.parse(JSON.stringify(prod));
                     prod.qty = Math.max(0, Number(prod.qty || 0) - Number(item.qty || 1));
                 }
             });
@@ -6516,7 +6692,17 @@
             const newInvoice = {
                 id: 'INV_' + Date.now(),
                 customerName, customerPhone,
-                items: cart.map(item => ({ ...item, costPrice: (appData.products || []).find(p => p.id === item.id)?.costPrice || 0 })),
+                items: cart.map(item => {
+                    const snap = cartProductSnapshots[item.id];
+                    return {
+                        ...item,
+                        costPrice: snap?.costPrice || 0,
+                        category: snap?.category || 'Laptop',
+                        code: snap?.code || '',
+                        laptopDetails: snap?.laptopDetails || null,
+                        chargerDetails: snap?.chargerDetails || null
+                    };
+                }),
                 gifts: selectedGifts,
                 voucherDiscount,
                 signature: customerSignature,
@@ -6532,7 +6718,7 @@
             let thienTxDescriptions = [];
 
             cart.forEach(item => {
-                const prod = (appData.products || []).find(p => p.id === item.id);
+                const prod = cartProductSnapshots[item.id];
                 if (prod) {
                     const profit = (item.price - (prod.costPrice || 0)) * item.qty;
                     if (prod.category === 'Laptop') {
@@ -6561,7 +6747,7 @@
             const expiryDate = new Date(); expiryDate.setMonth(expiryDate.getMonth() + warrantyMonths);
             if(!appData.warranties) appData.warranties = [];
             cart.forEach((item, index) => {
-                const prodRef = (appData.products || []).find(p => p.id === item.id);
+                const prodRef = cartProductSnapshots[item.id];
                 let itemThienCut = 0;
                 if (prodRef) {
                     const itemProfit = (item.price - (prodRef.costPrice || 0)) * item.qty;
@@ -6574,6 +6760,7 @@
                     phone: customerPhone || '',
                     product: item.name,
                     productId: item.id,
+                    productBackup: prodRef || null,
                     qty: item.qty,
                     price: item.price * item.qty,
                     invoiceId: newInvoice.id,
@@ -6585,6 +6772,9 @@
                     createdAt: new Date().toLocaleDateString('vi-VN')
                 });
             });
+
+            // Tự động xóa các sản phẩm có tồn kho về 0 khỏi kho
+            purgeZeroStockProducts();
 
             logAction(`Tạo đơn hàng ${newInvoice.id} cho khách ${customerName} (Kèm quà: ${selectedGifts.join(', ') || 'Không'})`);
             closeCheckoutModal();
@@ -7287,12 +7477,16 @@
             partsList.forEach(item => {
                 const partProd = (appData.products || []).find(p => p.id === item.id);
                 if (partProd) {
+                    item.productBackup = JSON.parse(JSON.stringify(partProd));
                     const deductQty = Number(item.qty || 1);
                     partProd.qty = Math.max(0, Number(partProd.qty || 0) - deductQty);
                     totalPartsCost += Number(partProd.costPrice || 0) * deductQty;
                     usedPartsSummary += ` • ${partProd.name} (x${deductQty})`;
                 }
             });
+
+            // Tự động xóa linh kiện đã hết hàng (số lượng = 0) khỏi kho
+            purgeZeroStockProducts();
 
             const profit = finalCost - totalPartsCost;
             let thienCut = 0;
@@ -7556,36 +7750,7 @@
 
         // Đồng bộ tự động thu hồi Tiền Của Thiện cho các thẻ bảo hành đã thu hồi trước đó nhưng chưa trừ quỹ Thiện
         function reconcileRevokedWarrantiesForThien() {
-            if (!appData.warranties || !Array.isArray(appData.warranties)) return;
-            if (!appData.thienFunds) appData.thienFunds = { balance: 0, transactions: [] };
-            if (!appData.thienFunds.transactions) appData.thienFunds.transactions = [];
-
-            let changed = false;
-            appData.warranties.forEach(war => {
-                if (war.revoked === true && !war.thienRecalled) {
-                    const alreadyHasRecallTx = appData.thienFunds.transactions.some(tx => tx.isRecall && tx.warId === war.id);
-                    if (!alreadyHasRecallTx) {
-                        const thienRefund = calculateThienRecallForWarranty(war);
-                        if (thienRefund > 0) {
-                            appData.thienFunds.balance = Math.max(0, Number(appData.thienFunds.balance || 0) - thienRefund);
-                            appData.thienFunds.transactions.push({
-                                warId: war.id,
-                                desc: `Thu hồi thẻ BH (${war.product}) - Khấu trừ lại Tiền Của Thiện`,
-                                amount: -thienRefund,
-                                isRecall: true,
-                                date: war.revokedAt || new Date().toLocaleString('vi-VN')
-                            });
-                            war.thienCut = thienRefund;
-                            changed = true;
-                        }
-                    }
-                    war.thienRecalled = true;
-                }
-            });
-
-            if (changed) {
-                saveAndSync();
-            }
+            // Không tự ý thay đổi dữ liệu khi chỉ hiển thị giao diện (render)
         }
 
         function confirmRevokeWarranty(e) {
@@ -7622,25 +7787,69 @@
                     if (prod) {
                         prod.qty = Number(prod.qty || 0) + restoreQty;
                         restoredItemsLog.push(`${prod.name} (+${restoreQty})`);
+                    } else if (partItem.productBackup) {
+                        const restoredProd = { ...partItem.productBackup, qty: restoreQty };
+                        appData.products.unshift(restoredProd);
+                        restoredItemsLog.push(`${restoredProd.name} (Khôi phục vào kho: +${restoreQty})`);
+                    } else if (partItem.name) {
+                        appData.products.unshift({
+                            id: partItem.id || ('PROD_' + Date.now()),
+                            category: 'Linh kiện',
+                            name: partItem.name,
+                            code: 'LK-' + Date.now().toString().slice(-4),
+                            costPrice: 0,
+                            price: Number(partItem.price || 0),
+                            qty: restoreQty
+                        });
+                        restoredItemsLog.push(`${partItem.name} (Khôi phục vào kho: +${restoreQty})`);
                     }
                 });
             } else if (war.productId) {
-                // 2. Khôi phục sản phẩm / linh kiện bán lẻ trực tiếp qua productId
+                // 2. Khôi phục sản phẩm / linh kiện bán lẻ trực tiếp qua productId (kể cả khi đã tự xóa lúc hết hàng)
                 let prod = (appData.products || []).find(p => p.id === war.productId);
                 const restoreQty = Number(war.qty || 1);
                 if (prod) {
                     prod.qty = Number(prod.qty || 0) + restoreQty;
                     restoredItemsLog.push(`${prod.name} (+${restoreQty})`);
+                } else if (war.productBackup) {
+                    const restoredProd = { ...war.productBackup, qty: restoreQty };
+                    appData.products.unshift(restoredProd);
+                    restoredItemsLog.push(`${restoredProd.name} (Khôi phục vào kho: +${restoreQty})`);
+                } else {
+                    appData.products.unshift({
+                        id: war.productId,
+                        category: 'Laptop',
+                        name: war.product,
+                        code: 'LT-' + Date.now().toString().slice(-4),
+                        costPrice: 0,
+                        price: Number(war.price || 0),
+                        qty: restoreQty
+                    });
+                    restoredItemsLog.push(`${war.product} (Khôi phục vào kho: +${restoreQty})`);
                 }
             } else {
                 // 3. Tìm kiếm linh kiện hoặc sản phẩm theo tên trong thẻ bảo hành (cho các thẻ cũ)
                 const cleanProdName = (war.product || '').replace(/^Sửa chữa:\s*/i, '').trim();
+                let foundExisting = false;
                 (appData.products || []).forEach(prod => {
                     if (prod.name && (cleanProdName.toLowerCase() === prod.name.toLowerCase() || (war.product || '').toLowerCase().includes(prod.name.toLowerCase()))) {
                         prod.qty = Number(prod.qty || 0) + 1;
                         restoredItemsLog.push(`${prod.name} (+1)`);
+                        foundExisting = true;
                     }
                 });
+                if (!foundExisting && cleanProdName) {
+                    appData.products.unshift({
+                        id: 'PROD_' + Date.now(),
+                        category: 'Laptop',
+                        name: cleanProdName,
+                        code: 'SKU-' + Date.now().toString().slice(-4),
+                        costPrice: 0,
+                        price: Number(war.price || 0),
+                        qty: 1
+                    });
+                    restoredItemsLog.push(`${cleanProdName} (Khôi phục vào kho: +1)`);
+                }
             }
 
             // 4. Khôi phục / hoàn tác tiền doanh thu (Hóa đơn bán hàng hoặc Hóa đơn sửa chữa)
@@ -7949,26 +8158,6 @@
         }
 
         // --- CHI PHÍ FUNCTIONS ---
-        function checkAndApplyDailyExpense() {
-            if (!appData.expenses) appData.expenses = [];
-            const todayStr = new Date().toLocaleDateString('vi-VN');
-            const hasAutoExpense = appData.expenses.some(e => e.date === todayStr && e.isAuto);
-            
-            // Nếu đã qua 17:00 của ngày hôm nay mà chưa có chi phí tự động thì áp dụng luôn
-            const now = new Date();
-            if (!hasAutoExpense && now.getHours() >= 17) {
-                appData.expenses.unshift({
-                    id: 'EXP_AUTO_' + Date.now(),
-                    desc: 'Chi phí cố định hàng ngày (Mặt bằng, nhân sự, v.v...)',
-                    amount: 600000,
-                    date: todayStr,
-                    isAuto: true,
-                    createdAt: new Date().toLocaleString('vi-VN')
-                });
-                saveAndSync();
-            }
-        }
-
         function addExpense(e) {
             e.preventDefault();
             const desc = document.getElementById('expenseDesc').value.trim();
@@ -8391,6 +8580,9 @@
 
         function saveAndSync() {
             try {
+                // Đảm bảo tự động xóa toàn bộ sản phẩm hết hàng (qty <= 0) khỏi kho trước khi lưu và đồng bộ
+                purgeZeroStockProducts();
+
                 const stringified = JSON.stringify(appData);
                 const securePayload = btoa(encodeURIComponent(stringified));
                 const checksum = btoa(stringified.length.toString() + '_' + Date.now());
@@ -8411,6 +8603,10 @@
                     data: appData
                 };
                 localStorage.setItem(KENG_VAULT_BACKUP_KEY_v2026, JSON.stringify(vaultSnapshot));
+                localStorage.setItem('keng_dedicated_local_vault', JSON.stringify(vaultSnapshot));
+
+                // Tự động kích hoạt lưu xoay vòng và chép đè qua 3 tệp (Tệp 1 -> Tệp 2 -> Tệp 3 -> Tệp 1) mỗi khi điều chỉnh dữ liệu
+                triggerRotatingThreeFilesBackup("Tự động lưu khi điều chỉnh dữ liệu");
             } catch (err) {
                 console.error("Lỗi bảo mật lưu trữ chuyên sâu:", err);
             }
